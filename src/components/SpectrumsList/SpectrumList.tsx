@@ -1,33 +1,33 @@
 import {useNavigate} from 'react-router-dom';
 import {FC, useEffect, useState} from 'react';
-import {ICity, mockCities} from "../../models/models.ts";
+import {ISpectrum, mockSpectrums} from "../../models/models.ts";
 import List from "../List.tsx";
-import CityItem from "../CityItem/CityItem.tsx";
-import './CitiesList.css'
+import SpectrumItem from "../SpectrumItem/SpectrumItem.tsx";
+import './SpectrumList.css'
 
-const CitiesList: FC = () => {
-    const [cities, setCities] = useState<ICity[]>([]);
+const SpectrumList: FC = () => {
+    const [Spectrums, setSpectrums] = useState<ISpectrum[]>([]);
     const navigate = useNavigate();
     let searchValue = ''
     useEffect(() => {
-        fetchCities().catch((err) => {
+        fetchSpectrums().catch((err) => {
             console.error(err);
             if (searchValue) {
-                const filteredCities = mockCities.filter(city =>
-                    city.city_name?.toLowerCase().includes(searchValue.toLowerCase())
+                const filteredSpectrums = mockSpectrums.filter(Spectrum =>
+                    Spectrum.name?.toLowerCase().includes(searchValue.toLowerCase())
                 );
-                setCities(filteredCities);
+                setSpectrums(filteredSpectrums);
             } else {
-                setCities(mockCities);
+                setSpectrums(mockSpectrums);
             }
         });
     }, []);
 
-    async function fetchCities() {
+    async function fetchSpectrums() {
         try {
             const currentURL = window.location.href;
             const url = new URL(currentURL);
-            let apiUrl = 'http://localhost:7070/api/v3/cities';
+            let apiUrl = 'http://localhost:8888/Spectrums';
 
             if (url.searchParams.has('search')) {
                 searchValue = url.searchParams.get('search') ?? '';
@@ -41,7 +41,7 @@ const CitiesList: FC = () => {
             }
 
             const data = await response.json();
-            setCities(data.cities);
+            setSpectrums(data.Spectrums);
         } catch (e) {
             console.error(e);
             throw e;
@@ -49,11 +49,11 @@ const CitiesList: FC = () => {
     }
 
     return (
-        <List items={cities} renderItem={(city: ICity) =>
-            <CityItem city={city} onClick={(num) => navigate(`/DevelopmentNetworkApplicationFrontend/cities/${num}`)}/>
+        <List items={Spectrums} renderItem={(Spectrum: ISpectrum) =>
+            <SpectrumItem Spectrum={Spectrum} onClick={(num) => navigate(`/frontendrip/spectrums/${num}`)}/>
         }
         />
     );
 };
 
-export default CitiesList;
+export default SpectrumList;

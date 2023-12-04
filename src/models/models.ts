@@ -1,10 +1,10 @@
-export interface ICities {
-    cities: ICity[],
+export interface ISpectrums {
+    Spectrums: ISpectrum[],
     status: string
 }
 
-export interface ICityResponse {
-    city: ICity,
+export interface ISpectrumResponse {
+    Spectrum: ISpectrum,
     status: string
 }
 
@@ -13,25 +13,19 @@ export interface IStatus {
     status_name: string,
 }
 
-export interface ICity {
+export interface ISpectrum {
     id: number,
-    city_name?: string,
+    name?: string,
+    len?: number,
+    freq?: number,
     status_id?: number,
     status: IStatus,
     description?: string,
     image_url?: string,
 }
 
-export const mockCities: ICity[] = [
-    {id: 1, city_name: 'Категат (Хедебю)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Категат был одним из самых важных викингских городов, расположенных на острове Хейланд в Дании. Город был известен своими морскими торговыми маршрутами и фортификациями.', image_url: 'https://fiord.org/wp-content/uploads/2016/12/Hedeby-now.jpg'},
-    {id: 2, city_name: 'Королевство Йорвик', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Этот викингский город, известный как Йорк, был важным торговым и административным центром во времена викингов.\\nДублин (Ирландия): Викинги основали Дублин в 9 веке. Этот город был известен своей торговлей и культурным влиянием в регионе.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Kingdom_of_Jórvik.svg/400px-Kingdom_of_Jórvik.svg.png'},
-    {id: 3, city_name: 'Новгород (Россия)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Викинги создали поселение в Новгороде, что сделало его важным торговым центром на востоке.', image_url: 'https://avatars.dzeninfra.ru/get-zen_doc/3229639/pub_5ec7ba99f66e3c72366a38ba_5ec9073987eb5a1725e2438d/scale_1200'},
-    {id: 4, city_name: 'Лунд (Швеция)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Лунд был одним из первых викингских городов и центром вероисповедания викингов.', image_url: 'https://traveltimes.ru/wp-content/uploads/2021/10/Кафедральный-собор-Лунда-2048x1333.jpg'},
-    {id: 5, city_name: 'Гриндавик (Исландия)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Этот город на Исландии служил базой для викингских мореплавателей и рыбаков.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Iceland_adm_location_map.svg/500px-Iceland_adm_location_map.svg.png'},
-    {id: 6, city_name: 'Висбю (Швеция)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Этот город на острове Готланд был важным торговым и административным центром викингов.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Visby_13-.JPG/580px-Visby_13-.JPG'},
-    {id: 7, city_name: 'Лимфьорд (Дания)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Лимфьорд был важным морским перекрестком и базой для викингских экспедиций.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Jytland.Limfjord.jpg/240px-Jytland.Limfjord.jpg'},
-    {id: 8, city_name: 'Рейкьявик (Исландия)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Викинги основали Рейкьявик, который со временем стал столицей Исландии.', image_url: 'https://traveller-eu.ru/sites/default/files/styles/main_img/public/evelyn-paris-WvPQYDd-3Ow-unsplash.webp?itok=PHKdX3SG'},
-    {id: 9, city_name: 'Торшавн (Фарерские острова)', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Этот город служил базой для викингов на Фарерских островах и был важным для контроля торговых путей в Северном Атлантическом регионе.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Tórshavn_skansin_8.jpg/500px-Tórshavn_skansin_8.jpg'},
-    {id: 10, city_name: 'Нормандия', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Викинг Ролло основал герцогство Нормандия в IX веке после договора с франкским королём. Нормандия стала известной своими влияниями на культуру и историю.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mont-Saint-Michel-2004.jpg/440px-Mont-Saint-Michel-2004.jpg'},
-    {id: 11, city_name: 'Великая Зима', status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'Это викингское поселение было обнаружено на территории современной России, недалеко от Волги.', image_url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Venice_frozen_lagoon_1708.jpg/400px-Venice_frozen_lagoon_1708.jpg'},
+export const mockSpectrums: ISpectrum[] = [
+    {id: 1, name: 'CMB1mock', len: 1.9,freq: 157.78, status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'CMB1 - имеет длину волны 1.9мм и частоту 157.788 Ггц', image_url: 'http://172.21.0.3:9000/spectrumbucket/CMB1.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=3DR34MJFUPPY0JFBB2EZ%2F20231025%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231025T072823Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiIzRFIzNE1KRlVQUFkwSkZCQjJFWiIsImV4cCI6MTY5ODIyMjQ5NiwicGFyZW50IjoibWluaW8ifQ.adFyKygCg-7HE0kMBWv8pDTDF_7RHjPTndfiOq2v71B4oB8z2YsPdQkGIQ4YzatxiUP2dWlMFWBo1BDoIr6UkQ&X-Amz-SignedHeaders=host&versionId=befcc374-8ed5-42b4-bf5a-7897b7319991&X-Amz-Signature=0fd530f80d55fb2b278eb46d07e832a26f47fe93d2a083783c6ac0c4bc129df6'},
+    {id: 2, name: 'CMB2mock', len: 2.72, freq: 110.08, status_id: 1, status: {id: 1, status_name: 'Существует'}, description: 'CMB2 - имеет длину волны 2.72мм и частоту 110.08 Ггц', image_url: 'http://172.21.0.3:9000/spectrumbucket/CMB2.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=3DR34MJFUPPY0JFBB2EZ%2F20231025%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231025T072834Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiIzRFIzNE1KRlVQUFkwSkZCQjJFWiIsImV4cCI6MTY5ODIyMjQ5NiwicGFyZW50IjoibWluaW8ifQ.adFyKygCg-7HE0kMBWv8pDTDF_7RHjPTndfiOq2v71B4oB8z2YsPdQkGIQ4YzatxiUP2dWlMFWBo1BDoIr6UkQ&X-Amz-SignedHeaders=host&versionId=604461e6-dba4-4aec-a882-798855536608&X-Amz-Signature=73fe40582bced59977b56d7e7a6d6d7abbe042e6914e3b211102b1eb4b5760a8'},
+    {id: 3, name: 'CMB3mock', len: 7.35, freq: 40.86,status_id: 1, status: {id: 1, status_name: 'Существует'},description: 'CMB3 - имеет длину волны 7.35мм и частоту 40.86 Ггц', image_url: 'http://172.21.0.3:9000/spectrumbucket/CMB3.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=3DR34MJFUPPY0JFBB2EZ%2F20231025%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20231025T072853Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiIzRFIzNE1KRlVQUFkwSkZCQjJFWiIsImV4cCI6MTY5ODIyMjQ5NiwicGFyZW50IjoibWluaW8ifQ.adFyKygCg-7HE0kMBWv8pDTDF_7RHjPTndfiOq2v71B4oB8z2YsPdQkGIQ4YzatxiUP2dWlMFWBo1BDoIr6UkQ&X-Amz-SignedHeaders=host&versionId=ab76dd0d-5a6a-439e-91eb-687e41608ef7&X-Amz-Signature=9c7f45d092ec0534f628bb2416b8a99bd13b75ebe40620f7e17dbf6623e92e83'}
 ]

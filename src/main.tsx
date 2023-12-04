@@ -1,21 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import CitiesList from "./components/CitiesList/CitiesList.tsx";
-import CityDetail from "./components/CityDetail/CityDetail.tsx";
+import SpectrumList from "./components/SpectrumsList/SpectrumList.tsx";
+import SpectrumDetail from "./components/SpectrumDetail/SpectrumDetail.tsx";
 
 const router = createBrowserRouter([
     {
-        path: '/DevelopmentNetworkApplicationFrontend',
-        element: <CitiesList/>
+        path: '/frontendrip',
+        element: <SpectrumList/>
     },
     {
-        path: '/DevelopmentNetworkApplicationFrontend/cities',
-        element: <CitiesList/>
+        path: '/frontendrip/spectrums',
+        element: <SpectrumList/>
     },
     {
-        path: '/DevelopmentNetworkApplicationFrontend/cities/:id',
-        element: <CityDetail/>
+        path: '/frontendrip/spectrums/:id',
+        element: <SpectrumDetail/>
     }
 ])
 

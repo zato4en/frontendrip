@@ -30,13 +30,13 @@ const NavigationBar = () => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/DevelopmentNetworkApplicationFrontend/cities">
-                                Города
+                            <a className="nav-link" href="/Spectrums">
+                                Спектры
                             </a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">
-                                Походы
+                                Спутники
                             </a>
                         </li>
                     </ul>
@@ -46,7 +46,7 @@ const NavigationBar = () => {
                     <input
                         className="form-control form-control-dark me-2"
                         type="search"
-                        placeholder="Введите город"
+                        placeholder="Введите спектр"
                         aria-label="Search"
                         name="search"
                     />
