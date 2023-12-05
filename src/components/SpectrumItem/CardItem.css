@@ -4,7 +4,7 @@
     overflow: hidden;
     width: calc(25% - 20px);
     margin: 10px;
-    border-radius: 20px;
+    /*border-radius: 20px;*/
     height: 250px;
     transition: transform 0.3s ease, filter 0.3s ease;
     display: inline-block;
@@ -26,11 +26,11 @@
     justify-content: center;
     align-items: center;
     border: 2px solid rgba(255, 255, 255, 0.66);
-    background: linear-gradient(to right, rgba(74, 0, 152, 0.84) 0%, rgba(6, 76, 98, 0.8) 100%);
-    border-radius: 15px 15px 20px 20px;
+    background: linear-gradient(to right, rgba(74, 0, 152, 0.84) 0%, rgba(181, 10, 204, 0.8) 100%);
+    /*border-radius: 15px 15px 20px 20px;*/
     text-align: center;
     color: #ffffff;
-    font-family: "New Century Schoolbook", "TeX Gyre Schola", serif;
+    font-family: "Monaco", "TeX Gyre Schola", serif;
     font-size: 27px;
     white-space: nowrap;
     overflow: hidden;

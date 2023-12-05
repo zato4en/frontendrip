@@ -30,7 +30,7 @@ const NavigationBar = () => {
                             </a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/Spectrums">
+                            <a className="nav-link" href="/">
                                 Спектры
                             </a>
                         </li>
@@ -44,7 +44,7 @@ const NavigationBar = () => {
 
                 <form className="d-flex">
                     <input
-                        className="form-control form-control-dark me-2"
+                        className="form-control form-control-light me-2"
                         type="search"
                         placeholder="Введите спектр"
                         aria-label="Search"

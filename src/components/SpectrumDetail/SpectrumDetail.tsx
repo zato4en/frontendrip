@@ -47,30 +47,36 @@ const SpectrumDetail: FC = () => {
 
         !Spectrum
             ? <div>Loading...</div>
-            : <div className="Spectrum-card-body">
-                <div className="card-container">
+            :  <div className="city-card-body">
+                <div className="card-external-container">
                     <span className="pro">Спектр</span>
-                    <img
-                        className="square"
-                        src={Spectrum?.image_url}
-                        alt={Spectrum?.name}
-                    />
-                    <h3>{Spectrum?.name}</h3>
-                    {/*<h6>Статус: {Spectrum?.status.status_name}</h6>*/}
-                    <p>{Spectrum.description}</p>
+                    <div className="card-container">
+                        <img
+                            className="square"
+                            src={Spectrum?.image_url}
+                            alt={Spectrum?.name}
+                        />
+                        <h3>{Spectrum?.name}</h3>
 
+                        {/* <h6>Статус: {Spectrum?.status.status_name}</h6> */}
+                        <p>{Spectrum?.description}</p>
+
+                        <div className="buttons">
+                            <button className="primary">Следить</button>
+                            <button className="primary ghost">Записаться</button>
+                        </div>
+                    </div>
                     <img
                         className="delete-button"
-                        src="http://localhost:8888/static/img/deleteTrash.png"
+                        src="http://localhost:8888/static/img/deleteTrash.png?v=1"
                         alt="Delete"
                         onClick={handleDelete}
                     />
-                    <div className="buttons">
-                        <button className="primary">Следить</button>
-                        <button className="primary ghost">Записаться</button>
-                    </div>
                 </div>
             </div>
+
+
+
     );
 };
 

@@ -21,7 +21,7 @@ const SpectrumList: FC = () => {
                 setSpectrums(mockSpectrums);
             }
         });
-    }, []);
+    },[]);
 
     async function fetchSpectrums() {
         try {

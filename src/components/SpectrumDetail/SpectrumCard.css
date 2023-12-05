@@ -1,29 +1,98 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+body {
+    background-color: #000; /* Фон страницы */
+    color: #fff; /* Цвет текста */
+}
+
+h3 {
+    color: #fff;
+}
+
+.city-card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card-wrapper {
+    position: relative; /* Обязательно для позиционирования */
+    display: flex;
+    align-items: center;
+}
+
+
+.pro, .delete-button {
+    transform: none;
+}
+
+
+.pro {
+    transform: translateY(-200px);
+
+    left: -10px; /* Отрицательный отступ на желаемую величину */
+    background-color: #FF69B4; /* Цвет фона для надписи */
+    color: #fff; /* Цвет текста */
+    padding: 5px 10px; /* Отступы вокруг текста */
+    border-radius: 5px; /* Скругленные углы */
+    margin-right: 15px; /* Дополнительное пространство справа от элемента, если необходимо */
+}
+
+
+
+.card-container {
+    width: 300px;
+    /* ... (остальные стили оставляем как есть) ... */
+}
+
+
+.card-external-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 50px; /* По умолчанию 50px, отрегулируйте под ваш дизайн */
+}
+
+
+
+.card-container {
+    width: 300px;
+
+}
+
+
 * {
     box-sizing: border-box;
 }
 
-.city-card-body {
-    font-family: Montserrat, sans-serif;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 20px;
+
+
+.pro {
+    left: -50px; /* Смещение надписи "Спектр" за пределы карточки слева */
 }
+
+.delete-button {
+
+    transform: translateY(-200px);
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    right: -10px;
+
+    margin-left: 15px;
+
+}
+
+
 
 h3 {
     margin: 10px 0;
 }
 
-.delete-button {
-    width: 34px;
-    height: 34px;
-    position: absolute;
-    top: 25px;
-    right: 25px
-}
+
 
 h6 {
     margin: 5px 0;
@@ -35,17 +104,17 @@ p {
     line-height: 21px;
 }
 
-.card-container {
-    background-color: #231E39;
-    border-radius: 5px;
-    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.75);
-    color: #B3B8CD;
-    padding: 30px;
-    position: relative;
-    width: 50%;
-    max-width: 100%;
-    text-align: center;
+
+.square {
+    width: 100%; /* Задаем ширину картинки равной ширине карточки */
+    object-fit: cover; /* Картинка будет покрывать всю область контейнера, избегая искажения */
+    display: block; /* Убираем возможные отступы вокруг изображения */
+    aspect-ratio: 1; /* Соотношение сторон 1:1 для квадратной картинки */
+
+    max-height: 300px;
 }
+
+
 
 .card-container .pro {
     color: #231E39;
@@ -60,7 +129,7 @@ p {
 }
 
 .card-container .round {
-    border: 1px solid #03BFCB;
+    border: 1px solid #640f86;
     border-radius: 50%;
     padding: 7px;
     width: 150px;
@@ -69,10 +138,10 @@ p {
 }
 
 button.primary {
-    background-color: #03BFCB;
-    border: 1px solid #03BFCB;
+    background-color: #391359;
+    border: 1px solid #cf00ff;
     border-radius: 3px;
-    color: #231E39;
+    color: #ffffff;
     font-family: Montserrat, sans-serif;
     font-weight: 500;
     padding: 10px 25px;
@@ -81,7 +150,7 @@ button.primary {
 
 button.primary.ghost {
     background-color: transparent;
-    color: #02899C;
+    color: #d000ff;
 }
 
 .skills {
