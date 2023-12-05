@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import FormControl from 'react-bootstrap/FormControl';
 import Button from 'react-bootstrap/Button';
 import React, {FC} from "react";
+import './navbar.css'
 
 interface NavigationBarProps {
     handleSearchValue: (value: string) => void
@@ -19,16 +20,16 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
     };
 
     return (
-        <Navbar expand="sm" className='bg-black' data-bs-theme="dark">
+        <Navbar expand="sm" className='navbar' data-bs-theme="dark">
             <div className='container-xl px-2 px-sm-3'>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Item>
-                            <Link to="/Spectrums" className="nav-link ps-0">Спектры</Link>
+                            <Link to="/Spectrums" className="navbarlink">Спектры</Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Link to="/Spectrums" className="nav-link">Спутники</Link>
+                            <Link to="/Spectrums" className="navbarlink">Спутники</Link>
                         </Nav.Item>
                     </Nav>
                     <Form onSubmit={handleSearch} className="d-flex">
@@ -40,7 +41,7 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
                             className="me-2"
                             aria-label="Search"
                         />
-                        <Button type="submit" variant="outline-light">Поиск</Button>
+                        <Button className ="searchbtn" type="submit" variant="outline-light">Поиск</Button>
                     </Form>
                 </Navbar.Collapse>
             </div>

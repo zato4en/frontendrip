@@ -1,5 +1,6 @@
 .breadcrumbs-container {
     display: flex;
+
     align-items: baseline;
     font-size: 16px;
     padding: 0 9%;
@@ -13,7 +14,7 @@
 }
 
 .breadcrumb {
-    color: #430087;
+    color: #cf00ff;
     cursor: pointer;
 }
 
