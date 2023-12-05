@@ -7,7 +7,7 @@ import react from '@vitejs/plugin-react'
 //   base: "/DevelopmentNetworkApplicationFrontend/"
 // })
 
-// https://vitejs.dev/config/
+// https://vitejs.dev/config/i
 export default defineConfig({
   base: "/frontendrip/",
   plugins: [react()],
