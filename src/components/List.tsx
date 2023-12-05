@@ -1,5 +1,5 @@
 import React from 'react';
-import './CitiesList/CitiesList.css'
+import './SpectrumsList/SpectrumsList.css'
 interface ListProps<T> {
     items: T[],
     renderItem: (item: T) => React.ReactNode

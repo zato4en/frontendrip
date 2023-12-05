@@ -25,10 +25,10 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Item>
-                            <Link to="/cities" className="nav-link ps-0">Города</Link>
+                            <Link to="/Spectrums" className="nav-link ps-0">Спектры</Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Link to="/cities" className="nav-link">Походы</Link>
+                            <Link to="/Spectrums" className="nav-link">Спутники</Link>
                         </Nav.Item>
                     </Nav>
                     <Form onSubmit={handleSearch} className="d-flex">
@@ -36,7 +36,7 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
                             id={'search-text-field'}
                             type="text"
                             name="search"
-                            placeholder="Поиск городов"
+                            placeholder="Поиск спектров"
                             className="me-2"
                             aria-label="Search"
                         />
