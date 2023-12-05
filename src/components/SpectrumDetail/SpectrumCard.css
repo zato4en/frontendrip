@@ -42,9 +42,10 @@ p {
     color: #B3B8CD;
     padding: 30px;
     position: relative;
-    width: 50%;
+    width: 100%;
     max-width: 100%;
     text-align: center;
+    justify-content: center;
 }
 
 .card-container .pro {
@@ -61,10 +62,10 @@ p {
 
 .card-container .round {
     border: 1px solid rgba(181, 10, 204, 0.8);
-    border-radius: 50%;
+
     padding: 7px;
-    width: 150px;
-    height: 150px;
+    width: 250px;
+    height: 250px;
     object-fit: cover
 }
 
