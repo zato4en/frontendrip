@@ -1,5 +1,5 @@
 import React from 'react';
-import './SpectrumsList/SpectrumList.css'
+import './CitiesList/CitiesList.css'
 interface ListProps<T> {
     items: T[],
     renderItem: (item: T) => React.ReactNode
@@ -12,5 +12,3 @@ export default function List<T>(props: ListProps<T>) {
         </div>
     )
 }
-
-
