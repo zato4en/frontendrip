@@ -40,6 +40,8 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer, reloa
             <img
                 src={Spectrum.image_url}
                 alt="Image"
+                onError={({currentTarget}) => {currentTarget.onerror = null;
+                currentTarget.src="https://zato4en.github.io/frontendrip/"}}
                 className="photo"
                 onClick={() => onClick(Spectrum.id)}
                 id={`photo-${Spectrum.id}`}
