@@ -41,7 +41,7 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
                         <Nav className="me-auto">
                             <Nav.Item>
                                 <Link to="/Spectrums" className="nav-link ps-0">
-                                    Города
+                                    Спектры
                                 </Link>
                             </Nav.Item>
                             <Nav.Item>
@@ -55,7 +55,7 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
                                 id={'search-text-field'}
                                 type="text"
                                 name="search"
-                                placeholder="Поиск городов"
+                                placeholder="Поиск Спектров"
                                 className="me-2"
                                 aria-label="Search"
                             />

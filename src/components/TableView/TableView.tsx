@@ -37,7 +37,7 @@ const TableView: FC<TableViewProps> = ({destHikes, status}) => {
                         <td className="image-td">
                             <img src={item.Spectrum.image_url} alt="photo"/>
                         </td>
-                        <td className="Spectrum-name-td">{item.Spectrum.Spectrum_name}</td>
+                        <td className="Spectrum-name-td">{item.Spectrum.name}</td>
                         <td>{item.Spectrum.description}</td>
                         {
                             status != 2 && <td className="delete-td">

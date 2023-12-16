@@ -20,7 +20,7 @@ export const fetchSpectrums = (searchValue?: string) => async (dispatch: AppDisp
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumWithBasket>('/api/v3/Spectrums' + `?search=${searchValue ?? ''}`)
+        const response = await axios.get<ISpectrumWithBasket>('/Spectrums' + `?search=${searchValue ?? ''}`)
         dispatch(SpectrumSlice.actions.SpectrumsFetched(response.data.Spectrums))
     } catch (e) {
         dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`Ошибка: ${e}`))
@@ -32,7 +32,7 @@ export const addSpectrumIntoHike = (SpectrumId: number, serialNumber: number, Sp
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "post",
-        url: "/api/v3/Spectrums/add-Spectrum-into-hike",
+        url: "/Spectrums/add-Spectrum-into-hike",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -46,7 +46,7 @@ export const addSpectrumIntoHike = (SpectrumId: number, serialNumber: number, Sp
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
         const response = await axios(config);
         const errorText = response.data.description ?? ""
-        const successText = errorText || `Город "${SpectrumName}" добавлен`
+        const successText = errorText || `Спектр "${SpectrumName}" добавлен`
         dispatch(SpectrumSlice.actions.SpectrumAddedIntoHike([errorText, successText]));
         setTimeout(() => {
             dispatch(SpectrumSlice.actions.SpectrumAddedIntoHike(['', '']));
@@ -61,7 +61,7 @@ export const deleteHike = (id: number) => async (dispatch: AppDispatch) => {
 
     const config = {
         method: "delete",
-        url: "/api/v3/hikes",
+        url: "/hikes",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -91,7 +91,7 @@ export const makeHike = () => async (dispatch: AppDispatch) => {
 
     const config = {
         method: "put",
-        url: "/api/v3/hikes/update/status-for-user",
+        url: "/hikes/update/status-for-user",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -121,7 +121,7 @@ export const fetchHikes = () => async (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(hikeSlice.actions.hikesFetching())
-        const response = await axios.get<IHikeResponse>(`/api/v3/hikes`, {
+        const response = await axios.get<IHikeResponse>(`/hikes`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -143,7 +143,7 @@ export const deleteHikeById = (id: number) => async (dispatch: AppDispatch) => {
 
     try {
         dispatch(hikeSlice.actions.hikesFetching())
-        const response = await axios.delete<IDeleteDestinationHike>(`/api/v3/destination-hikes`, {
+        const response = await axios.delete<IDeleteDestinationHike>(`/destination-hikes`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
@@ -169,7 +169,7 @@ export const updateHike = (
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "put",
-        url: "/api/v3/hikes",
+        url: "/hikes",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             ContentType: "application/json"
@@ -203,15 +203,15 @@ export const fetchSpectrum = (
 ) => async (dispatch: AppDispatch) => {
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumResponse>(`/api/v3/Spectrums?Spectrum=${SpectrumId}`)
-        const Spectrum = response.data.Spectrum
-        setPage(Spectrum.Spectrum_name ?? "Без названия", Spectrum.id)
+        const response = await axios.get<ISpectrumResponse>(`/Spectrums?search=${SpectrumId}`)
+        const Spectrum = response.data.spectrum
+        setPage(Spectrum.name ?? "Без названия", Spectrum.id)
         dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum))
     } catch (e) {
         console.log(`Ошибка загрузки городов: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;
         const mockSpectrum = mockSpectrums[previewID]
-        setPage(mockSpectrum.Spectrum_name ?? "Без названия", mockSpectrum.id)
+        setPage(mockSpectrum.name ?? "Без названия", mockSpectrum.id)
         dispatch(SpectrumSlice.actions.SpectrumFetched(mockSpectrum))
     }
 }
@@ -219,7 +219,7 @@ export const fetchSpectrum = (
 export const registerSession = (userName: string, login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/api/v3/users/sign_up",
+        url: "/users/sign_up",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -249,7 +249,7 @@ export const logoutSession = () => async (dispatch: AppDispatch) => {
 
     const config = {
         method: "get",
-        url: "/api/v3/users/logout",
+        url: "/users/logout",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json'
@@ -279,7 +279,7 @@ export const logoutSession = () => async (dispatch: AppDispatch) => {
 export const loginSession = (login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/api/v3/users/login",
+        url: "/users/login",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -313,7 +313,7 @@ export const loginSession = (login: string, password: string) => async (dispatch
 function filterMockData(searchValue?: string) {
     if (searchValue) {
         const filteredSpectrums = mockSpectrums.filter(Spectrum =>
-            Spectrum.Spectrum_name?.toLowerCase().includes((searchValue ?? '').toLowerCase())
+            Spectrum.name?.toLowerCase().includes((searchValue ?? '').toLowerCase())
         );
         if (filteredSpectrums.length === 0) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment

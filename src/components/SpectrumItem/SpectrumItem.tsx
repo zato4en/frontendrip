@@ -20,7 +20,7 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer}) => {
 
     const plusClickHandler = () => {
         dispatch(increase())
-        dispatch(addSpectrumIntoHike(Spectrum.id, serialNumber, Spectrum.Spectrum_name ?? "Без названия"))
+        dispatch(addSpectrumIntoHike(Spectrum.id, serialNumber, Spectrum.name ?? "Без названия"))
     }
 
     return (
@@ -41,7 +41,7 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer}) => {
                     />
                 </div>
             )}
-            <div className="container-card" onClick={() => onClick(Spectrum.id)}>{Spectrum.Spectrum_name}</div>
+            <div className="container-card" onClick={() => onClick(Spectrum.id)}>{Spectrum.name}</div>
         </div>
     );
 };

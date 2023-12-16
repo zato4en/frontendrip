@@ -1,5 +1,5 @@
-export interface ICities {
-    cities: ISpectrum[],
+export interface ISpectrums {
+    Spectrums: ISpectrum[],
     status: string
 }
 
@@ -11,6 +11,10 @@ export interface ISpectrumResponse {
 export interface IStatus {
     id: number,
     status_name: string,
+}
+export interface ISpectrumWithBasket {
+    basket_id: number
+    Spectrums: ISpectrum[]
 }
 
 export interface ISpectrum {
@@ -26,10 +30,10 @@ export interface ISpectrum {
 
 export interface IDestinationHikes {
     id: number,
-    city_id: number,
+    Spectrum_id: number,
     hike_id: number,
     serial_number: number,
-    city: ICity,
+    Spectrum: ISpectrum,
 }
 
 export interface IRegisterResponse {
@@ -85,6 +89,10 @@ export interface IRequest {
     status: string
 }
 
+export interface IHikeResponse {
+    hikes: IHike[]
+    status: string
+}
 
 
 export const mockSpectrums: ISpectrum[] = [

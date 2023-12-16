@@ -19,7 +19,7 @@ const initialState: SpectrumState = {
     serialNumber: 0
 }
 
-export const spectrumSlice = createSlice({
+export const SpectrumSlice = createSlice({
     name: 'Spectrum',
     initialState,
     reducers: {
@@ -70,4 +70,4 @@ export const spectrumSlice = createSlice({
     },
 })
 
-export default spectrumSlice.reducer;
+export default SpectrumSlice.reducer;

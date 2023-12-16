@@ -1,10 +1,10 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
-import cityReducer from "./reducers/SpectrumSlice.ts"
+import SpectrumReducer from "./reducers/SpectrumSlice.ts"
 import hikeReducer from "./reducers/HikeSlice.ts"
 import userReducer from "./reducers/UserSlice.ts"
 
 const rootReducer = combineReducers({
-    cityReducer,
+    SpectrumReducer,
     hikeReducer,
     userReducer
 })

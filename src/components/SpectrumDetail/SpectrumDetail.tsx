@@ -28,7 +28,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
 
     const DeleteData = async () => {
         try {
-            const response = await fetch('http://localhost:7070/api/v3/Spectrums/delete/' + Spectrum?.id, {
+            const response = await fetch('http://localhost:8888/Spectrums/delete/' + Spectrum?.id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -65,9 +65,9 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                     <img
                         className="round"
                         src={Spectrum?.image_url}
-                        alt={Spectrum?.Spectrum_name}
+                        alt={Spectrum?.name}
                     />
-                    <h3>{Spectrum?.Spectrum_name}</h3>
+                    <h3>{Spectrum?.name}</h3>
                     <h6>Статус: {Spectrum?.status.status_name}</h6>
                     <p>{Spectrum?.description}</p>
                     <img
