@@ -102,6 +102,8 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                         className="round"
                         src={Spectrum?.image_url}
                         alt={Spectrum?.name}
+                        onError={({currentTarget}) => {currentTarget.onerror = null;
+                            currentTarget.src="/default.jpeg"}}
                     />
                     <h3>{Spectrum?.name}</h3>
                     {/*<h6>Статус: {Spectrum?.status.status_name}</h6>*/}
