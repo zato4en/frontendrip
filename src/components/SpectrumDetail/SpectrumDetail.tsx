@@ -28,7 +28,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
 
     const DeleteData = async () => {
         try {
-            const response = await fetch('http://localhost:8888/Spectrums/delete/' + Spectrum?.id, {
+            const response = await fetch('http://localhost:8888/Spectrums/' + Spectrum?.id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
             });
 
             if (response.status === 200) {
-                console.log('Город успешно удален');
+                console.log('Спектр успешно удален');
                 window.location.reload();
             } else {
                 console.error('Произошла ошибка при удалении города');
@@ -68,7 +68,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                         alt={Spectrum?.name}
                     />
                     <h3>{Spectrum?.name}</h3>
-                    <h6>Статус: {Spectrum?.status.status_name}</h6>
+                    {/*<h6>Статус: {Spectrum?.status.status_name}</h6>*/}
                     <p>{Spectrum?.description}</p>
                     <img
                         className="delete-button"

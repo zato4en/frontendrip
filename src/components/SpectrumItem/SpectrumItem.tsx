@@ -1,7 +1,7 @@
 import {FC} from 'react';
 import {ISpectrum} from '../../models/models.ts';
 import './CardItem.css'
-import {addSpectrumIntoHike} from "../../store/reducers/ActionCreator.ts";
+import {addSpectrumIntoSatellite} from "../../store/reducers/ActionCreator.ts";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {SpectrumSlice} from "../../store/reducers/SpectrumSlice.ts";
 
@@ -20,7 +20,7 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer}) => {
 
     const plusClickHandler = () => {
         dispatch(increase())
-        dispatch(addSpectrumIntoHike(Spectrum.id, serialNumber, Spectrum.name ?? "Без названия"))
+        dispatch(addSpectrumIntoSatellite(Spectrum.id, serialNumber, Spectrum.name ?? "Без названия"))
     }
 
     return (

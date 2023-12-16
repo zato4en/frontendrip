@@ -1,52 +1,52 @@
-import {IDeleteDestinationHike, IRequest} from "../../models/models.ts";
+import {IDeleteDestinationSatellite, IRequest} from "../../models/models.ts";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-interface HikeState {
-    hike: IRequest | null;
+interface Satellitestate {
+    Satellite: IRequest | null;
     isLoading: boolean;
     error: string;
     success: string;
 }
 
-const initialState: HikeState = {
-    hike: null,
+const initialState: Satellitestate = {
+    Satellite: null,
     isLoading: false,
     error: '',
     success: ''
 }
 
-export const hikeSlice = createSlice({
-    name: 'hike',
+export const satelliteSlice = createSlice({
+    name: 'Satellite',
     initialState,
     reducers: {
-        hikesFetching(state) {
+        SatellitesFetching(state) {
             state.isLoading = true
         },
-        hikesFetched(state, action: PayloadAction<IRequest>) {
+        SatellitesFetched(state, action: PayloadAction<IRequest>) {
             state.isLoading = false
             state.error = ''
-            state.hike = action.payload
+            state.Satellite = action.payload
         },
-        hikesDeleteSuccess(state, action: PayloadAction<IDeleteDestinationHike>) {
+        SatellitesDeleteSuccess(state, action: PayloadAction<IDeleteDestinationSatellite>) {
             state.isLoading = false
             const text = action.payload.description ?? ""
             state.error = text
             state.success = "Город успешно удалён из заявки"
         },
-        hikesUpdated(state, action: PayloadAction<string[]>) {
+        SatellitesUpdated(state, action: PayloadAction<string[]>) {
             state.isLoading = false
             state.error = action.payload[0]
             state.success = action.payload[1]
         },
-        hikesDeleteError(state, action: PayloadAction<string>) {
+        SatellitesDeleteError(state, action: PayloadAction<string>) {
             state.isLoading = false
             state.error = action.payload
         },
-        hikesFetchedError(state, action: PayloadAction<string>) {
+        SatellitesFetchedError(state, action: PayloadAction<string>) {
             state.isLoading = false
             state.error = action.payload
         },
     },
 })
 
-export default hikeSlice.reducer;
+export default satelliteSlice.reducer;

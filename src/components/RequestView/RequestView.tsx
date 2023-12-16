@@ -3,13 +3,13 @@ import {FC, useEffect, useState} from "react";
 import TableView from "../TableView/TableView.tsx";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {
-    convertServerDateToInputFormat, deleteHike,
+    convertServerDateToInputFormat, deleteSatellite,
     emptyString,
-    fetchHikes,
-    makeHike,
-    updateHike
+    fetchSatellites,
+    makeSatellite,
+    updateSatellite
 } from "../../store/reducers/ActionCreator.ts";
-import {IHike} from "../../models/models.ts";
+import {ISatellite} from "../../models/models.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import LoadAnimation from "../Popup/MyLoaderComponent.tsx";
 import {Link} from "react-router-dom";
@@ -20,36 +20,36 @@ interface RequestViewProps {
 
 const RequestView: FC<RequestViewProps> = ({setPage}) => {
     const dispatch = useAppDispatch();
-    const {hike, isLoading, error, success} = useAppSelector(state => state.hikeReducer);
+    const {Satellite, isLoading, error, success} = useAppSelector(state => state.SatelliteReducer);
     const {isAuth} = useAppSelector(state => state.userReducer);
-    const [startHikeDate, setStartHikeDate] = useState('');
-    const [endHikeDate, setEndHikeDate] = useState('');
+    const [startSatelliteDate, setStartSatelliteDate] = useState('');
+    const [endSatelliteDate, setEndSatelliteDate] = useState('');
     const [leader, setLeader] = useState('$');
     const [description, setDescription] = useState('$');
-    const [hikeName, setHikeName] = useState('$');
+    const [SatelliteName, setSatelliteName] = useState('$');
 
     useEffect(() => {
         setPage();
-        dispatch(fetchHikes());
+        dispatch(fetchSatellites());
     }, []);
 
-    const handleDeleteHike = (id: number) => {
-        dispatch(deleteHike(id))
+    const handleDeleteSatellite = (id: number) => {
+        dispatch(deleteSatellite(id))
     }
 
     const handleMakeRequest = () => {
-        dispatch(makeHike())
+        dispatch(makeSatellite())
     }
 
-    const handleSave = (id: number, hike: IHike) => {
+    const handleSave = (id: number, Satellite: ISatellite) => {
         dispatch(
-            updateHike(
+            updateSatellite(
                 id,
-                description == '$' ? hike.description : description,
-                hikeName == '$' ? hike.hike_name : hikeName,
-                startHikeDate == "" ? hike.date_start_hike : startHikeDate,
-                endHikeDate == "" ? hike.date_end : endHikeDate,
-                leader == '$' ? hike.leader : leader
+                description == '$' ? Satellite.description : description,
+                SatelliteName == '$' ? Satellite.Satellite_name : SatelliteName,
+                startSatelliteDate == "" ? Satellite.date_start_Satellite : startSatelliteDate,
+                endSatelliteDate == "" ? Satellite.date_end : endSatelliteDate,
+                leader == '$' ? Satellite.leader : leader
             )
         )
     }
@@ -65,19 +65,19 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             {isLoading && <LoadAnimation/>}
             {error != "" && <MyComponent isError={true} message={error}/>}
             {success != "" && <MyComponent isError={false} message={success}/>}
-            {hike && hike.hikes.length == 0 && <h1>Заявок нет</h1>}
-            {hike &&
-                hike.hikes.map((singleHike, index) => (
+            {Satellite && Satellite.Satellites.length == 0 && <h1>Заявок нет</h1>}
+            {Satellite &&
+                Satellite.Satellites.map((singleSatellite, index) => (
                     <div key={index} className='card-block'>
                         <div className="card">
-                            <h3>Статус: {singleHike.status.status_name}</h3>
+                            <h3>Статус: {singleSatellite.status.status_name}</h3>
                             <div className="info">
                                 <div className="author-info">
-                                    <img src={singleHike.user.image_url} alt="Фото Автора" className="author-img"/>
+                                    <img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>
                                     <div>
-                                        <h4>{emptyString(singleHike.user.user_name, "Имя не задано")}</h4>
-                                        <p>Профессия: {emptyString(singleHike.user.profession, 'Профессия не задана')}</p>
-                                        <p>@{emptyString(singleHike.user.login, 'Логин на задан')}</p>
+                                        <h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>
+                                        <p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>
+                                        <p>@{emptyString(singleSatellite.user.login, 'Логин на задан')}</p>
                                     </div>
                                 </div>
 
@@ -87,9 +87,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         <input
                                             type="date"
                                             className="form-control"
-                                            value={startHikeDate || convertServerDateToInputFormat(singleHike.date_start_hike)}
-                                            onChange={(e) => setStartHikeDate(e.target.value)}
-                                            disabled={singleHike.status_id == 2}
+                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_start_Satellite)}
+                                            onChange={(e) => setStartSatelliteDate(e.target.value)}
+                                            disabled={singleSatellite.status_id == 2}
                                         />
                                     </p>
                                     <p>
@@ -97,9 +97,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         <input
                                             type="date"
                                             className="form-control"
-                                            value={endHikeDate || convertServerDateToInputFormat(singleHike.date_end)}
-                                            onChange={(e) => setEndHikeDate(e.target.value)}
-                                            disabled={singleHike.status_id == 2}
+                                            value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_end)}
+                                            onChange={(e) => setEndSatelliteDate(e.target.value)}
+                                            disabled={singleSatellite.status_id == 2}
                                         />
                                     </p>
                                     <p>
@@ -107,9 +107,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         <input
                                             type="text"
                                             className="form-control bg-black text-white"
-                                            value={leader == "$" ? singleHike.leader : leader}
+                                            value={leader == "$" ? singleSatellite.leader : leader}
                                             onChange={(e) => setLeader(e.target.value)}
-                                            disabled={singleHike.status_id == 2}
+                                            disabled={singleSatellite.status_id == 2}
                                         />
                                     </p>
                                 </div>
@@ -119,39 +119,39 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <input
                                     type="text"
                                     className="form-control bg-black text-white"
-                                    value={hikeName == "$" ? singleHike.hike_name : hikeName}
-                                    onChange={(e) => setHikeName(e.target.value)}
+                                    value={SatelliteName == "$" ? singleSatellite.Satellite_name : SatelliteName}
+                                    onChange={(e) => setSatelliteName(e.target.value)}
                                     style={{marginBottom: '20px'}}
-                                    disabled={singleHike.status_id == 2}
+                                    disabled={singleSatellite.status_id == 2}
                                 />
                                 <textarea
                                     className="form-control description-text-info bg-black text-white"
                                     style={{height: "200px"}}
-                                    value={description == "$" ? singleHike.description : description}
+                                    value={description == "$" ? singleSatellite.description : description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    disabled={singleHike.status_id == 2}
+                                    disabled={singleSatellite.status_id == 2}
                                 ></textarea>
                             </div>
                             <div style={{textAlign: 'right'}}>
-                                {singleHike.status_id != 2 && <button
+                                {singleSatellite.status_id != 2 && <button
                                     type="button"
                                     className="btn btn-outline-light"
-                                    onClick={() => handleSave(singleHike.id, singleHike)}
+                                    onClick={() => handleSave(singleSatellite.id, singleSatellite)}
                                     style={{width: '150px', marginTop: '15px'}}
                                 >
                                     Сохранить
                                 </button>}
                             </div>
                         </div>
-                        <TableView destHikes={singleHike.destination_hikes} status={singleHike.status_id}/>
+                        <TableView destSatellites={singleSatellite.destination_Satellites} status={singleSatellite.status_id}/>
                         {
-                            singleHike.status_id != 2 && (
+                            singleSatellite.status_id != 2 && (
                                 <div className='delete-make'>
                                     <div style={{textAlign: 'left', flex: 1}}>
                                         <button
                                             type="button"
                                             className="btn btn-outline-danger"
-                                            onClick={() => handleDeleteHike(singleHike.id)}
+                                            onClick={() => handleDeleteSatellite(singleSatellite.id)}
                                         >
                                             Удалить
                                         </button>

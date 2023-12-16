@@ -1,16 +1,16 @@
 export interface ISpectrums {
     Spectrums: ISpectrum[],
-    status: string
+    status?: string
 }
 
 export interface ISpectrumResponse {
-    spectrum: ISpectrum,
-    status: string
+    Spectrums: ISpectrum[],
+    status?: string
 }
 
 export interface IStatus {
     id: number,
-    status_name: string,
+    status_name?: string,
 }
 export interface ISpectrumWithBasket {
     basket_id: number
@@ -23,15 +23,15 @@ export interface ISpectrum {
     len?: number,
     freq?: number,
     status_id?: number,
-    status: IStatus,
+    status?: IStatus,
     description?: string,
     image_url?: string,
 }
 
-export interface IDestinationHikes {
+export interface IDestinationSatellites {
     id: number,
     Spectrum_id: number,
-    hike_id: number,
+    Satellite_id: number,
     serial_number: number,
     Spectrum: ISpectrum,
 }
@@ -57,41 +57,41 @@ export interface IUser {
     password: string,
 }
 
-export interface IHike {
+export interface ISatellite {
     id: number,
-    hike_name: string,
+    Satellite_name: string,
     date_created: string,
     date_end: string,
     date_start_of_processing: string,
     date_approve: string,
-    date_start_hike: string,
+    date_start_Satellite: string,
     user_id: number,
     status_id: number,
     description: string,
     status: IStatus,
     leader: string,
-    destination_hikes: IDestinationHikes[],
+    destination_Satellites: IDestinationSatellites[],
     user: IUser,
 }
 
-export interface IUpdateHike {
+export interface IUpdateSatellite {
     description?: string
 }
 
-export interface IDeleteDestinationHike {
-    deleted_destination_hike: number,
+export interface IDeleteDestinationSatellite {
+    deleted_destination_Satellite: number,
     status: string,
     description?: string,
 }
 
 export interface IRequest {
-    hikes: IHike[]
-    status: string
+    Satellites: ISatellite[]
+    status?: string
 }
 
-export interface IHikeResponse {
-    hikes: IHike[]
-    status: string
+export interface ISatelliteResponse {
+    Satellites: ISatellite[]
+    status?: string
 }
 
 

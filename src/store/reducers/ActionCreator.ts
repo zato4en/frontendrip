@@ -4,14 +4,14 @@ import {
     IAuthResponse,
     ISpectrumResponse,
     ISpectrumWithBasket,
-    IDeleteDestinationHike,
-    IHikeResponse, IRegisterResponse,
+    IDeleteDestinationSatellite,
+    ISatelliteResponse, IRegisterResponse,
     IRequest,
     mockSpectrums
 } from "../../models/models.ts";
 import Cookies from 'js-cookie';
 import {SpectrumSlice} from "./SpectrumSlice.ts"
-import {hikeSlice} from "./HikeSlice.ts";
+import {satelliteSlice} from "./SatelliteSlice.ts";
 import {userSlice} from "./UserSlice.ts";
 
 
@@ -20,7 +20,7 @@ export const fetchSpectrums = (searchValue?: string) => async (dispatch: AppDisp
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumWithBasket>('/Spectrums' + `?search=${searchValue ?? ''}`)
+        const response = await axios.get<ISpectrumWithBasket>('/api/Spectrums' + `?search=${searchValue ?? ''}`)
         dispatch(SpectrumSlice.actions.SpectrumsFetched(response.data.Spectrums))
     } catch (e) {
         dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`Ошибка: ${e}`))
@@ -28,11 +28,11 @@ export const fetchSpectrums = (searchValue?: string) => async (dispatch: AppDisp
     }
 }
 
-export const addSpectrumIntoHike = (SpectrumId: number, serialNumber: number, SpectrumName: string) => async (dispatch: AppDispatch) => {
+export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: number, SpectrumName: string) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "post",
-        url: "/Spectrums/add-Spectrum-into-hike",
+        url: "/api/Spectrums/add-Spectrum-into-Satellite",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -47,21 +47,21 @@ export const addSpectrumIntoHike = (SpectrumId: number, serialNumber: number, Sp
         const response = await axios(config);
         const errorText = response.data.description ?? ""
         const successText = errorText || `Спектр "${SpectrumName}" добавлен`
-        dispatch(SpectrumSlice.actions.SpectrumAddedIntoHike([errorText, successText]));
+        dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite([errorText, successText]));
         setTimeout(() => {
-            dispatch(SpectrumSlice.actions.SpectrumAddedIntoHike(['', '']));
+            dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite(['', '']));
         }, 6000);
     } catch (e) {
         dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`${e}`))
     }
 }
 
-export const deleteHike = (id: number) => async (dispatch: AppDispatch) => {
+export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "delete",
-        url: "/hikes",
+        url: "/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -70,28 +70,28 @@ export const deleteHike = (id: number) => async (dispatch: AppDispatch) => {
         }
     }
     try {
-        dispatch(hikeSlice.actions.hikesFetching())
+        dispatch(satelliteSlice.actions.SatellitesFetching())
         const response = await axios(config);
         const errorText = response.data.description ?? ""
         const successText = errorText || `Заявка удалена`
-        dispatch(hikeSlice.actions.hikesUpdated([errorText, successText]));
+        dispatch(satelliteSlice.actions.SatellitesUpdated([errorText, successText]));
         if (successText != "") {
-            dispatch(fetchHikes())
+            dispatch(fetchSatellites())
         }
         setTimeout(() => {
-            dispatch(hikeSlice.actions.hikesUpdated(['', '']));
+            dispatch(satelliteSlice.actions.SatellitesUpdated(['', '']));
         }, 6000);
     } catch (e) {
-        dispatch(hikeSlice.actions.hikesDeleteError(`${e}`))
+        dispatch(satelliteSlice.actions.SatellitesDeleteError(`${e}`))
     }
 }
 
-export const makeHike = () => async (dispatch: AppDispatch) => {
+export const makeSatellite = () => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "put",
-        url: "/hikes/update/status-for-user",
+        url: "/Satellites/update/status-for-user",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -100,50 +100,50 @@ export const makeHike = () => async (dispatch: AppDispatch) => {
         }
     }
     try {
-        dispatch(hikeSlice.actions.hikesFetching())
+        dispatch(satelliteSlice.actions.SatellitesFetching())
         const response = await axios(config);
         const errorText = response.data.description ?? ""
         const successText = errorText || `Заявка создана`
-        dispatch(hikeSlice.actions.hikesUpdated([errorText, successText]));
+        dispatch(satelliteSlice.actions.SatellitesUpdated([errorText, successText]));
         if (successText != "") {
-            dispatch(fetchHikes())
+            dispatch(fetchSatellites())
         }
         setTimeout(() => {
-            dispatch(hikeSlice.actions.hikesUpdated(['', '']));
+            dispatch(satelliteSlice.actions.SatellitesUpdated(['', '']));
         }, 6000);
     } catch (e) {
-        dispatch(hikeSlice.actions.hikesDeleteError(`${e}`))
+        dispatch(satelliteSlice.actions.SatellitesDeleteError(`${e}`))
     }
 }
 
-export const fetchHikes = () => async (dispatch: AppDispatch) => {
+export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
-        dispatch(hikeSlice.actions.hikesFetching())
-        const response = await axios.get<IHikeResponse>(`/hikes`, {
+        dispatch(satelliteSlice.actions.SatellitesFetching())
+        const response = await axios.get<ISatelliteResponse>(`/Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
 
         const transformedResponse: IRequest = {
-            hikes: response.data.hikes,
+            Satellites: response.data.Satellites,
             status: response.data.status
         };
 
-        dispatch(hikeSlice.actions.hikesFetched(transformedResponse))
+        dispatch(satelliteSlice.actions.SatellitesFetched(transformedResponse))
     } catch (e) {
-        dispatch(hikeSlice.actions.hikesFetchedError(`${e}`))
+        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
     }
 }
 
-export const deleteHikeById = (id: number) => async (dispatch: AppDispatch) => {
+export const deleteSatelliteById = (id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     try {
-        dispatch(hikeSlice.actions.hikesFetching())
-        const response = await axios.delete<IDeleteDestinationHike>(`/destination-hikes`, {
+        dispatch(satelliteSlice.actions.SatellitesFetching())
+        const response = await axios.delete<IDeleteDestinationSatellite>(`/destination-Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
@@ -151,17 +151,17 @@ export const deleteHikeById = (id: number) => async (dispatch: AppDispatch) => {
                 id: id,
             },
         });
-        dispatch(hikeSlice.actions.hikesDeleteSuccess(response.data))
-        dispatch(fetchHikes())
+        dispatch(satelliteSlice.actions.SatellitesDeleteSuccess(response.data))
+        dispatch(fetchSatellites())
     } catch (e) {
-        dispatch(hikeSlice.actions.hikesFetchedError(`${e}`))
+        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
     }
 }
 
-export const updateHike = (
+export const updateSatellite = (
     id: number,
     description: string,
-    hikeName: string,
+    SatelliteName: string,
     startDate: string,
     endDate: string,
     leader: string
@@ -169,15 +169,15 @@ export const updateHike = (
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "put",
-        url: "/hikes",
+        url: "/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             ContentType: "application/json"
         },
         data: {
             description: description,
-            hike_name: hikeName,
-            date_start_hike: convertInputFormatToServerDate(startDate),
+            Satellite_name: SatelliteName,
+            date_start_Satellite: convertInputFormatToServerDate(startDate),
             date_end: convertInputFormatToServerDate(endDate),
             leader: leader,
             id: id,
@@ -188,12 +188,12 @@ export const updateHike = (
         const response = await axios(config);
         const errorText = response.data.description ?? ""
         const successText = errorText || "Успешно обновленно"
-        dispatch(hikeSlice.actions.hikesUpdated([errorText, successText]));
+        dispatch(satelliteSlice.actions.SatellitesUpdated([errorText, successText]));
         setTimeout(() => {
-            dispatch(hikeSlice.actions.hikesUpdated(['', '']));
+            dispatch(satelliteSlice.actions.SatellitesUpdated(['', '']));
         }, 5000);
     } catch (e) {
-        dispatch(hikeSlice.actions.hikesFetchedError(`${e}`));
+        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`));
     }
 }
 
@@ -203,10 +203,10 @@ export const fetchSpectrum = (
 ) => async (dispatch: AppDispatch) => {
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumResponse>(`/Spectrums?search=${SpectrumId}`)
-        const Spectrum = response.data.spectrum
-        setPage(Spectrum.name ?? "Без названия", Spectrum.id)
-        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum))
+        const response = await axios.get<ISpectrumResponse>(`/api/Spectrums?Spectrum=${SpectrumId}`)
+        const Spectrum = response.data.Spectrums
+        setPage(Spectrum[0].name ?? "Без названия", Spectrum[0].id)
+        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum[0]))
     } catch (e) {
         console.log(`Ошибка загрузки городов: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;
@@ -219,7 +219,7 @@ export const fetchSpectrum = (
 export const registerSession = (userName: string, login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/users/sign_up",
+        url: "/api/signup",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -279,7 +279,7 @@ export const logoutSession = () => async (dispatch: AppDispatch) => {
 export const loginSession = (login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/users/login",
+        url: "/api/login",
         headers: {
             'Content-Type': 'application/json'
         },

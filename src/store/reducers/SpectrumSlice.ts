@@ -46,7 +46,7 @@ export const SpectrumSlice = createSlice({
             state.error = action.payload
             state.success = ''
         },
-        SpectrumAddedIntoHike(state, action: PayloadAction<string[]>) {
+        SpectrumAddedIntoSatellite(state, action: PayloadAction<string[]>) {
             state.isLoading = false
             state.error = action.payload[0]
             state.success = action.payload[1]

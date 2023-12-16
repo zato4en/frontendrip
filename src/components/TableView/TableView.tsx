@@ -1,22 +1,22 @@
 import {FC} from "react";
 import './TableView.css'
-import {IDestinationHikes} from "../../models/models.ts";
+import {IDestinationSatellites} from "../../models/models.ts";
 import {useAppDispatch} from "../../hooks/redux.ts";
-import {deleteHikeById} from "../../store/reducers/ActionCreator.ts";
+import {deleteSatelliteById} from "../../store/reducers/ActionCreator.ts";
 import {SpectrumSlice} from "../../store/reducers/SpectrumSlice.ts";
 
 interface TableViewProps {
     status: number
-    destHikes: IDestinationHikes[]
+    destSatellites: IDestinationSatellites[]
 }
 
-const TableView: FC<TableViewProps> = ({destHikes, status}) => {
+const TableView: FC<TableViewProps> = ({destSatellites, status}) => {
     const dispatch = useAppDispatch()
     const {minus} = SpectrumSlice.actions
 
     const handleDelete = (id: number) => {
         dispatch(minus())
-        dispatch(deleteHikeById(id))
+        dispatch(deleteSatelliteById(id))
     }
 
     return (
@@ -31,7 +31,7 @@ const TableView: FC<TableViewProps> = ({destHikes, status}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {destHikes.map((item, index) => (
+                {destSatellites.map((item, index) => (
                     <tr key={index}>
                         <td className="Spectrum-number-td">{item.serial_number}</td>
                         <td className="image-td">

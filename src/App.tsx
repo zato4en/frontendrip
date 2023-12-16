@@ -9,7 +9,7 @@ import LoginPage from "./components/LoginPage/LoginPage.tsx";
 import RegisterPage from "./components/RegisterPage/RegisterPage.tsx";
 
 function App() {
-    const SpectrumsPage = {name: 'Спектра', to: 'Spectrums'};
+    const SpectrumsPage = {name: 'Города', to: 'Spectrums'};
     const requestPage = {name: 'Заявка', to: 'request'};
     const [searchValue, setSearchValue] = useState('')
     const [pages, setPage] = useState<IBreadCrumb[]>([SpectrumsPage])
@@ -56,7 +56,7 @@ function App() {
                     <Route path="/Spectrums/:id" element={
                         <SpectrumDetail
                             setPage={(name, id) => addPage([
-                                SpectrumsPage, {name: `Спектр-${name}`, to: `Spectrums/${id}`}
+                                SpectrumsPage, {name: `Город-${name}`, to: `Spectrums/${id}`}
                             ])}
                         />}
                     />
