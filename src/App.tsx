@@ -4,12 +4,15 @@ import SpectrumsList from "./components/SpectrumsList/SpectrumsList.tsx";
 import SpectrumDetail from "./components/SpectrumDetail/SpectrumDetail.tsx";
 import {useState} from "react";
 import BreadCrumbs, {IBreadCrumb} from "./components/BreadCrumbs/BreadCrumbs.tsx";
-
+import RequestView from "./components/RequestView/RequestView.tsx";
+import LoginPage from "./components/LoginPage/LoginPage.tsx";
+import RegisterPage from "./components/RegisterPage/RegisterPage.tsx";
 
 function App() {
-    const spectrumsPage = {name: 'Спектры', to: 'spectrums'};
+    const SpectrumsPage = {name: 'Города', to: 'Spectrums'};
+    const requestPage = {name: 'Заявка', to: 'request'};
     const [searchValue, setSearchValue] = useState('')
-    const [pages, setPage] = useState<IBreadCrumb[]>([spectrumsPage])
+    const [pages, setPage] = useState<IBreadCrumb[]>([SpectrumsPage])
     const addPage = (newPage: IBreadCrumb[]) => {
         setPage(newPage);
     };
@@ -27,16 +30,33 @@ function App() {
                     <Route path="/Spectrums"
                            element={
                                <SpectrumsList
-                                   setPage={() => addPage([spectrumsPage])}
+                                   setPage={() => addPage([SpectrumsPage])}
                                    searchValue={searchValue}
                                    resetSearchValue={resetSearchValue}
                                />
                            }
                     />
-                    <Route path="/Spectrum/:id" element={
+                    <Route path="/request"
+                           element={
+                               <RequestView
+                                   setPage={() => addPage([requestPage])}
+                               />
+                           }
+                    />
+                    <Route path="/login"
+                           element={
+                               <LoginPage/>
+                           }
+                    />
+                    <Route path="/register"
+                           element={
+                               <RegisterPage/>
+                           }
+                    />
+                    <Route path="/Spectrums/:id" element={
                         <SpectrumDetail
                             setPage={(name, id) => addPage([
-                                spectrumsPage, {name: `Спектр-${name}`, to: `spectrums/${id}`}
+                                SpectrumsPage, {name: `Город-${name}`, to: `Spectrums/${id}`}
                             ])}
                         />}
                     />

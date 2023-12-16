@@ -1,7 +1,8 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {ISpectrum, mockSpectrums} from '../../models/models.ts';
 import './SpectrumCard.css'
+import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
+import {fetchSpectrum} from "../../store/reducers/ActionCreator.ts";
 
 interface SpectrumDetailProps {
     setPage: (name: string, id: number) => void
@@ -9,7 +10,8 @@ interface SpectrumDetailProps {
 
 const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
     const params = useParams();
-    const [Spectrum, setSpectrum] = useState<ISpectrum | null>(null);
+    const dispatch = useAppDispatch()
+    const {Spectrum, isLoading, error} = useAppSelector(state => state.SpectrumReducer)
     const navigate = useNavigate();
 
     const handleDelete = () => {
@@ -26,19 +28,18 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
 
     const DeleteData = async () => {
         try {
-            const response = await fetch('http://localhost:8888/Spectrums' , {
+            const response = await fetch('http://localhost:7070/api/v3/Spectrums/delete/' + Spectrum?.id, {
                 method: 'DELETE',
                 headers: {
-                    // Сделать чтобы в джейсоне передавался айди  Spectrum?.id
                     'Content-Type': 'application/json',
                 },
             });
 
             if (response.status === 200) {
-                console.log('Спектр успешно удален');
+                console.log('Город успешно удален');
                 window.location.reload();
             } else {
-                console.error('Произошла ошибка при удалении спектра');
+                console.error('Произошла ошибка при удалении города');
             }
 
         } catch (error) {
@@ -51,62 +52,23 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
     }
 
     useEffect(() => {
-        fetchSpectrum()
-            .catch((err) => {
-                console.error(err);
-                const previewID = params.id !== undefined ? parseInt(params.id, 10) - 1 : 0;
-                const mockSpectrum = mockSpectrums[previewID]
-                if (mockSpectrum) {
-                    setPage(mockSpectrum.name ?? "Без названия", mockSpectrum.id)
-                }
-                setSpectrum(mockSpectrum);
-            });
-
+        dispatch(fetchSpectrum(`${params.id}`, setPage))
     }, [params.id]);
 
-    async function fetchSpectrum() {
-        try {
-            const response = await fetch(`http://localhost:8888/Spectrum/${params.id}`);
-
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-
-            const data = await response.json();
-            // Исправление здесь:
-            // if (data && data.Spectrums) {
-                setPage(data.Spectrums.name ?? "Без названия", data.Spectrums.id);
-                setSpectrum(data.Spectrums);
-            // } else {
-                // Сюда попадаем, если поле Spectrums отсутствует в ответе
-                // console.error("Проблема в структуре ответа API: отсутствует поле 'Spectrums'.", data);
-            // }
-        } catch (error) {
-            console.error('Error fetching Spectrum data', error);
-            throw error;
-        }
-    }
-
-
-    if (!Spectrum) {
-        return <div>Loading...</div>;
-    }
-
     return (
-        !Spectrum
-            ? <div>Loading...</div>
-            : <div className="Spectrum-card-body">
+        <>
+            {isLoading && <h1> Загрузка данных .... </h1>}
+            {error && <h1>Ошибка {error} </h1>}
+            {<div className="Spectrum-card-body">
                 <div className="card-container">
-                    <span className="pro">Спектр</span>
+                    <span className="pro">Город</span>
                     <img
                         className="round"
                         src={Spectrum?.image_url}
-                        alt={Spectrum?.name}
-                        onError={({currentTarget}) => {currentTarget.onerror = null;
-                            currentTarget.src="/default.jpeg"}}
+                        alt={Spectrum?.Spectrum_name}
                     />
-                    <h3>{Spectrum?.name}</h3>
-                    {/*<h6>Статус: {Spectrum?.status.status_name}</h6>*/}
+                    <h3>{Spectrum?.Spectrum_name}</h3>
+                    <h6>Статус: {Spectrum?.status.status_name}</h6>
                     <p>{Spectrum?.description}</p>
                     <img
                         className="delete-button"
@@ -116,10 +78,11 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                     />
                     <div className="buttons">
                         <button className="primary" onClick={BackHandler}>Назад</button>
-                        <button className="primary ghost">Оставить заявку</button>
+                        <button className="primary ghost">Записаться</button>
                     </div>
                 </div>
-            </div>
+            </div>}
+        </>
     );
 };
 
