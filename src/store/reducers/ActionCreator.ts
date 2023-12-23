@@ -121,7 +121,7 @@ export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(satelliteSlice.actions.SatellitesFetching())
-        const response = await axios.get<ISatelliteResponse>(`/Satellites`, {
+        const response = await axios.get<ISatelliteResponse>(`/api/Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -143,7 +143,7 @@ export const deleteSatelliteById = (id: number) => async (dispatch: AppDispatch)
 
     try {
         dispatch(satelliteSlice.actions.SatellitesFetching())
-        const response = await axios.delete<IDeleteDestinationSatellite>(`/destination-Satellites`, {
+        const response = await axios.delete<IDeleteDestinationSatellite>(`/api/destination-Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
@@ -245,11 +245,12 @@ export const registerSession = (userName: string, login: string, password: strin
 }
 
 export const logoutSession = () => async (dispatch: AppDispatch) => {
+    // Cookies.remove('jwtToken');
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "get",
-        url: "/users/logout",
+        url: "/api/logout",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json'

@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "../hooks/redux.ts";
 import {logoutSession} from "../store/reducers/ActionCreator.ts";
 import LoadAnimation from "./Popup/MyLoaderComponent.tsx";
 import MyComponent from "./Popup/Popover.tsx";
+import Cookies from "js-cookie";
 
 interface NavigationBarProps {
     handleSearchValue: (value: string) => void;
@@ -25,6 +26,7 @@ const NavigationBar: FC<NavigationBarProps> = ({handleSearchValue}) => {
     };
 
     const handleLogout = () => {
+        Cookies.remove('jwtToken');
         dispatch(logoutSession())
     };
 
