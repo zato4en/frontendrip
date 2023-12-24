@@ -35,7 +35,7 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer}) => {
             {isServer && (
                 <div className="circle" onClick={plusClickHandler}>
                     <img
-                        src="/plus.png"
+                        src="/public/plus.png"
                         alt="+"
                         className="deleted-trash"
                     />

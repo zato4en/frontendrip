@@ -32,7 +32,7 @@ export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: numbe
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "post",
-        url: "/api/Spectrums/add-Spectrum-into-Satellite",
+        url: "/api/SpectrumsRequests",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -208,7 +208,7 @@ export const fetchSpectrum = (
         setPage(Spectrum[0].name ?? "Без названия", Spectrum[0].id)
         dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum[0]))
     } catch (e) {
-        console.log(`Ошибка загрузки городов: ${e}`)
+        console.log(`Ошибка загрузки спектров: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;
         const mockSpectrum = mockSpectrums[previewID]
         setPage(mockSpectrum.name ?? "Без названия", mockSpectrum.id)

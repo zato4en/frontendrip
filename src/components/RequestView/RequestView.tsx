@@ -65,7 +65,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             {isLoading && <LoadAnimation/>}
             {error != "" && <MyComponent isError={true} message={error}/>}
             {success != "" && <MyComponent isError={false} message={success}/>}
-            {Satellite && Satellite.Satellites.length == 0 && <h1>Заявок нет</h1>}
+            {(!Satellite || Satellite.Satellites.length === 0) && <h1>Заявок нет</h1>}
+
             {Satellite &&
                 Satellite.Satellites.map((singleSatellite, index) => (
                     <div key={index} className='card-block'>
@@ -73,17 +74,17 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                             <h3>Статус: {singleSatellite.status.status_name}</h3>
                             <div className="info">
                                 <div className="author-info">
-                                    <img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>
+                                    {/*<img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>*/}
                                     <div>
-                                        <h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>
-                                        <p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>
-                                        <p>@{emptyString(singleSatellite.user.login, 'Логин на задан')}</p>
+                                        {/*<h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>*/}
+                                        {/*<p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>*/}
+                                        <p>@{emptyString(singleSatellite.., 'Логин на задан')}</p>
                                     </div>
                                 </div>
 
                                 <div className="dates-info">
                                     <p>
-                                        Начало похода:
+                                        Начало работы:
                                         <input
                                             type="date"
                                             className="form-control"
@@ -93,7 +94,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         />
                                     </p>
                                     <p>
-                                        Конец похода:
+                                        Конец работы:
                                         <input
                                             type="date"
                                             className="form-control"
@@ -102,16 +103,16 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                             disabled={singleSatellite.status_id == 2}
                                         />
                                     </p>
-                                    <p>
-                                        Лидер похода:
-                                        <input
-                                            type="text"
-                                            className="form-control bg-black text-white"
-                                            value={leader == "$" ? singleSatellite.leader : leader}
-                                            onChange={(e) => setLeader(e.target.value)}
-                                            disabled={singleSatellite.status_id == 2}
-                                        />
-                                    </p>
+                                    {/*<p>*/}
+                                    {/*    Лидер похода:*/}
+                                    {/*    <input*/}
+                                    {/*        type="text"*/}
+                                    {/*        className="form-control bg-black text-white"*/}
+                                    {/*        value={leader == "$" ? singleSatellite.leader : leader}*/}
+                                    {/*        onChange={(e) => setLeader(e.target.value)}*/}
+                                    {/*        disabled={singleSatellite.status_id == 2}*/}
+                                    {/*    />*/}
+                                    {/*</p>*/}
                                 </div>
 
                             </div>

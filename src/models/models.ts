@@ -50,10 +50,10 @@ export interface IAuthResponse {
 export interface IUser {
     id: number,
     user_name: string,
-    profession: string,
-    login: string,
-    birthday: string,
-    image_url: string,
+    profession?: string,
+    user_login: string,
+    birthday?: string,
+    image_url?: string,
     password: string,
 }
 
