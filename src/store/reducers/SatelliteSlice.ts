@@ -30,7 +30,7 @@ export const satelliteSlice = createSlice({
             state.isLoading = false
             state.error = ''
             state.Satellites = action.payload
-
+        //
         },
         SatelliteFetched(state, action: PayloadAction<ISatellite>) {
             state.isLoading = false
