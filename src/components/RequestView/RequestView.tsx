@@ -136,7 +136,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                     >
                                         <option value="">Выберите статус</option>
                                         <option value="1">Черновик</option>
-                                        <option value="2">Сформирован</option>
+                                        <option value="2">В работе</option>
                                         <option value="3">Завершён</option>
                                         <option value="4">Отклонён</option>
                                     </Form.Select>

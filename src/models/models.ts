@@ -13,7 +13,7 @@ export interface ISpectrumResponse {
 //     status_name?: string,
 // }
 export interface ISpectrumWithBasket {
-    basket_id: number
+    Satellite_id: number
     Spectrums: ISpectrum[]
 }
 
@@ -63,13 +63,9 @@ export interface ISatellite {
     date_create: string,
     date_formation: string,
     date_completion: string,
-    date_approve: string,
     user_id: number,
     moder_id: number,
-    status_id?: number,
-    description: string,
     status: string,
-    leader?: string,
     spectrum_requests: ISpectrumRequests[],
     user_login: string,
     moder_login: string,

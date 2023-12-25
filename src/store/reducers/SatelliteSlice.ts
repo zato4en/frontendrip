@@ -3,13 +3,17 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface Satellitestate {
     Satellites: ISatellite[];
+    Satellite: ISatellite | null;
     isLoading: boolean;
     error: string;
     success: string;
 }
 
+
+
 const initialState: Satellitestate = {
     Satellites: [],
+    Satellite: null,
     isLoading: false,
     error: '',
     success: ''
@@ -26,6 +30,13 @@ export const satelliteSlice = createSlice({
             state.isLoading = false
             state.error = ''
             state.Satellites = action.payload
+
+        },
+        SatelliteFetched(state, action: PayloadAction<ISatellite>) {
+            state.isLoading = false
+            state.error = ''
+            state.Satellite = action.payload
+
         },
         SatellitesDeleteSuccess(state, action: PayloadAction<IDeleteSpectrumRequest>) {
             state.isLoading = false

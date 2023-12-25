@@ -18,10 +18,17 @@ import {userSlice} from "./UserSlice.ts";
 export const fetchSpectrums = (searchValue?: string) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken')
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
+    const config = {
+        method: "get",
+        url: `/api/Spectrums`+ `?search=${searchValue ?? ''}`,
+        headers: {
+            Authorization: `Bearer ${accessToken ?? ''}`,
+        },
+    }
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumWithBasket>('/api/Spectrums' + `?search=${searchValue ?? ''}`)
-        dispatch(SpectrumSlice.actions.SpectrumsFetched(response.data.Spectrums))
+        const response = await axios<ISpectrumWithBasket>(config);
+        dispatch(SpectrumSlice.actions.SpectrumsFetched([response.data.Spectrums,response.data.Satellite_id]))
     } catch (e) {
         dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`Ошибка: ${e}`))
         dispatch(SpectrumSlice.actions.SpectrumsFetched(filterMockData(searchValue)))
@@ -46,6 +53,7 @@ export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: numbe
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
         const response = await axios(config);
         const errorText = response.data.description ?? ""
+        dispatch(fetchSpectrums())
         const successText = errorText || `Спектр "${SpectrumName}" добавлен`
         dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite([errorText, successText]));
         setTimeout(() => {
@@ -132,6 +140,36 @@ export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     }
 }
 
+export const fetchSatelliteById = (
+    id: string,
+    setPage: (name: string, id: number) => void
+) => async (dispatch: AppDispatch) => {
+    interface ISinglesatelliteResponse {
+        Satellite: ISatellite,
+    }
+
+    const accessToken = Cookies.get('jwtToken');
+    dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
+    try {
+        dispatch(satelliteSlice.actions.SatellitesFetching())
+
+        const response = await axios.get<ISinglesatelliteResponse>(`/api/Satellites/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        setPage(response.data.Satellite.satellite, response.data.Satellite.id)
+
+        dispatch(satelliteSlice.actions.SatelliteFetched(response.data.Satellite))
+
+    } catch (e) {
+        console.log("aboba")
+        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
+    }
+}
+
+
 export const deleteSatelliteById = (spectrum_id: number,satellite_id:number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
@@ -153,32 +191,31 @@ export const deleteSatelliteById = (spectrum_id: number,satellite_id:number) => 
     }
 }
 
-export const fetchSatelliteById = (
-    id: string,
-    setPage: (name: string, id: number) => void
-) => async (dispatch: AppDispatch) => {
-    interface ISingleSatelliteResponse {
-        Satellite: ISatellite,
-    }
-
-    const accessToken = Cookies.get('jwtToken');
-    dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
-    try {
-        dispatch(satelliteSlice.actions.SatellitesFetching())
-        const response = await axios.get<ISingleSatelliteResponse>(`/api/v3/Satellites/${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        setPage(response.data.Satellite.satellite, response.data.Satellite.id)
-        dispatch(satelliteSlice.actions.SatellitesFetched(response.data.Satellite))
-    } catch (e) {
-        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
-    }
-}
+// export const fetchSatelliteById = (
+//     id: string,
+//     setPage: (name: string, id: number) => void
+// ) => async (dispatch: AppDispatch) => {
+//     interface ISingleSatelliteResponse {
+//         Satellite: ISatellite,
+//     }
+//
+//     const accessToken = Cookies.get('jwtToken');
+//     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
+//     try {
+//         dispatch(satelliteSlice.actions.SatellitesFetching())
+//         const response = await axios.get<ISingleSatelliteResponse>(`/api/v3/Satellites/${id}`, {
+//             headers: {
+//                 Authorization: `Bearer ${accessToken}`
+//             }
+//         });
+//         setPage(response.data.Satellite.satellite, response.data.Satellite.id)
+//         dispatch(satelliteSlice.actions.SatellitesFetched(response.data.Satellite))
+//     } catch (e) {
+//         dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
+//     }
+// }
 export const updateSatellite = (
     id: number,
-    description: string,
     satellite: string,
     // startDate: string,
     // endDate: string,
@@ -193,7 +230,6 @@ export const updateSatellite = (
             ContentType: "application/json"
         },
         data: {
-            description: description,
             satellite: satellite,
             // date_create: convertInputFormatToServerDate(startDate),
             // date_end: convertInputFormatToServerDate(endDate),

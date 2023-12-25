@@ -6,14 +6,18 @@ interface SpectrumState {
     Spectrum: ISpectrum | null,
     isLoading: boolean;
     error: string;
+    basketID:number;
     success: string;
     serialNumber: number;
 }
+
+
 
 const initialState: SpectrumState = {
     Spectrums: [],
     Spectrum: null,
     isLoading: false,
+    basketID:0,
     error: '',
     success: '',
     serialNumber: 0
@@ -37,9 +41,11 @@ export const SpectrumSlice = createSlice({
             state.error = ''
             state.success = ''
         },
-        SpectrumsFetched(state, action: PayloadAction<ISpectrum[]>) {
+        SpectrumsFetched(state, action: PayloadAction<[ISpectrum[], number]>) {
             state.isLoading = false
-            state.Spectrums = action.payload
+            state.Spectrums = action.payload[0]
+            state.basketID = action.payload[1]
+            console.log(action.payload[1])
         },
         SpectrumsFetchedError(state, action: PayloadAction<string>) {
             state.isLoading = false

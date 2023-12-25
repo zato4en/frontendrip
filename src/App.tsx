@@ -58,15 +58,14 @@ function App() {
                     <Route path="/Spectrums/:id" element={
                         <SpectrumDetail
                             setPage={(name, id) => addPage([
-                                SpectrumsPage, {name: `Город-${name}`, to: `Spectrums/${id}`}
+                                SpectrumsPage, {name: `Спектр-${name}`, to: `Spectrums/${id}`}
                             ])}
                         />}
                     />
-                    <Route path="/hikes/:hike_id" element={
+                    <Route path="/Satellites/:satellite_id" element={
                         <SatelliteCard setPage={
                             (name, id) => addPage([
-
-                                {name: `Поход: "${name}"`, to: `hike/${id}`}
+                                {name: `Заявка: "${name}"`, to: `Satellite/${id}`}
                             ])
                         }/>
                     }/>

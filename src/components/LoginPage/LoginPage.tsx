@@ -24,7 +24,7 @@ const LoginPage: FC<LoginPageProps> = () => {
 
     if (isAuth) {
         return <Link to="/Spectrums" className="btn btn-outline-danger">
-            Смотреть города
+            Смотреть спектры
         </Link>
     }
 

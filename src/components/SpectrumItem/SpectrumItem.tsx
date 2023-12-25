@@ -19,6 +19,7 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer}) => {
     const {serialNumber} = useAppSelector(state => state.SpectrumReducer)
 
     const plusClickHandler = () => {
+
         dispatch(increase())
         dispatch(addSpectrumIntoSatellite(Spectrum.id, serialNumber, Spectrum.name ?? "Без названия"))
     }
