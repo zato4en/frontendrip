@@ -7,6 +7,8 @@ import BreadCrumbs, {IBreadCrumb} from "./components/BreadCrumbs/BreadCrumbs.tsx
 import RequestView from "./components/RequestView/RequestView.tsx";
 import LoginPage from "./components/LoginPage/LoginPage.tsx";
 import RegisterPage from "./components/RegisterPage/RegisterPage.tsx";
+import satelliteCard from "./components/RequestView/SatelliteCard.tsx";
+import SatelliteCard from "./components/RequestView/SatelliteCard.tsx";
 
 function App() {
     const SpectrumsPage = {name: 'Города', to: 'Spectrums'};
@@ -60,6 +62,14 @@ function App() {
                             ])}
                         />}
                     />
+                    <Route path="/hikes/:hike_id" element={
+                        <SatelliteCard setPage={
+                            (name, id) => addPage([
+
+                                {name: `Поход: "${name}"`, to: `hike/${id}`}
+                            ])
+                        }/>
+                    }/>
                 </Routes>
             </>
         </>

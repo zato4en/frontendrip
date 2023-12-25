@@ -69,7 +69,7 @@ export interface ISatellite {
     status_id?: number,
     description: string,
     status: string,
-    leader: string,
+    leader?: string,
     spectrum_requests: ISpectrumRequests[],
     user_login: string,
     moder_login: string,

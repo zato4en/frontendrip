@@ -7,7 +7,7 @@ import {
     IDeleteSpectrumRequest,
     ISatelliteResponse, IRegisterResponse,
     IRequest,
-    mockSpectrums
+    mockSpectrums, ISatellite
 } from "../../models/models.ts";
 import Cookies from 'js-cookie';
 import {SpectrumSlice} from "./SpectrumSlice.ts"
@@ -118,16 +118,13 @@ export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(satelliteSlice.actions.SatellitesFetching())
-        const response = await axios.get<ISatelliteResponse>(`/api/Satellites`, {
+        const response = await axios.get<IRequest>(`/api/Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
 
-        const transformedResponse: IRequest = {
-            Satellites: response.data.Satellites,
-            status: response.data.status
-        };
+        const transformedResponse = response.data.Satellites;
 
         dispatch(satelliteSlice.actions.SatellitesFetched(transformedResponse))
     } catch (e) {
@@ -156,6 +153,29 @@ export const deleteSatelliteById = (spectrum_id: number,satellite_id:number) => 
     }
 }
 
+export const fetchSatelliteById = (
+    id: string,
+    setPage: (name: string, id: number) => void
+) => async (dispatch: AppDispatch) => {
+    interface ISingleSatelliteResponse {
+        Satellite: ISatellite,
+    }
+
+    const accessToken = Cookies.get('jwtToken');
+    dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
+    try {
+        dispatch(satelliteSlice.actions.SatellitesFetching())
+        const response = await axios.get<ISingleSatelliteResponse>(`/api/v3/Satellites/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        setPage(response.data.Satellite.satellite, response.data.Satellite.id)
+        dispatch(satelliteSlice.actions.SatellitesFetched(response.data.Satellite))
+    } catch (e) {
+        dispatch(satelliteSlice.actions.SatellitesFetchedError(`${e}`))
+    }
+}
 export const updateSatellite = (
     id: number,
     description: string,

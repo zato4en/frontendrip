@@ -1,15 +1,15 @@
-import {IDeleteDestinationSatellite, IRequest} from "../../models/models.ts";
+import {IDeleteSpectrumRequest, ISatellite} from "../../models/models.ts";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 interface Satellitestate {
-    Satellite: IRequest | null;
+    Satellites: ISatellite[];
     isLoading: boolean;
     error: string;
     success: string;
 }
 
 const initialState: Satellitestate = {
-    Satellite: null,
+    Satellites: [],
     isLoading: false,
     error: '',
     success: ''
@@ -22,16 +22,16 @@ export const satelliteSlice = createSlice({
         SatellitesFetching(state) {
             state.isLoading = true
         },
-        SatellitesFetched(state, action: PayloadAction<IRequest>) {
+        SatellitesFetched(state, action: PayloadAction<ISatellite[]>) {
             state.isLoading = false
             state.error = ''
-            state.Satellite = action.payload
+            state.Satellites = action.payload
         },
-        SatellitesDeleteSuccess(state, action: PayloadAction<IDeleteDestinationSatellite>) {
+        SatellitesDeleteSuccess(state, action: PayloadAction<IDeleteSpectrumRequest>) {
             state.isLoading = false
             const text = action.payload.description ?? ""
             state.error = text
-            state.success = "Город успешно удалён из заявки"
+            state.success = "Спектр успешно удалён из заявки"
         },
         SatellitesUpdated(state, action: PayloadAction<string[]>) {
             state.isLoading = false

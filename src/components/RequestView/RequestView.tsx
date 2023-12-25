@@ -1,180 +1,206 @@
-import './RequestView.css';
 import {FC, useEffect, useState} from "react";
-import TableView from "../TableView/TableView.tsx";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
-import {
-    convertServerDateToInputFormat, deleteSatellite,
-    emptyString,
-    fetchSatellites,
-    makeSatellite,
-    updateSatellite
-} from "../../store/reducers/ActionCreator.ts";
-import {ISatellite} from "../../models/models.ts";
+import {fetchSatellites} from "../../store/reducers/ActionCreator.ts";
 import MyComponent from "../Popup/Popover.tsx";
-import LoadAnimation from "../Popup/MyLoaderComponent.tsx";
 import {Link} from "react-router-dom";
-import {satelliteSlice} from "../../store/reducers/SatelliteSlice.ts";
+import "./DatePickerStyles.css";
+import "./RequestView.css";
+import {Dropdown, Form, Button, Container, Row, Col} from "react-bootstrap";
+import {format} from "date-fns";
+import {useNavigate} from 'react-router-dom';
+import Cookies from "js-cookie";
+import {ISatellite} from "../../models/models.ts";
 
 interface RequestViewProps {
     setPage: () => void;
 }
 
 const RequestView: FC<RequestViewProps> = ({setPage}) => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {Satellite, isLoading, error, success} = useAppSelector(state => state.SatelliteReducer);
-    const {isAuth} = useAppSelector(state => state.userReducer);
-    const [startSatelliteDate, setStartSatelliteDate] = useState('');
-    const [endSatelliteDate, setEndSatelliteDate] = useState('');
-    const [leader, setLeader] = useState('$');
-    const [description, setDescription] = useState('$');
-    const [SatelliteName, setSatelliteName] = useState('$');
+    const {Satellites, error, success} = useAppSelector((state) => state.SatelliteReducer);
+    const {isAuth} = useAppSelector((state) => state.userReducer);
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [selectedStatus, setSelectedStatus] = useState<string>('');
+    const role = Cookies.get('role')
 
     useEffect(() => {
         setPage();
         dispatch(fetchSatellites());
-    }, []);
 
-    const handleDeleteSatellite = (id: number) => {
-        dispatch(deleteSatellite(id))
-    }
+        const handleFilterInterval = setInterval(() => {
+            handleFilter();
+        }, 3000);
 
-    const handleMakeRequest = (id:number) => {
-        dispatch(makeSatellite(id))
+        const cleanup = () => {
+            clearInterval(handleFilterInterval);
+        };
 
-    }
+        window.addEventListener('beforeunload', cleanup);
 
-    const handleSave = (id: number, Satellite: ISatellite) => {
-        dispatch(
-            updateSatellite(
-                id,
-                description == '$' ? Satellite.description : description,
-                SatelliteName == '$' ? Satellite.satellite : SatelliteName,
-                // startSatelliteDate == "" ? Satellite.date_create : startSatelliteDate,
-                // endSatelliteDate == "" ? Satellite.da : endSatelliteDate,
-                // leader == '$' ? Satellite.leader : leader
-            )
-        )
+        return () => {
+            cleanup();
+            window.removeEventListener('beforeunload', cleanup);
+        };
+    }, [startDate, endDate, selectedStatus]);
+
+
+
+
+
+
+
+    const clickCell = (cellID: number) => {
+        navigate(`/Satellites/${cellID}`);
     }
 
     if (!isAuth) {
-        return <Link to="/login" className="btn btn-outline-danger">
-            Требуется войти в систему
-        </Link>
+        return (
+            <Link to="/login" className="btn btn-outline-danger">
+                Требуется войти в систему
+            </Link>
+        );
     }
+
+    // const handleInputChange = () => {
+    //     if (Satellites) {
+    //         const d = Satellites.filter(obj => obj.user_login == textValue)
+    //         setFilteredUsers(d.length == 0 ? null : d)
+    //     }
+    // };
 
     return (
         <>
-            {isLoading && <LoadAnimation/>}
-            {error != "" && <MyComponent isError={true} message={error}/>}
-            {success != "" && <MyComponent isError={false} message={success}/>}
-            {(!Satellite || Satellite.Satellites.length === 0) && <h1>Заявок нет</h1>}
+            {/*<Container className="d-flex justify-content-center">*/}
+            {/*    <Row>*/}
+            {/*        <Col>*/}
+            {/*            <Form.Group controlId="exampleForm.ControlInput1">*/}
+            {/*                <Form.Label>Фильтрация по пользователю</Form.Label>*/}
+            {/*                <Form.Control*/}
+            {/*                    type="text"*/}
+            {/*                    placeholder="Введите текст"*/}
+            {/*                    value={textValue}*/}
+            {/*                    onChange={(e) => setTextValue(e.target.value)}*/}
+            {/*                    // onKeyPress={(e) => {*/}
+            {/*                    //     if (e.key === 'Enter') {*/}
+            {/*                    //         handleInputChange();*/}
+            {/*                    //     }*/}
+            {/*                    // }}*/}
+            {/*                    style={{width: '100%'}}*/}
+            {/*                />*/}
+            {/*            </Form.Group>*/}
+            {/*        </Col>*/}
+            {/*    </Row>*/}
+            {/*</Container>*/}
 
-            {Satellite &&
-                Satellite.Satellites.map((singleSatellite, index) => (
-                    <div key={index} className='card-block'>
-                        <div className="card">
-                            <h3>Статус: {singleSatellite.status}</h3>
-                            <div className="info">
-                                <div className="author-info">
-                                    {/*<img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>*/}
-                                    <div>
-                                        {/*<h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>*/}
-                                        {/*<p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>*/}
-                                        <p>@{emptyString(singleSatellite.user_login, 'Логин не задан')}</p>
-                                    </div>
-                                </div>
+            {/* =================================== ALERTS ===========================================*/}
 
-                                <div className="dates-info">
-                                    <p>
-                                        Начало работы:
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_create)}
-                                            onChange={(e) => setStartSatelliteDate(e.target.value)}
-                                            disabled={singleSatellite.status_id == 2}
-                                        />
-                                    </p>
-                                    <p>
-                                        Конец работы:
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_formation)}
-                                            onChange={(e) => setEndSatelliteDate(e.target.value)}
-                                            disabled={singleSatellite.status_id == 2}
-                                        />
-                                    </p>
-                                    {/*<p>*/}
-                                    {/*    Лидер похода:*/}
-                                    {/*    <input*/}
-                                    {/*        type="text"*/}
-                                    {/*        className="form-control bg-black text-white"*/}
-                                    {/*        value={leader == "$" ? singleSatellite.leader : leader}*/}
-                                    {/*        onChange={(e) => setLeader(e.target.value)}*/}
-                                    {/*        disabled={singleSatellite.status_id == 2}*/}
-                                    {/*    />*/}
-                                    {/*</p>*/}
-                                </div>
+            {error !== "" && <MyComponent isError={true} message={error}/>}
+            {success !== "" && <MyComponent isError={false} message={success}/>}
 
-                            </div>
-                            <div className="detail-info">
-                                <input
-                                    type="text"
-                                    className="form-control bg-black text-white"
-                                    value={SatelliteName == "$" ? singleSatellite.satellite : SatelliteName}
-                                    onChange={(e) => setSatelliteName(e.target.value)}
-                                    style={{marginBottom: '20px'}}
-                                    disabled={singleSatellite.status == "удален"}
-                                />
-                                <textarea
-                                    className="form-control description-text-info bg-black text-white"
-                                    style={{height: "200px"}}
-                                    value={description == "$" ? singleSatellite.description : description}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    disabled={singleSatellite.status_id == 2}
-                                ></textarea>
-                            </div>
-                            <div style={{textAlign: 'right'}}>
-                                {singleSatellite.status_id != 2 && <button
-                                    type="button"
-                                    className="btn btn-outline-light"
-                                    onClick={() => handleSave(singleSatellite.id, singleSatellite)}
-                                    style={{width: '150px', marginTop: '15px'}}
-                                >
-                                    Сохранить
-                                </button>}
-                            </div>
-                        </div>
-                        <TableView spectrum_requests={singleSatellite.spectrum_requests} status={singleSatellite.status}/>
-                        {
-                            singleSatellite.status_id != 2 && (
-                                <div className='delete-make'>
-                                    <div style={{textAlign: 'left', flex: 1}}>
-                                        {/*<button*/}
-                                        {/*    type="button"*/}
-                                        {/*    className="btn btn-outline-danger"*/}
-                                        {/*    onClick={() => handleDeleteSatellite(singleSatellite.id)}*/}
-                                        {/*>*/}
-                                        {/*    Удалить*/}
-                                        {/*</button>*/}
-                                    </div>
-                                    <div style={{textAlign: 'right', flex: 1}}>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-light"
-                                            onClick={() => handleMakeRequest(singleSatellite.id)}
-                                        >
-                                            Сформировать
-                                        </button>
-                                    </div>
-                                </div>
-                            )
-                        }
-                    </div>
-                ))}
+            {/* =================================== FILTERS ======================================*/}
+            {role &&
+                <div className="filter-section d-flex justify-content-end mb-3 pe-4">
+                    <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                            Фильтры
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu className={'px-2'}>
+                            <label>Дата создания с:</label>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                className="custom-datepicker"
+                                popperPlacement="bottom-start"
+                            />
+
+                            <label>Дата окончания по:</label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                className="custom-datepicker"
+                                popperPlacement="bottom-start"
+                            />
+
+                            {role == '2' &&
+                                <>
+                                    <label>Статус похода:</label>
+                                    <Form.Select
+                                        className='my-2'
+                                        value={selectedStatus || ""}
+                                        onChange={(e) => setSelectedStatus(e.target.value)}
+                                    >
+                                        <option value="">Выберите статус</option>
+                                        <option value="1">Черновик</option>
+                                        <option value="2">Сформирован</option>
+                                        <option value="3">Завершён</option>
+                                        <option value="4">Отклонён</option>
+                                    </Form.Select>
+                                </>
+                            }
+
+
+
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </div>
+            }
+
+            {/* =================================== TABLE ADMIN =============================================*/}
+            {Satellites &&
+                <table className='table-Satellites'>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название похода</th>
+                        <th>Дата создания</th>
+                        <th>Дата окончания похода</th>
+                        <th>Дата начала процесса</th>
+                        <th>Дата принятия</th>
+                        <th>Дата начала похода</th>
+                        <th>Автор</th>
+
+
+
+                        <th>Статус</th>
+                        <th>Лидер</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {Satellites.map((Satellite) => (
+                            <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
+                                <td>{Satellite.id}</td>
+                                <td>{Satellite.satellite || 'Не задано'}</td>
+                                <td>{checkData(Satellite.date_create)}</td>
+                                <td>{Satellite.user_login || 'Не задан'}</td>
+                                <td>{Satellite.status}</td>
+                                <td>{Satellite.leader || 'На задан'}</td>
+                            </tr>
+                    ))}
+
+
+                    </tbody>
+                </table>
+            }
         </>
     );
 };
 
 export default RequestView;
+
+function checkData(data: string): string {
+    if (data == '0001-01-01T00:00:00Z') {
+        return 'Дата не задана'
+    }
+    const formattedDate = (dateString: string) => {
+        const date = new Date(dateString);
+        return format(date, 'dd.MM.yyyy');
+    };
+
+    const formatted = formattedDate(data);
+    return formatted
+}
