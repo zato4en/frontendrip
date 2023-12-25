@@ -37,7 +37,7 @@ const RegisterPage: FC<RegisterPageProps> = () => {
 
 
     if (isAuth) {
-        return <Link to="/Spectrums" className="btn btn-outline-danger">
+        return <Link to="/cities" className="btn btn-outline-danger">
             Смотреть города
         </Link>
     }

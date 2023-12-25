@@ -1,32 +1,33 @@
-import {FC} from 'react';
 import {Link} from 'react-router-dom';
-import React from 'react';
-import './BreadCrumbs.css'
+import {FC} from "react";
+import './breadcrumbs.css'
 
-export interface IBreadCrumb {
-    to: string;
-    name: string;
-}
-// ?
-interface BreadCrumbsProps {
-    pages: IBreadCrumb[];
+export interface BreadcrumbsProps {
+    paths: Breadcrumb[]
 }
 
-const BreadCrumbs: FC<BreadCrumbsProps> = ({pages}) => {
+export interface Breadcrumb {
+    name: string
+    to: string
+}
+
+const Breadcrumbs: FC<BreadcrumbsProps> = ({paths}) => {
+
     return (
-        <div style={{display: 'flex'}}>
-            <div className="breadcrumbs-container">
-                {pages.map((page, index) => (
-                    <React.Fragment key={index}>
-                        {index > 0 && <span className="separator">{' -> '}</span>}
-                        <Link to={`/${page.to}`} className="nav-link ps-0">
-                            <span className="breadcrumb">{page.name}</span>
-                        </Link>
-                    </React.Fragment>
+        <div className={'mx-5 my-2'}>
+            <div className="breadcrumbs">
+                {paths.map((path, index) => (
+                    <div key={index} className="breadcrumb-item-2">
+                        {index === paths.length - 1 ? (
+                            path.name
+                        ) : (
+                            <Link to={path.to}>{path.name}</Link>
+                        )}
+                    </div>
                 ))}
             </div>
         </div>
     );
 };
 
-export default BreadCrumbs;
+export default Breadcrumbs;

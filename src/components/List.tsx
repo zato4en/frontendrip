@@ -1,17 +1,14 @@
 import React from 'react';
-import './SpectrumsList/SpectrumsList.css'
+import './CitiesList/CitiesList.css'
 interface ListProps<T> {
     items: T[],
     renderItem: (item: T) => React.ReactNode
 }
 
-export default function List<T>({ items, renderItem }: ListProps<T>) {
-    // Проверяем, что items не null и не undefined. Если items не определен, используем пустой массив.
-    const safeItems = items || [];
-
+export default function List<T>(props: ListProps<T>) {
     return (
         <div className="card-grid">
-            {safeItems.map(renderItem)}
+            {props.items.map(props.renderItem)}
         </div>
-    );
+    )
 }

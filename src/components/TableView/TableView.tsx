@@ -1,23 +1,24 @@
 import {FC} from "react";
 import './TableView.css'
-import {ISatellite, ISpectrumRequests} from "../../models/models.ts";
+import {IDestinationHikes} from "../../models/models.ts";
 import {useAppDispatch} from "../../hooks/redux.ts";
-import {deleteSatelliteById} from "../../store/reducers/ActionCreator.ts";
-import {SpectrumSlice} from "../../store/reducers/SpectrumSlice.ts";
-import spectrumItem from "../SpectrumItem/SpectrumItem.tsx";
+import {deleteDestHikeById} from "../../store/reducers/ActionCreator.ts";
+import {citySlice} from "../../store/reducers/CitySlice.ts";
 
 interface TableViewProps {
-    status: string
-    spectrum_requests: ISpectrumRequests[]
+    status: number
+    destHikes: IDestinationHikes[]
+    setPage: (name: string, id: number) => void
+    hikeID: string
 }
 
-const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
+const TableView: FC<TableViewProps> = ({destHikes, status, setPage, hikeID}) => {
     const dispatch = useAppDispatch()
-    const {minus} = SpectrumSlice.actions
+    const {minus} = citySlice.actions
 
-    const handleDelete = (spectrum_id: number,satellite_id:number) => {
+    const handleDelete = (id: number) => {
         dispatch(minus())
-        dispatch(deleteSatelliteById(spectrum_id,satellite_id))
+        dispatch(deleteDestHikeById(id, hikeID, setPage))
     }
 
     return (
@@ -27,26 +28,26 @@ const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
                 <tr>
                     <th className="number">Номер</th>
                     <th>Фотография</th>
-                    <th>Название спектра</th>
+                    <th>Название города</th>
                     <th>Описание</th>
                 </tr>
                 </thead>
                 <tbody>
-                {spectrum_requests.map((item, index) => (
+                {destHikes.map((item, index) => (
                     <tr key={index}>
-                        <td className="Spectrum-number-td">{item.spectrum_id}</td>
+                        <td className="city-number-td">{item.serial_number}</td>
                         <td className="image-td">
-                            <img src={item.spectrum.image_url} alt="photo"/>
+                            <img src={item.city.image_url} alt="photo"/>
                         </td>
-                        <td className="Spectrum-name-td">{item.spectrum.name}</td>
-                        <td>{item.spectrum.description}</td>
+                        <td className="city-name-td">{item.city.city_name}</td>
+                        <td>{item.city.description}</td>
                         {
-                            status != "удален" && <td className="delete-td">
+                            status != 2 && <td className="delete-td">
                                 <img
                                     className="delete-button-td"
                                     src="/dustbin.png"
                                     alt="Delete"
-                                    onClick={() => handleDelete(item.spectrum_id, item.satellite_id)}
+                                    onClick={() => handleDelete(item.id)}
                                 />
                             </td>
                         }

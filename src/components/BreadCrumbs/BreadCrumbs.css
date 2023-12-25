@@ -1,24 +1,28 @@
-.breadcrumbs-container {
+.breadcrumbs {
     display: flex;
-
-    align-items: baseline;
-    font-size: 16px;
-    padding: 0 9%;
+    list-style: none;
+    padding: 0;
+    font-size: 18px;
 }
 
-.separator {
-    display: flex;
-    align-items: center;
-    margin: 0 8px;
-    color: #3b3b3b;
+.breadcrumb-item-2 {
+    margin-right: 10px;
+    text-decoration: none;
+    position: relative;
+    padding: 5px 10px;
+    display: inline-block;
+    background-color: #2d2d2d;
+    border-radius: 20px;
 }
 
-.breadcrumb {
-    color: #cf00ff;
-    cursor: pointer;
+.breadcrumb-item:last-child {
+    font-weight: bold;
+    padding-left: 10px;
 }
 
-.breadcrumb:hover {
-    color: #ff00f3;
-    cursor: pointer;
+.breadcrumb-item:not(:last-child):after {
+    content: '>';
+    margin-left: 10px;
+    color: #ffffff; /* Замените на цвет стрелочки, если необходимо */
 }
+
