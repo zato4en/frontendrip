@@ -13,6 +13,7 @@ import {ISatellite} from "../../models/models.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import LoadAnimation from "../Popup/MyLoaderComponent.tsx";
 import {Link} from "react-router-dom";
+import {satelliteSlice} from "../../store/reducers/SatelliteSlice.ts";
 
 interface RequestViewProps {
     setPage: () => void;
@@ -37,8 +38,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         dispatch(deleteSatellite(id))
     }
 
-    const handleMakeRequest = () => {
-        dispatch(makeSatellite())
+    const handleMakeRequest = (id:number) => {
+        dispatch(makeSatellite(id))
     }
 
     const handleSave = (id: number, Satellite: ISatellite) => {
@@ -46,10 +47,10 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             updateSatellite(
                 id,
                 description == '$' ? Satellite.description : description,
-                SatelliteName == '$' ? Satellite.Satellite_name : SatelliteName,
-                startSatelliteDate == "" ? Satellite.date_start_Satellite : startSatelliteDate,
-                endSatelliteDate == "" ? Satellite.date_end : endSatelliteDate,
-                leader == '$' ? Satellite.leader : leader
+                SatelliteName == '$' ? Satellite.satellite : SatelliteName,
+                // startSatelliteDate == "" ? Satellite.date_create : startSatelliteDate,
+                // endSatelliteDate == "" ? Satellite.da : endSatelliteDate,
+                // leader == '$' ? Satellite.leader : leader
             )
         )
     }
@@ -71,14 +72,14 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                 Satellite.Satellites.map((singleSatellite, index) => (
                     <div key={index} className='card-block'>
                         <div className="card">
-                            <h3>Статус: {singleSatellite.status.status_name}</h3>
+                            <h3>Статус: {singleSatellite.status}</h3>
                             <div className="info">
                                 <div className="author-info">
                                     {/*<img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>*/}
                                     <div>
                                         {/*<h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>*/}
                                         {/*<p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>*/}
-                                        <p>@{emptyString(singleSatellite.., 'Логин на задан')}</p>
+                                        <p>@{emptyString(singleSatellite.user_login, 'Логин не задан')}</p>
                                     </div>
                                 </div>
 
@@ -88,7 +89,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         <input
                                             type="date"
                                             className="form-control"
-                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_start_Satellite)}
+                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_create)}
                                             onChange={(e) => setStartSatelliteDate(e.target.value)}
                                             disabled={singleSatellite.status_id == 2}
                                         />
@@ -98,7 +99,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         <input
                                             type="date"
                                             className="form-control"
-                                            value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_end)}
+                                            value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_formation)}
                                             onChange={(e) => setEndSatelliteDate(e.target.value)}
                                             disabled={singleSatellite.status_id == 2}
                                         />
@@ -120,10 +121,10 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <input
                                     type="text"
                                     className="form-control bg-black text-white"
-                                    value={SatelliteName == "$" ? singleSatellite.Satellite_name : SatelliteName}
+                                    value={SatelliteName == "$" ? singleSatellite.satellite : SatelliteName}
                                     onChange={(e) => setSatelliteName(e.target.value)}
                                     style={{marginBottom: '20px'}}
-                                    disabled={singleSatellite.status_id == 2}
+                                    disabled={singleSatellite.status == "удален"}
                                 />
                                 <textarea
                                     className="form-control description-text-info bg-black text-white"
@@ -144,24 +145,24 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 </button>}
                             </div>
                         </div>
-                        <TableView destSatellites={singleSatellite.destination_Satellites} status={singleSatellite.status_id}/>
+                        <TableView spectrum_requests={singleSatellite.spectrum_requests} status={singleSatellite.status}/>
                         {
                             singleSatellite.status_id != 2 && (
                                 <div className='delete-make'>
                                     <div style={{textAlign: 'left', flex: 1}}>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger"
-                                            onClick={() => handleDeleteSatellite(singleSatellite.id)}
-                                        >
-                                            Удалить
-                                        </button>
+                                        {/*<button*/}
+                                        {/*    type="button"*/}
+                                        {/*    className="btn btn-outline-danger"*/}
+                                        {/*    onClick={() => handleDeleteSatellite(singleSatellite.id)}*/}
+                                        {/*>*/}
+                                        {/*    Удалить*/}
+                                        {/*</button>*/}
                                     </div>
                                     <div style={{textAlign: 'right', flex: 1}}>
                                         <button
                                             type="button"
                                             className="btn btn-outline-light"
-                                            onClick={handleMakeRequest}
+                                            onClick={() => handleMakeRequest(singleSatellite.id)}
                                         >
                                             Сформировать
                                         </button>

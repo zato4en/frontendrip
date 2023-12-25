@@ -8,10 +8,10 @@ export interface ISpectrumResponse {
     status?: string
 }
 
-export interface IStatus {
-    id: number,
-    status_name?: string,
-}
+// export interface IStatus {
+//     id: number,
+//     status_name?: string,
+// }
 export interface ISpectrumWithBasket {
     basket_id: number
     Spectrums: ISpectrum[]
@@ -23,17 +23,17 @@ export interface ISpectrum {
     len?: number,
     freq?: number,
     status_id?: number,
-    status?: IStatus,
+    status?: string,
     description?: string,
     image_url?: string,
 }
 
-export interface IDestinationSatellites {
+export interface ISpectrumRequests {
     id: number,
-    Spectrum_id: number,
-    Satellite_id: number,
-    serial_number: number,
-    Spectrum: ISpectrum,
+    spectrum_id: number,
+    satellite_id: number,
+    satellite_number?: number,
+    spectrum: ISpectrum,
 }
 
 export interface IRegisterResponse {
@@ -47,39 +47,41 @@ export interface IAuthResponse {
     status?: string,
 }
 
-export interface IUser {
-    id: number,
-    user_name: string,
-    profession?: string,
-    user_login: string,
-    birthday?: string,
-    image_url?: string,
-    password: string,
-}
+// export interface IUser {
+//     id: number,
+//     user_name: string,
+//     profession?: string,
+//     user_login: string,
+//     birthday?: string,
+//     image_url?: string,
+//     password: string,
+// }
 
 export interface ISatellite {
     id: number,
-    Satellite_name: string,
-    date_created: string,
-    date_end: string,
-    date_start_of_processing: string,
+    satellite: string,
+    date_create: string,
+    date_formation: string,
+    date_completion: string,
     date_approve: string,
-    date_start_Satellite: string,
     user_id: number,
-    status_id: number,
+    moder_id: number,
+    status_id?: number,
     description: string,
-    status: IStatus,
+    status: string,
     leader: string,
-    destination_Satellites: IDestinationSatellites[],
-    user: IUser,
+    spectrum_requests: ISpectrumRequests[],
+    user_login: string,
+    moder_login: string,
+    percentage:string
 }
 
 export interface IUpdateSatellite {
     description?: string
 }
 
-export interface IDeleteDestinationSatellite {
-    deleted_destination_Satellite: number,
+export interface IDeleteSpectrumRequest {
+    deleted_spectrum_request: number,
     status: string,
     description?: string,
 }

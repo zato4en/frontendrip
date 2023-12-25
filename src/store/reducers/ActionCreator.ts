@@ -4,7 +4,7 @@ import {
     IAuthResponse,
     ISpectrumResponse,
     ISpectrumWithBasket,
-    IDeleteDestinationSatellite,
+    IDeleteSpectrumRequest,
     ISatelliteResponse, IRegisterResponse,
     IRequest,
     mockSpectrums
@@ -61,7 +61,7 @@ export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => 
 
     const config = {
         method: "delete",
-        url: "/Satellites",
+        url: "/api/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -86,17 +86,14 @@ export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => 
     }
 }
 
-export const makeSatellite = () => async (dispatch: AppDispatch) => {
+export const makeSatellite = (id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "put",
-        url: "/Satellites/update/status-for-user",
+        url: `/api/SatellitesUser/${id}`, // изменение здесь: id внесён в URL
         headers: {
             Authorization: `Bearer ${accessToken}`,
-        },
-        data: {
-            status_id: 2
         }
     }
     try {
@@ -105,7 +102,7 @@ export const makeSatellite = () => async (dispatch: AppDispatch) => {
         const errorText = response.data.description ?? ""
         const successText = errorText || `Заявка создана`
         dispatch(satelliteSlice.actions.SatellitesUpdated([errorText, successText]));
-        if (successText != "") {
+        if (successText !== "") {
             dispatch(fetchSatellites())
         }
         setTimeout(() => {
@@ -138,17 +135,18 @@ export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     }
 }
 
-export const deleteSatelliteById = (id: number) => async (dispatch: AppDispatch) => {
+export const deleteSatelliteById = (spectrum_id: number,satellite_id:number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     try {
         dispatch(satelliteSlice.actions.SatellitesFetching())
-        const response = await axios.delete<IDeleteDestinationSatellite>(`/api/destination-Satellites`, {
+        const response = await axios.delete<IDeleteSpectrumRequest>(`/api/SpectrumsRequests`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
             data: {
-                id: id,
+                spectrum_id: spectrum_id,
+                satellite_id:satellite_id
             },
         });
         dispatch(satelliteSlice.actions.SatellitesDeleteSuccess(response.data))
@@ -161,25 +159,25 @@ export const deleteSatelliteById = (id: number) => async (dispatch: AppDispatch)
 export const updateSatellite = (
     id: number,
     description: string,
-    SatelliteName: string,
-    startDate: string,
-    endDate: string,
-    leader: string
+    satellite: string,
+    // startDate: string,
+    // endDate: string,
+    // leader: string
 ) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "put",
-        url: "/Satellites",
+        url: "/api/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             ContentType: "application/json"
         },
         data: {
             description: description,
-            Satellite_name: SatelliteName,
-            date_start_Satellite: convertInputFormatToServerDate(startDate),
-            date_end: convertInputFormatToServerDate(endDate),
-            leader: leader,
+            satellite: satellite,
+            // date_create: convertInputFormatToServerDate(startDate),
+            // date_end: convertInputFormatToServerDate(endDate),
+            // leader: leader,
             id: id,
         }
     };
