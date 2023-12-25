@@ -40,6 +40,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
     const handleMakeRequest = (id:number) => {
         dispatch(makeSatellite(id))
+
     }
 
     const handleSave = (id: number, Satellite: ISatellite) => {
