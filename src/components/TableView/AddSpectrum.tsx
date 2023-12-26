@@ -4,6 +4,7 @@ import {convertServerDateToInputFormat, createSpectrum} from "../../store/reduce
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 
 interface SpectrumData {
     SpectrumName: string;
@@ -16,6 +17,7 @@ interface AddSpectrumProps {
 }
 
 const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
+    const navigate = useNavigate();
     const [SpectrumData, setSpectrumData] = useState<SpectrumData>({
         SpectrumName: '',
         description: '',
@@ -35,6 +37,7 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
 
     const save = () => {
         dispatch(createSpectrum(SpectrumData.SpectrumName, SpectrumData.description, SpectrumData.image))
+        navigate(-1)
     }
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {

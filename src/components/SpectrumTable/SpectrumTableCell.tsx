@@ -26,7 +26,7 @@ const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
     };
 
     const handleSaveClick = () => {
-        dispatch(updateSpectrumInfo(SpectrumData.id, name, description, statusId))
+        dispatch(updateSpectrumInfo(SpectrumData.id, name, description))
         if (imageFile) {
             dispatch(updateSpectrumImage(SpectrumData.id, imageFile))
         }
@@ -46,7 +46,7 @@ const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const {value} = e.target;
         setStatus(value)
-        setStatusId(value)
+
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,49 +61,49 @@ const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
             <div>
                 <Form className='mx-5'>
                     <Form.Group as={Col} controlId="formSpectrumName" className='mt-2'>
-                        <Form.Label>Название города</Form.Label>
+                        <Form.Label>Название спектра</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="Введите название города"
+                            placeholder="Введите название спектра"
                             name="name"
                             value={name}
                             onChange={handleInputChangeName}
                         />
                     </Form.Group>
 
-                    <Form.Group as={Col} controlId="formSpectrumStatus" className='mt-2'>
-                        <Form.Label>Статус</Form.Label>
-                        <Form.Control
-                            as="select"
-                            name="status"
-                            value={status}
-                            onChange={handleInputChange}
-                        >
-                            <option value="1">Существует</option>
-                            <option value="2">Уничтожен</option>
-                        </Form.Control>
-                    </Form.Group>
+                    {/*<Form.Group as={Col} controlId="formSpectrumStatus" className='mt-2'>*/}
+                    {/*    <Form.Label>Статус</Form.Label>*/}
+                    {/*    <Form.Control*/}
+                    {/*        as="select"*/}
+                    {/*        name="status"*/}
+                    {/*        value={status}*/}
+                    {/*        onChange={handleInputChange}*/}
+                    {/*    >*/}
+                    {/*        <option value="0">Существует</option>*/}
+                    {/*        <option value="1">Удален</option>*/}
+                    {/*    </Form.Control>*/}
+                    {/*</Form.Group>*/}
 
                     <Form.Group controlId="formSpectrumDescription" className='mt-2'>
                         <Form.Label>Описание</Form.Label>
                         <Form.Control
                             as="textarea"
                             rows={3}
-                            placeholder="Введите описание города"
+                            placeholder="Введите описание спектра"
                             name="description"
                             value={description}
                             onChange={handleInputChangeDescription}
                         />
                     </Form.Group>
 
-                    <Form.Group controlId="formSpectrumImage" className='mt-2'>
-                        <Form.Label>Картинка</Form.Label>
-                        <Form.Control
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                        />
-                    </Form.Group>
+                    {/*<Form.Group controlId="formSpectrumImage" className='mt-2'>*/}
+                    {/*    <Form.Label>Картинка</Form.Label>*/}
+                    {/*    <Form.Control*/}
+                    {/*        type="file"*/}
+                    {/*        accept="image/*"*/}
+                    {/*        onChange={handleImageChange}*/}
+                    {/*    />*/}
+                    {/*</Form.Group>*/}
 
                     <div style={{display: 'flex', justifyContent: 'space-between'}} className='my-3'>
                         <Button variant="primary" onClick={handleSaveClick}>
@@ -126,7 +126,7 @@ const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
             <tr key={SpectrumData.id}>
                 <td>{SpectrumData.id}</td>
                 <td>{SpectrumData.name}</td>
-                <td>{SpectrumData.status}</td>
+                {/*<td>{SpectrumData.status}</td>*/}
                 <td>{SpectrumData.description}</td>
                 <td>{SpectrumData.image_url &&
                     <img src={SpectrumData.image_url}

@@ -4,7 +4,7 @@ import './Menu.css'
 import {FC, useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import Cookies from "js-cookie";
-import {fetchCurrentSatellite} from "../../store/reducers/ActionCreator.ts";
+import {fetchCurrentSatellite, fetchSatellites} from "../../store/reducers/ActionCreator.ts";
 
 interface MenuProps {
     setPage: () => void
@@ -18,7 +18,7 @@ const Menu: FC<MenuProps> = ({setPage}) => {
 
     useEffect(() => {
         setPage()
-        dispatch(fetchCurrentSatellite())
+        dispatch(fetchSatellites())
     }, []);
 
     if (!jwtToken) {

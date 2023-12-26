@@ -5,8 +5,6 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {fetchSpectrum} from "../../store/reducers/ActionCreator.ts";
 import Cookies from "js-cookie";
 import axios from "axios";
-import {IDeleteSpectrumRequest} from "../../models/models.ts";
-import spectrumTable from "../SpectrumTable/SpectrumTable.tsx";
 
 interface SpectrumDetailProps {
     setPage: (name: string, id: number) => void

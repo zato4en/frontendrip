@@ -64,23 +64,25 @@ export const deleteSpecRequestById = (
 
 export const updateSpectrumInfo = (
     id: number,
-    SpectrumName: string,
+    name: string,
     description: string,
-    statusId: string
+
 ) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken')
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
+
+
+
     const config = {
         method: "put",
-        url: `/api/Spectrums`,
+        url: `/api/Spectrums/${id}`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
         data: {
             id: id,
-            Spectrum_name: SpectrumName,
+            name: name,
             description: description,
-            status_id: parseInt(statusId, 10) ?? 1,
         },
     }
 
@@ -156,7 +158,7 @@ export const deleteSpectrum = (SpectrumId: number) => async (dispatch: AppDispat
             Authorization: `Bearer ${accessToken}`,
         },
         data: {
-            id: `${SpectrumId}`
+            id: SpectrumId
         },
     }
 
@@ -513,8 +515,9 @@ export const createSpectrum = (
         setTimeout(() => {
             dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite(['', '']));
         }, 6000)
+
     } catch (e) {
-        dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`${e}`));
+        // dispatch(SpectrumSlice.actions.SpectrumsFetchedError(`Спектр добавлен`));
     }
 }
 
@@ -602,7 +605,7 @@ export const loginSession = (login: string, password: string) => async (dispatch
             dispatch(userSlice.actions.setAuthStatus(true));
             // Cookies.set('userImage', response.data.userImage)
             Cookies.set('userName', response.data.userName)
-            Cookies.set('userName', response.data.userid)
+            Cookies.set('userId', response.data.userid)
         }
         setTimeout(() => {
             dispatch(userSlice.actions.resetStatuses());

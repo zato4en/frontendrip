@@ -29,6 +29,29 @@ body {
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
+.detail-info {
+    font-family: Arial, sans-serif; /* Красивый и читаемый шрифт */
+    color: #fff; /* Белый цвет текста описания */
+}
+
+.detail-info > input.form-control {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Стиль шрифта для поля ввода */
+    color: #fff; /* Белый цвет текста ввода */
+    /* Специфический стиль для placeholder */
+    ::placeholder {
+        color: #ffffff; /* Белый цвет placeholder */
+        opacity: 1; /* Убедитесь, что placeholder полностью видим */
+    }
+    /* Стили для Internet Explorer 10-11 */
+    :-ms-input-placeholder {
+        color: #fff;
+    }
+    /* Стили для Microsoft Edge */
+    ::-ms-input-placeholder {
+        color: #fff;
+    }
+}
+
 .info {
     display: flex;
     flex-wrap: wrap;

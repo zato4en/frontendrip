@@ -42,6 +42,7 @@ const SpectrumTable: FC<SpectrumTableProps> = ({setPage}) => {
                     {/*<th>Статус</th>*/}
                     <th>Описание</th>
                     <th>Изображение</th>
+                    <th>Действия</th>
                 </tr>
                 </thead>
                 <tbody>

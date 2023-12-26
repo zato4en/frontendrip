@@ -1,4 +1,5 @@
 import {FC, useEffect, useState} from 'react';
+import "../RequestView/RequestView.css";
 import {
     convertServerDateToInputFormat, DateFormat,
     deleteSatellite,
@@ -94,44 +95,45 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                     </div>
                                 </div>
 
-                                <div className="dates-info">
-                                    <p>
-                                        Начало сканирования:
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_formation)}
-                                            onChange={(e) => setStartSatelliteDate(e.target.value)}
-                                            disabled={singleSatellite.status != "черновик"}
-                                        />
-                                    </p>
-                                    {/*<p>*/}
-                                    {/*    Конец похода:*/}
-                                    {/*    <input*/}
-                                    {/*        type="date"*/}
-                                    {/*        className="form-control"*/}
-                                    {/*        value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.вф)}*/}
-                                    {/*        onChange={(e) => setEndSatelliteDate(e.target.value)}*/}
-                                    {/*        disabled={singleSatellite.status != "черновик"}*/}
-                                    {/*    />*/}
-                                    {/*</p>*/}
-                                    {/*<p>*/}
-                                    {/*    Лидер похода:*/}
-                                    {/*    <input*/}
-                                    {/*        type="text"*/}
-                                    {/*        className="form-control bg-black text-white"*/}
-                                    {/*        value={leader == "$" ? singleSatellite.leader : leader}*/}
-                                    {/*        onChange={(e) => setLeader(e.target.value)}*/}
-                                    {/*        disabled={singleSatellite.status != "черновик"}*/}
-                                    {/*    />*/}
-                                    {/*</p>*/}
-                                </div>
+                                {/*<div className="dates-info">*/}
+                                {/*    <p>*/}
+                                {/*        Начало сканирования:*/}
+                                {/*        <input*/}
+                                {/*            type="date"*/}
+                                {/*            className="form-control"*/}
+                                {/*            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_formation)}*/}
+                                {/*            onChange={(e) => setStartSatelliteDate(e.target.value)}*/}
+                                {/*            disabled={singleSatellite.status != "черновик"}*/}
+                                {/*        />*/}
+                                {/*    </p>*/}
+                                {/*    /!*<p>*!/*/}
+                                {/*    /!*    Конец похода:*!/*/}
+                                {/*    /!*    <input*!/*/}
+                                {/*    /!*        type="date"*!/*/}
+                                {/*    /!*        className="form-control"*!/*/}
+                                {/*    /!*        value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.вф)}*!/*/}
+                                {/*    /!*        onChange={(e) => setEndSatelliteDate(e.target.value)}*!/*/}
+                                {/*    /!*        disabled={singleSatellite.status != "черновик"}*!/*/}
+                                {/*    /!*    />*!/*/}
+                                {/*    /!*</p>*!/*/}
+                                {/*    /!*<p>*!/*/}
+                                {/*    /!*    Лидер похода:*!/*/}
+                                {/*    /!*    <input*!/*/}
+                                {/*    /!*        type="text"*!/*/}
+                                {/*    /!*        className="form-control bg-black text-white"*!/*/}
+                                {/*    /!*        value={leader == "$" ? singleSatellite.leader : leader}*!/*/}
+                                {/*    /!*        onChange={(e) => setLeader(e.target.value)}*!/*/}
+                                {/*    /!*        disabled={singleSatellite.status != "черновик"}*!/*/}
+                                {/*    /!*    />*!/*/}
+                                {/*    /!*</p>*!/*/}
+                                {/*</div>*/}
 
                             </div>
                             <div className="detail-info">
                                 <>Имя спутника</>
                                 <input
                                     type="text"
+                                    placeholder="Введите название спутника"
                                     className="form-control bg-black text-white"
                                     value={SatelliteName == "$" ? singleSatellite.satellite : SatelliteName}
                                     onChange={(e) => setSatelliteName(e.target.value)}
