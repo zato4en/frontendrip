@@ -17,7 +17,7 @@ function App() {
     const addSpectrumPage: Breadcrumb = {name: 'Создание спектра', to: 'add-spectrum'};
     const SpectrumsTablePage: Breadcrumb = {name: 'Таблица спектров', to: 'Spectrums/admin'};
     const SpectrumsPage: Breadcrumb = {name: 'Спектры', to: 'Spectrums'};
-    const requestPage: Breadcrumb = {name: 'Заявки', to: 'Satellites'};
+    const requestPage: Breadcrumb = {name: 'Заявки', to: 'request'};
     const [pages, setPage] = useState<Breadcrumb[]>([SpectrumsPage])
     const addPage = (newPage: Breadcrumb[]) => {
         setPage(newPage);

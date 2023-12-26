@@ -102,7 +102,7 @@ const NavigationBar = () => {
                                 <div className="avatar-container d-flex align-items-center">
                                     <Nav.Item>
                                         <img
-                                            src={userImage || defaultImage}
+                                            src={defaultImage}
                                             alt="User Avatar"
                                             className="avatar me-2"
                                         />

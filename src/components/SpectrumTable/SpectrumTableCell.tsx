@@ -11,10 +11,10 @@ interface SpectrumTableCellProps {
 const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
     const dispatch = useAppDispatch()
     const [isEditing, setIsEditing] = useState(false);
-    const [name, setName] = useState(SpectrumData.Spectrum_name ?? "");
+    const [name, setName] = useState(SpectrumData.name ?? "");
     const [description, setDescription] = useState(SpectrumData.description ?? "");
-    const [status, setStatus] = useState(SpectrumData.status.status_name);
-    const [statusId, setStatusId] = useState(`${SpectrumData.status.id}`);
+    const [status, setStatus] = useState(SpectrumData.status);
+    const [statusId, setStatusId] = useState(`${SpectrumData.status}`);
     const [imageFile, setImageFile] = useState<File | null>(null);
 
     const handleDeleteClick = () => {
@@ -125,8 +125,8 @@ const SpectrumTableCell: FC<SpectrumTableCellProps> = ({SpectrumData}) => {
         <>
             <tr key={SpectrumData.id}>
                 <td>{SpectrumData.id}</td>
-                <td>{SpectrumData.Spectrum_name}</td>
-                <td>{SpectrumData.status.status_name}</td>
+                <td>{SpectrumData.name}</td>
+                <td>{SpectrumData.status}</td>
                 <td>{SpectrumData.description}</td>
                 <td>{SpectrumData.image_url &&
                     <img src={SpectrumData.image_url}

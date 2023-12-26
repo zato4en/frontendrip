@@ -7,7 +7,7 @@ import {
     IDeleteSpectrumRequest, ISatellite,
     ISatelliteResponse, IRegisterResponse,
     IRequest,
-    mockSpectrums
+    mockSpectrums, ISpectrum
 } from "../../models/models.ts";
 import Cookies from 'js-cookie';
 import {SpectrumSlice} from "./SpectrumSlice.ts"
@@ -72,7 +72,7 @@ export const updateSpectrumInfo = (
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     const config = {
         method: "put",
-        url: `/api/v3/Spectrums`,
+        url: `/api/Spectrums`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -105,7 +105,7 @@ export const updateSpectrumImage = (SpectrumId: number, file: File) => async (di
 
     const config = {
         method: "put",
-        url: `/api/v3/Spectrums/upload-image`,
+        url: `/api/Spectrums/upload-image`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -135,7 +135,7 @@ export const deleteSatelliteById = (spectrum_id: number,satellite_id:number) => 
             },
             data: {
                 spectrum_id: spectrum_id,
-                satellite_id:satellite_id
+                satellite_id: satellite_id
             },
         });
         dispatch(SatelliteSlice.actions.SatellitesDeleteSuccess(response.data))
@@ -151,7 +151,7 @@ export const deleteSpectrum = (SpectrumId: number) => async (dispatch: AppDispat
 
     const config = {
         method: "delete",
-        url: `/api/v3/Spectrums`,
+        url: `/api/Spectrums`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -177,7 +177,7 @@ export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: numbe
 
     const config = {
         method: "post",
-        url: "/api/v3/Spectrums/add-Spectrum-into-Satellite",
+        url: "/api/SpectrumsRequests",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -209,7 +209,7 @@ export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => 
 
     const config = {
         method: "delete",
-        url: "/api/v3/Satellites",
+        url: "/api/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -234,18 +234,17 @@ export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => 
     }
 }
 
-export const makeSatellite = () => async (dispatch: AppDispatch) => {
+export const makeSatellite = (id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "put",
-        url: "/api/v3/Satellites/update/status-for-user",
+        url: `/api/SatellitesUser/${id}`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
-        data: {
-            status_id: 2
-        }
+
+
     }
     try {
         dispatch(SatelliteSlice.actions.SatellitesFetching())
@@ -269,7 +268,7 @@ export const moderatorUpdateStatus = (SatelliteId: number, status: number) => as
 
     const config = {
         method: "put",
-        url: "/api/v3/Satellites/update/status-for-moderator",
+        url: "/api/Satellites/update/status-for-moderator",
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
@@ -300,7 +299,7 @@ export const fetchSatellites = () => async (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(SatelliteSlice.actions.SatellitesFetching())
-        const response = await axios.get<ISatelliteResponse>(`/api/v3/Satellites`, {
+        const response = await axios.get<ISatelliteResponse>(`/api/Satellites`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -324,7 +323,7 @@ export const fetchCurrentSatellite = () => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
-        const response = await axios.get<ISingleSatelliteResponse>(`/api/v3/Satellites/current`, {
+        const response = await axios.get<ISingleSatelliteResponse>(`/api/Satellites/current`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -348,7 +347,7 @@ export const fetchSatelliteById = (
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(SatelliteSlice.actions.SatellitesFetching())
-        const response = await axios.get<ISingleSatelliteResponse>(`/api/v3/Satellites/${id}`, {
+        const response = await axios.get<ISingleSatelliteResponse>(`/api/Satellites/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -378,7 +377,7 @@ export const fetchSatellitesFilter = (dateStart?: string, dateEnd?: string, stat
         const queryString = Object.keys(queryParams)
             .map((key) => `${key}=${encodeURIComponent(queryParams[key]!)}`)
             .join('&');
-        const urlWithParams = `/api/v3/Satellites${queryString ? `?${queryString}` : ''}`;
+        const urlWithParams = `/api/Satellites${queryString ? `?${queryString}` : ''}`;
         const response = await axios.get<ISatelliteResponse>(urlWithParams, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -423,26 +422,19 @@ export const deleteDestSatelliteById = (
 
 export const updateSatellite = (
     id: number,
-    // description: string,
     SatelliteName: string,
-    // startDate: string,
-    // endDate: string,
-    // leader: string
+
 ) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     const config = {
         method: "put",
-        url: "/api/v3/Satellites",
+        url: "/api/Satellites",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             ContentType: "application/json"
         },
         data: {
-            // description: description,
-            Satellite_name: SatelliteName,
-            // date_start_Satellite: convertInputFormatToServerDate(startDate),
-            // date_end: convertInputFormatToServerDate(endDate),
-            // leader: leader,
+            Satellite: SatelliteName,
             id: id,
         }
     };
@@ -467,10 +459,13 @@ export const fetchSpectrum = (
 ) => async (dispatch: AppDispatch) => {
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumResponse>(`/api/Spectrums?Spectrum=${SpectrumId}`)
-        const Spectrum = response.data.Spectrums
-        setPage(Spectrum[0].name ?? "Без названия", Spectrum[0].id)
-        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum[0]))
+        // Теперь предполагаем, что response.data.Spectrums - это объект, а не массив
+        const response = await axios.get<{ Spectrums: ISpectrum}>(`/api/Spectrums/${SpectrumId}`)
+        console.log(response.data)
+        const Spectrum = response.data.Spectrums  // Убрана индексация [0], так как это не массив
+        console.log(Spectrum)
+        setPage(Spectrum.name ?? "Без названия", Spectrum.id)
+        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum))
     } catch (e) {
         console.log(`Ошибка загрузки спектров: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;
@@ -500,7 +495,7 @@ export const createSpectrum = (
 
     const config = {
         method: "post",
-        url: "/api/v3/Spectrums",
+        url: "/api/Spectrums",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'multipart/form-data'
@@ -525,7 +520,7 @@ export const createSpectrum = (
 export const registerSession = (userName: string, login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/api/v3/users/sign_up",
+        url: "/api/signup",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -555,7 +550,7 @@ export const logoutSession = () => async (dispatch: AppDispatch) => {
 
     const config = {
         method: "get",
-        url: "/api/v3/users/logout",
+        url: "/api/logout",
         headers: {
             Authorization: `Bearer ${accessToken}`,
             'Content-Type': 'application/json'

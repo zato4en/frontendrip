@@ -121,85 +121,80 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
     return (
         <>
-            <Container className="d-flex justify-content-center">
-                <Row>
-                    <Col>
-                        <Form.Group controlId="exampleForm.ControlInput1">
-                            <Form.Label>Фильтрация по пользователю</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Введите текст"
-                                value={textValue}
-                                onChange={(e) => setTextValue(e.target.value)}
-                                onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                        handleInputChange();
-                                    }
-                                }}
-                                style={{width: '100%'}}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-            </Container>
+            <div className="d-flex justify-content-end mt-3 pe-4 mx-5">
+                <div className="filter-section">
 
-            {/* =================================== ALERTS ===========================================*/}
+                    {role && (
+                        <>
+                            {role === '2' &&
+                                <Form.Group controlId="exampleForm.ControlInput1" className="mb-2">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Введите пользователя"
+                                        value={textValue}
+                                        onChange={(e) => setTextValue(e.target.value)}
+                                        onKeyPress={(e) => {
+                                            if (e.key === 'Enter') {
+                                                handleInputChange();
+                                            }
+                                        }}
+                                        style={{width: '200px'}}
+                                    />
+                                </Form.Group>
+                            }
 
-            {error !== "" && <MyComponent isError={true} message={error}/>}
-            {success !== "" && <MyComponent isError={false} message={success}/>}
-
-            {/* =================================== FILTERS ======================================*/}
-            {role &&
-                <div className="filter-section d-flex justify-content-end mb-3 pe-4">
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Фильтры
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu className={'px-2'}>
-                            <label>Дата создания с:</label>
+                            <label>Дата создания:</label>
                             <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
-                                className="custom-datepicker"
+                                className="custom-datepicker mb-2"
                                 popperPlacement="bottom-start"
                             />
 
-                            <label>Дата окончания по:</label>
+                            <label>Дата окончания:</label>
                             <DatePicker
                                 selected={endDate}
                                 onChange={(date) => setEndDate(date)}
-                                className="custom-datepicker"
+                                className="custom-datepicker mb-2"
                                 popperPlacement="bottom-start"
                             />
 
-                            {role == '2' &&
+                            {role === '2' && (
                                 <>
-                                    <label>Статус похода:</label>
+                                    <label>Статус заявки:</label>
                                     <Form.Select
-                                        className='my-2'
+                                        className="mb-2"
+                                        style={{width: '170px'}}
                                         value={selectedStatus || ""}
                                         onChange={(e) => setSelectedStatus(e.target.value)}
                                     >
                                         <option value="">Выберите статус</option>
-                                        <option value="1">Черновик</option>
                                         <option value="2">Сформирован</option>
                                         <option value="3">Завершён</option>
                                         <option value="4">Отклонён</option>
                                     </Form.Select>
                                 </>
-                            }
+                            )}
 
-                            <Button style={{width: '200px'}} className='mt-2' onClick={handleFilter}>Применить
-                                фильтры</Button>
-                            <Button variant="outline-danger" style={{width: '200px'}} className='mt-2'
-                                    onClick={resetFilter}>Сбросить
-                                фильтры</Button>
-
-                        </Dropdown.Menu>
-                    </Dropdown>
+                            <Button
+                                style={{width: '120px'}}
+                                className="mb-2"
+                                onClick={handleFilter}
+                            >
+                                Применить
+                            </Button>
+                            <Button
+                                variant="outline-danger"
+                                style={{width: '120px'}}
+                                className="mb-2"
+                                onClick={resetFilter}
+                            >
+                                Сбросить
+                            </Button>
+                        </>
+                    )}
                 </div>
-            }
+            </div>
 
             {/* =================================== TABLE ADMIN =============================================*/}
             {Satellite &&
@@ -207,18 +202,18 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Название похода</th>
+                        <th>Название спутника</th>
                         <th>Дата создания</th>
-                        <th>Дата окончания похода</th>
-                        <th>Дата начала процесса</th>
-                        <th>Дата принятия</th>
-                        <th>Дата начала похода</th>
-                        <th>Автор</th>
+                        <th>Дата формирования</th>
+                        <th>Процент сканирования</th>
                         {role == '2' &&
                             <th>Модератор</th>
                         }
+                        {role == '2' &&
+                            <th>Логин пользователя</th>
+                        }
+
                         <th>Статус</th>
-                        <th>Лидер</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -228,13 +223,13 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.id}</td>
                                 <td>{Satellite.satellite || 'Не задано'}</td>
                                 <td>{checkData(Satellite.date_create)}</td>
+                                <td>{checkData(Satellite.date_formation)}</td>
                                 {/*<td>{checkData(Satellite.date_end)}</td>*/}
                                 {/*<td>{checkData(Satellite.date_start_of_processing)}</td>*/}
                                 {/*<td>{checkData(Satellite.date_approve)}</td>*/}
                                 {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
-                                <td>{Satellite.user_login || 'Не задан'}</td>
+                                <td>{Satellite.percentage || 'Сканирование не началось'}</td>
                                 <td>{Satellite.status}</td>
-                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
                             </tr>
                         ))
                         : (filteredByUsers ? filteredByUsers : Satellite.Satellites).map((Satellite) => (
@@ -242,16 +237,23 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.id}</td>
                                 <td>{Satellite.satellite || 'Не задано'}</td>
                                 <td>{checkData(Satellite.date_create)}</td>
-                                {/*<td>{checkData(Satellite.date_end)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_start_of_processing)}</td>*/}
+                                <td>{checkData(Satellite.date_formation)}</td>
+
                                 {/*<td>{checkData(Satellite.date_approve)}</td>*/}
                                 {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
-                                <td>{Satellite.user_login || 'Не задан'}</td>
+                                <td>{Satellite.percentage || 'Сканирование не началось'}</td>
+                                <td>{Satellite.status}</td>
+
+                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
+
                                 {role == '2' &&
                                     <td>{Satellite.moder_login || 'Не задан'}</td>
                                 }
-                                <td>{Satellite.status}</td>
-                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
+                                {role == '2' &&
+                                    <td>{Satellite.status}</td>
+                                }
+
                             </tr>
                         ))}
                     </tbody>

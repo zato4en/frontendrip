@@ -109,4 +109,4 @@ export const mockSpectrums: ISpectrum[] = [
 ]
 
 
-export const defaultImage: string = `https://w.forfun.com/fetch/15/156edf6b7f00b207e365081fd2cd8186.jpeg`
+export const defaultImage: string = `public/defaultava.webp`

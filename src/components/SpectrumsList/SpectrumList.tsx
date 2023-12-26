@@ -45,7 +45,7 @@ const SpectrumList: FC<SpectrumsListProps> = ({setPage}) => {
                     disabled={basketID == 0}
                     style={{position: 'absolute', right: 40}}
                 >
-                    Создать поход
+                    Создать заявку
                 </Button>
             </div>
             <List items={Spectrums ?? []} renderItem={(Spectrum: ISpectrum) =>

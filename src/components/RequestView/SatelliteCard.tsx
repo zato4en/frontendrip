@@ -55,8 +55,9 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
         }
     }
 
-    const handleMakeRequest = () => {
-        dispatch(makeSatellite())
+    const handleMakeRequest = (id: number) => {
+        dispatch(makeSatellite(id))
+
         navigate(-1);
     }
 
@@ -64,11 +65,8 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
         dispatch(
             updateSatellite(
                 id,
-                // description == '$' ? Satellite.description : description,
                 SatelliteName == '$' ? Satellite.satellite : SatelliteName,
-                // startSatelliteDate == "" ? Satellite.date_formation : startSatelliteDate,
-                // endSatelliteDate == "" ? Satellite.date_end : endSatelliteDate,
-                // leader == '$' ? Satellite.leader : leader
+
             )
         )
     }
@@ -130,24 +128,19 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
                             </div>
                             <div className="detail-info">
-                                <label>Сформирована: {DateFormat(singleSatellite.date_formation)}</label>
+                                <>Имя спутника</>
                                 <input
                                     type="text"
                                     className="form-control bg-black text-white"
                                     value={SatelliteName == "$" ? singleSatellite.satellite : SatelliteName}
                                     onChange={(e) => setSatelliteName(e.target.value)}
                                     style={{marginBottom: '20px'}}
-                                    disabled={singleSatellite.status != "черновик"}
+                                    disabled={singleSatellite.status == "в работе"}
                                 />
-                                <textarea
-                                    className="form-control description-text-info bg-black text-white"
-                                    style={{height: "200px"}}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                    disabled={singleSatellite.status != "черновик"}
-                                ></textarea>
+
                             </div>
                             <div style={{textAlign: 'right'}}>
-                                {singleSatellite.status == "черновик" && <button
+                                {singleSatellite.status != "в работе" && <button
                                     type="button"
                                     className="btn btn-outline-light"
                                     onClick={() => handleSave(singleSatellite.id, singleSatellite)}
@@ -163,7 +156,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                         <TableView
                             setPage={setPage}
                             SatelliteID={Satellite_id ?? ''}
-                            destSatellites={singleSatellite.spectrum_requests}
+                            spectrum_requests={singleSatellite.spectrum_requests}
                             status={singleSatellite.status}
                         />
 
@@ -187,7 +180,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                     <button
                                         type="button"
                                         className="btn btn-outline-light"
-                                        onClick={handleMakeRequest}
+                                        onClick={() => handleMakeRequest(Satellite_id)}
                                     >
                                         Сформировать
                                     </button>
