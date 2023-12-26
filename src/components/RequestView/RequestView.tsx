@@ -128,7 +128,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
                             {role == '2' &&
                                 <>
-                                    <label>Статус похода:</label>
+                                    <label>Статус заявки:</label>
                                     <Form.Select
                                         className='my-2'
                                         value={selectedStatus || ""}
@@ -156,18 +156,17 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Название похода</th>
-                        <th>Дата создания</th>
-                        <th>Дата окончания похода</th>
+                        <th>Название спутника</th>
+                        <th>Дата создания заявки</th>
+                        {/*<th>Логин пользователя</th>*/}
                         <th>Дата начала процесса</th>
-                        <th>Дата принятия</th>
-                        <th>Дата начала похода</th>
-                        <th>Автор</th>
+
+                        <th>Процент сканирования</th>
 
 
 
                         <th>Статус</th>
-                        <th>Лидер</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -176,9 +175,11 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.id}</td>
                                 <td>{Satellite.satellite || 'Не задано'}</td>
                                 <td>{checkData(Satellite.date_create)}</td>
-                                <td>{Satellite.user_login || 'Не задан'}</td>
+                                <td>{checkData(Satellite.date_formation || 'Не сформирована')}</td>
+                                <td>{Satellite.percentage || 'пустая строка сканирования'}</td>
+                                {/*<td>{Satellite.user_login || 'Не задан'}</td>*/}
                                 <td>{Satellite.status}</td>
-                                <td>{Satellite.leader || 'На задан'}</td>
+                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
                             </tr>
                     ))}
 

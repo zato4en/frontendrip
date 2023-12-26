@@ -78,17 +78,17 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
             {Satellite &&
                     <div className='card-block'>
                         <div className="card">
-                            <h3>Статус: {Satellite.status}</h3>
+                            <h3>Статус заявки: {Satellite.status}</h3>
                             <div className="info">
                                 <div className="author-info">
                                     <div>
-                                        <p>@{emptyString(Satellite.user_login, 'Логин не задан')}</p>
+                                        <p>@{emptyString("Логин пользователя:  " + Satellite.user_login, 'Логин не задан')}</p>
                                     </div>
                                 </div>
 
                                 <div className="dates-info">
                                     <p>
-                                        Начало работы:
+                                        Дата создания:
                                         <input
                                             type="date"
                                             className="form-control"
@@ -98,7 +98,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                         />
                                     </p>
                                     <p>
-                                        Конец работы:
+                                        Дата формирования:
                                         <input
                                             type="date"
                                             className="form-control"
@@ -112,6 +112,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
                             </div>
                             <div className="detail-info">
+                                <>Имя спутника</>
                                 <input
                                     type="text"
                                     className="form-control bg-black text-white"

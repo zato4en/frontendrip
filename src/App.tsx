@@ -11,7 +11,7 @@ import satelliteCard from "./components/RequestView/SatelliteCard.tsx";
 import SatelliteCard from "./components/RequestView/SatelliteCard.tsx";
 
 function App() {
-    const SpectrumsPage = {name: 'Города', to: 'Spectrums'};
+    const SpectrumsPage = {name: 'Спектры', to: 'Spectrums'};
     const requestPage = {name: 'Заявка', to: 'request'};
     const [searchValue, setSearchValue] = useState('')
     const [pages, setPage] = useState<IBreadCrumb[]>([SpectrumsPage])
@@ -65,7 +65,7 @@ function App() {
                     <Route path="/Satellites/:satellite_id" element={
                         <SatelliteCard setPage={
                             (name, id) => addPage([
-                                {name: `Заявка: "${name}"`, to: `Satellite/${id}`}
+                                {name: `Заявка: "${name}"`, to: `Satellites/${id}`}
                             ])
                         }/>
                     }/>
