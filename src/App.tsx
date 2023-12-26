@@ -1,24 +1,24 @@
 import {Routes, Route} from 'react-router-dom';
 import NavigationBar from "./components/NavigationBar/NavigationBar.tsx";
-import CitiesList from "./components/SpectrumsList/CitiesList.tsx";
-import CityDetail from "./components/SpectrumDetail/CityDetail.tsx";
+import SpectrumList from "./components/SpectrumsList/SpectrumList.tsx";
+import SpectrumDetail from "./components/SpectrumDetail/SpectrumDetail.tsx";
 import {useState} from "react";
 import BreadCrumbs, {Breadcrumb} from "./components/BreadCrumbs/BreadCrumbs.tsx";
 import RequestView from "./components/RequestView/RequestView.tsx";
 import LoginPage from "./components/LoginPage/LoginPage.tsx";
 import RegisterPage from "./components/RegisterPage/RegisterPage.tsx";
-import CityTable from "./components/SpectrumTable/CityTable.tsx";
-import CreateCityPage from "./components/TableView/AddCity.tsx";
-import HikeCard from "./components/RequestView/HikeCard.tsx";
+import SpectrumTable from "./components/SpectrumTable/SpectrumTable.tsx";
+import CreateSpectrumPage from "./components/TableView/AddSpectrum.tsx";
+import SatelliteCard from "./components/RequestView/SatelliteCard.tsx";
 import Menu from "./components/Menu/Menu.tsx";
 
 function App() {
     const homePage: Breadcrumb = {name: 'Главная', to: ''};
-    const addCityPage: Breadcrumb = {name: 'Создание спектра', to: 'add-spectrum'};
-    const citiesTablePage: Breadcrumb = {name: 'Таблица спектров', to: 'Spectrums/admin'};
-    const citiesPage: Breadcrumb = {name: 'Спектры', to: 'Spectrums'};
+    const addSpectrumPage: Breadcrumb = {name: 'Создание спектра', to: 'add-spectrum'};
+    const SpectrumsTablePage: Breadcrumb = {name: 'Таблица спектров', to: 'Spectrums/admin'};
+    const SpectrumsPage: Breadcrumb = {name: 'Спектры', to: 'Spectrums'};
     const requestPage: Breadcrumb = {name: 'Заявки', to: 'Satellites'};
-    const [pages, setPage] = useState<Breadcrumb[]>([citiesPage])
+    const [pages, setPage] = useState<Breadcrumb[]>([SpectrumsPage])
     const addPage = (newPage: Breadcrumb[]) => {
         setPage(newPage);
     };
@@ -36,9 +36,9 @@ function App() {
                         />
                     }/>
 
-                    <Route path="/cities" element={
-                        <CitiesList
-                            setPage={() => addPage([homePage, citiesPage])}
+                    <Route path="/Spectrums" element={
+                        <SpectrumList
+                            setPage={() => addPage([homePage, SpectrumsPage])}
                         />
                     }
                     />
@@ -50,44 +50,44 @@ function App() {
                     }
                     />
 
-                    <Route path="/add-city" element={
-                        <CreateCityPage
-                            setPage={() => addPage([homePage, addCityPage])}
+                    <Route path="/add-Spectrum" element={
+                        <CreateSpectrumPage
+                            setPage={() => addPage([homePage, addSpectrumPage])}
                         />}
                     />
 
-                    <Route path="/add-city-2" element={
-                        <CreateCityPage
-                            setPage={() => addPage([homePage, citiesTablePage, addCityPage])}
+                    <Route path="/add-Spectrum-2" element={
+                        <CreateSpectrumPage
+                            setPage={() => addPage([homePage, SpectrumsTablePage, addSpectrumPage])}
                         />}
                     />
 
                     <Route path="/login" element={<LoginPage/>}/>
 
-                    <Route path="/cities/admin" element={
-                        <CityTable
-                            setPage={() => addPage([homePage, citiesTablePage])}
+                    <Route path="/Spectrums/admin" element={
+                        <SpectrumTable
+                            setPage={() => addPage([homePage, SpectrumsTablePage])}
                         />}
                     />
 
                     <Route path="/register" element={<RegisterPage/>}/>
 
-                    <Route path="/hikes/:hike_id" element={
-                        <HikeCard setPage={
+                    <Route path="/Satellites/:Satellite_id" element={
+                        <SatelliteCard setPage={
                             (name, id) => addPage([
                                 homePage,
                                 requestPage,
-                                {name: `Поход: "${name}"`, to: `hike/${id}`}
+                                {name: `Заявка: "${name}"`, to: `Satellite/${id}`}
                             ])
                         }/>
                     }/>
 
-                    <Route path="/cities/:id" element={
-                        <CityDetail
+                    <Route path="/Spectrums/:id" element={
+                        <SpectrumDetail
                             setPage={(name, id) => addPage([
                                 homePage,
-                                citiesPage,
-                                {name: `${name}`, to: `cities/${id}`}
+                                SpectrumsPage,
+                                {name: `${name}`, to: `Spectrums/${id}`}
                             ])}
                         />}
                     />
