@@ -64,11 +64,11 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
         dispatch(
             updateSatellite(
                 id,
-                description == '$' ? Satellite.description : description,
-                SatelliteName == '$' ? Satellite.Satellite_name : SatelliteName,
-                startSatelliteDate == "" ? Satellite.date_start_Satellite : startSatelliteDate,
-                endSatelliteDate == "" ? Satellite.date_end : endSatelliteDate,
-                leader == '$' ? Satellite.leader : leader
+                // description == '$' ? Satellite.description : description,
+                SatelliteName == '$' ? Satellite.satellite : SatelliteName,
+                // startSatelliteDate == "" ? Satellite.date_formation : startSatelliteDate,
+                // endSatelliteDate == "" ? Satellite.date_end : endSatelliteDate,
+                // leader == '$' ? Satellite.leader : leader
             )
         )
     }
@@ -84,71 +84,70 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                         {/* ======================= ШАПКА =============================== */}
 
                         <div className="card">
-                            <h3>Статус: {singleSatellite.status.status_name}</h3>
+                            <h3>Статус: {singleSatellite.status}</h3>
                             <div className="info">
                                 <div className="author-info">
-                                    <img src={singleSatellite.user.image_url} alt="Фото Автора" className="author-img"/>
+                                    {/*<img src={singleSatellite.user} alt="Фото Автора" className="author-img"/>*/}
                                     <div>
-                                        <h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>
-                                        <p>Профессия: {emptyString(singleSatellite.user.profession, 'Профессия не задана')}</p>
-                                        <p>@{emptyString(singleSatellite.user.login, 'Логин на задан')}</p>
+                                        {/*<h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>*/}
+                                        {/*<p>Профессия: {emptyString(singleSatellite.user, 'Профессия не задана')}</p>*/}
+                                        <p>@{emptyString(singleSatellite.user_login, 'Логин на задан')}</p>
                                     </div>
                                 </div>
 
                                 <div className="dates-info">
                                     <p>
-                                        Начало похода:
+                                        Начало сканирования:
                                         <input
                                             type="date"
                                             className="form-control"
-                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_start_Satellite)}
+                                            value={startSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_formation)}
                                             onChange={(e) => setStartSatelliteDate(e.target.value)}
-                                            disabled={singleSatellite.status_id != 1}
+                                            disabled={singleSatellite.status != "черновик"}
                                         />
                                     </p>
-                                    <p>
-                                        Конец похода:
-                                        <input
-                                            type="date"
-                                            className="form-control"
-                                            value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.date_end)}
-                                            onChange={(e) => setEndSatelliteDate(e.target.value)}
-                                            disabled={singleSatellite.status_id != 1}
-                                        />
-                                    </p>
-                                    <p>
-                                        Лидер похода:
-                                        <input
-                                            type="text"
-                                            className="form-control bg-black text-white"
-                                            value={leader == "$" ? singleSatellite.leader : leader}
-                                            onChange={(e) => setLeader(e.target.value)}
-                                            disabled={singleSatellite.status_id != 1}
-                                        />
-                                    </p>
+                                    {/*<p>*/}
+                                    {/*    Конец похода:*/}
+                                    {/*    <input*/}
+                                    {/*        type="date"*/}
+                                    {/*        className="form-control"*/}
+                                    {/*        value={endSatelliteDate || convertServerDateToInputFormat(singleSatellite.вф)}*/}
+                                    {/*        onChange={(e) => setEndSatelliteDate(e.target.value)}*/}
+                                    {/*        disabled={singleSatellite.status != "черновик"}*/}
+                                    {/*    />*/}
+                                    {/*</p>*/}
+                                    {/*<p>*/}
+                                    {/*    Лидер похода:*/}
+                                    {/*    <input*/}
+                                    {/*        type="text"*/}
+                                    {/*        className="form-control bg-black text-white"*/}
+                                    {/*        value={leader == "$" ? singleSatellite.leader : leader}*/}
+                                    {/*        onChange={(e) => setLeader(e.target.value)}*/}
+                                    {/*        disabled={singleSatellite.status != "черновик"}*/}
+                                    {/*    />*/}
+                                    {/*</p>*/}
                                 </div>
 
                             </div>
                             <div className="detail-info">
-                                <label>Сформирована: {DateFormat(singleSatellite.date_start_of_processing)}</label>
+                                <label>Сформирована: {DateFormat(singleSatellite.date_formation)}</label>
                                 <input
                                     type="text"
                                     className="form-control bg-black text-white"
-                                    value={SatelliteName == "$" ? singleSatellite.Satellite_name : SatelliteName}
+                                    value={SatelliteName == "$" ? singleSatellite.satellite : SatelliteName}
                                     onChange={(e) => setSatelliteName(e.target.value)}
                                     style={{marginBottom: '20px'}}
-                                    disabled={singleSatellite.status_id != 1}
+                                    disabled={singleSatellite.status != "черновик"}
                                 />
                                 <textarea
                                     className="form-control description-text-info bg-black text-white"
                                     style={{height: "200px"}}
-                                    value={description == "$" ? singleSatellite.description : description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    disabled={singleSatellite.status_id != 1}
+                                    disabled={singleSatellite.status != "черновик"}
                                 ></textarea>
                             </div>
                             <div style={{textAlign: 'right'}}>
-                                {singleSatellite.status_id == 1 && <button
+                                {singleSatellite.status == "черновик" && <button
                                     type="button"
                                     className="btn btn-outline-light"
                                     onClick={() => handleSave(singleSatellite.id, singleSatellite)}
@@ -164,14 +163,14 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                         <TableView
                             setPage={setPage}
                             SatelliteID={Satellite_id ?? ''}
-                            destSatellites={singleSatellite.destination_Satellites}
-                            status={singleSatellite.status_id}
+                            destSatellites={singleSatellite.spectrum_requests}
+                            status={singleSatellite.status}
                         />
 
                         {/* ======================= КНОПКИ ============================= */}
 
                         <div className='delete-make' style={{display: 'flex', gap: '10px'}}>
-                            {singleSatellite.status_id != 5 && (
+                            {singleSatellite.status != "удален"  && (
                                 <div style={{flex: 1}}>
                                     <button
                                         type="button"
@@ -183,7 +182,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                 </div>
                             )}
 
-                            {singleSatellite.status_id == 1 && (
+                            {singleSatellite.status == "черновик" && (
                                 <div style={{flex: 1}}>
                                     <button
                                         type="button"
@@ -195,7 +194,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                 </div>
                             )}
 
-                            {singleSatellite.status_id == 2 && role == '2' && (
+                            {singleSatellite.status == "в работе" && role == '2' && (
                                 <>
                                     <div style={{flex: 1}}>
                                         <button

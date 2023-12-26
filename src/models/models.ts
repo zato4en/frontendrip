@@ -49,6 +49,9 @@ export interface IAuthResponse {
     access_token?: string,
     description?: string,
     status?: string,
+    role?: string
+    userName?: string,
+    userImage?: string
 }
 
 // export interface IUser {

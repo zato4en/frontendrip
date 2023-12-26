@@ -67,10 +67,10 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                     <img
                         className="round"
                         src={Spectrum?.image_url}
-                        alt={Spectrum?.Spectrum_name}
+                        alt={Spectrum?.name}
                     />
-                    <h3>{Spectrum?.Spectrum_name}</h3>
-                    <h6>Статус: {Spectrum?.status.status_name}</h6>
+                    <h3>{Spectrum?.name}</h3>
+                    <h6>Статус: {Spectrum?.status}</h6>
                     <p>{Spectrum?.description}</p>
                     {role == '2' &&
                         <img

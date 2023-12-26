@@ -95,7 +95,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         }
 
         if (Satellite) {
-            const d = Satellite.Satellites.filter(obj => isDateInRange(obj.date_start_of_processing))
+            const d = Satellite.Satellites.filter(obj => isDateInRange(obj.date_create))
             setFilteredSatellites(d)
         }
     }
@@ -114,7 +114,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
     const handleInputChange = () => {
         if (Satellite) {
-            const d = Satellite.Satellites.filter(obj => obj.user.login == textValue)
+            const d = Satellite.Satellites.filter(obj => obj.user_login == textValue)
             setFilteredUsers(d.length == 0 ? null : d)
         }
     };
@@ -226,32 +226,32 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                         ? filteredSatellites.map((Satellite) => (
                             <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
                                 <td>{Satellite.id}</td>
-                                <td>{Satellite.Satellite_name || 'Не задано'}</td>
-                                <td>{checkData(Satellite.date_created)}</td>
-                                <td>{checkData(Satellite.date_end)}</td>
-                                <td>{checkData(Satellite.date_start_of_processing)}</td>
-                                <td>{checkData(Satellite.date_approve)}</td>
-                                <td>{checkData(Satellite.date_start_Satellite)}</td>
-                                <td>{Satellite.user.user_name || 'Не задан'}</td>
-                                <td>{Satellite.status.status_name}</td>
-                                <td>{Satellite.leader || 'На задан'}</td>
+                                <td>{Satellite.satellite || 'Не задано'}</td>
+                                <td>{checkData(Satellite.date_create)}</td>
+                                {/*<td>{checkData(Satellite.date_end)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_start_of_processing)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
+                                <td>{Satellite.user_login || 'Не задан'}</td>
+                                <td>{Satellite.status}</td>
+                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
                             </tr>
                         ))
                         : (filteredByUsers ? filteredByUsers : Satellite.Satellites).map((Satellite) => (
                             <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
                                 <td>{Satellite.id}</td>
-                                <td>{Satellite.Satellite_name || 'Не задано'}</td>
-                                <td>{checkData(Satellite.date_created)}</td>
-                                <td>{checkData(Satellite.date_end)}</td>
-                                <td>{checkData(Satellite.date_start_of_processing)}</td>
-                                <td>{checkData(Satellite.date_approve)}</td>
-                                <td>{checkData(Satellite.date_start_Satellite)}</td>
-                                <td>{Satellite.user.user_name || 'Не задан'}</td>
+                                <td>{Satellite.satellite || 'Не задано'}</td>
+                                <td>{checkData(Satellite.date_create)}</td>
+                                {/*<td>{checkData(Satellite.date_end)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_start_of_processing)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
+                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
+                                <td>{Satellite.user_login || 'Не задан'}</td>
                                 {role == '2' &&
-                                    <td>{Satellite.moderator.user_name || 'Не задан'}</td>
+                                    <td>{Satellite.moder_login || 'Не задан'}</td>
                                 }
-                                <td>{Satellite.status.status_name}</td>
-                                <td>{Satellite.leader || 'На задан'}</td>
+                                <td>{Satellite.status}</td>
+                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
                             </tr>
                         ))}
                     </tbody>

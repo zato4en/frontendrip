@@ -20,7 +20,7 @@ export const fetchSpectrums = (searchValue?: string, makeLoading: boolean = true
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     const config = {
         method: "get",
-        url: `/api/v3/Spectrums`+ `?search=${searchValue ?? ''}`,
+        url: `/api/Spectrums`+ `?search=${searchValue ?? ''}`,
         headers: {
             Authorization: `Bearer ${accessToken ?? ''}`,
         },
@@ -423,11 +423,11 @@ export const deleteDestSatelliteById = (
 
 export const updateSatellite = (
     id: number,
-    description: string,
+    // description: string,
     SatelliteName: string,
-    startDate: string,
-    endDate: string,
-    leader: string
+    // startDate: string,
+    // endDate: string,
+    // leader: string
 ) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
     const config = {
@@ -438,11 +438,11 @@ export const updateSatellite = (
             ContentType: "application/json"
         },
         data: {
-            description: description,
+            // description: description,
             Satellite_name: SatelliteName,
-            date_start_Satellite: convertInputFormatToServerDate(startDate),
-            date_end: convertInputFormatToServerDate(endDate),
-            leader: leader,
+            // date_start_Satellite: convertInputFormatToServerDate(startDate),
+            // date_end: convertInputFormatToServerDate(endDate),
+            // leader: leader,
             id: id,
         }
     };
@@ -582,7 +582,7 @@ export const logoutSession = () => async (dispatch: AppDispatch) => {
 export const loginSession = (login: string, password: string) => async (dispatch: AppDispatch) => {
     const config = {
         method: "post",
-        url: "/api/v3/users/login",
+        url: "/api/login",
         headers: {
             'Content-Type': 'application/json'
         },
