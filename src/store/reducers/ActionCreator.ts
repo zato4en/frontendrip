@@ -353,7 +353,7 @@ export const fetchSatelliteById = (
                 Authorization: `Bearer ${accessToken}`
             }
         });
-        setPage(response.data.Satellite.Satellite_name, response.data.Satellite.id)
+        setPage(response.data.Satellite.satellite, response.data.Satellite.id)
         dispatch(SatelliteSlice.actions.SatelliteFetched(response.data.Satellite))
     } catch (e) {
         dispatch(SatelliteSlice.actions.SatellitesFetchedError(`${e}`))
@@ -405,12 +405,13 @@ export const deleteDestSatelliteById = (
 
     try {
         dispatch(SatelliteSlice.actions.SatellitesFetching())
-        const response = await axios.delete<IDeleteDestinationSatellite>(`/api/v3/destination-Satellites`, {
+        const response = await axios.delete<IDeleteSpectrumRequest>(`/api/SpectrumsRequests`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             },
             data: {
                 id: id,
+            //     НАДО ПЕРЕДАВАТЬ ДВА АЙДИ
             },
         });
         dispatch(SatelliteSlice.actions.SatellitesDeleteSuccess(response.data))
@@ -459,21 +460,22 @@ export const updateSatellite = (
     }
 }
 
+
 export const fetchSpectrum = (
     SpectrumId: string,
     setPage: (name: string, id: number) => void
 ) => async (dispatch: AppDispatch) => {
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumResponse>(`/api/v3/Spectrums?Spectrum=${SpectrumId}`)
-        const Spectrum = response.data.Spectrum
-        setPage(Spectrum.Spectrum_name ?? "Без названия", Spectrum.id)
-        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum))
+        const response = await axios.get<ISpectrumResponse>(`/api/Spectrums?Spectrum=${SpectrumId}`)
+        const Spectrum = response.data.Spectrums
+        setPage(Spectrum[0].name ?? "Без названия", Spectrum[0].id)
+        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum[0]))
     } catch (e) {
-        console.log(`Ошибка загрузки городов: ${e}`)
+        console.log(`Ошибка загрузки спектров: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;
         const mockSpectrum = mockSpectrums[previewID]
-        setPage(mockSpectrum.Spectrum_name ?? "Без названия", mockSpectrum.id)
+        setPage(mockSpectrum.name ?? "Без названия", mockSpectrum.id)
         dispatch(SpectrumSlice.actions.SpectrumFetched(mockSpectrum))
     }
 }
@@ -602,7 +604,7 @@ export const loginSession = (login: string, password: string) => async (dispatch
             Cookies.set('jwtToken', jwtToken);
             Cookies.set('role', response.data.role ?? '');
             dispatch(userSlice.actions.setAuthStatus(true));
-            Cookies.set('userImage', response.data.userImage)
+            Cookies.set('userImage', response.data.userName)
             Cookies.set('userName', response.data.userName)
         }
         setTimeout(() => {
@@ -618,7 +620,7 @@ export const loginSession = (login: string, password: string) => async (dispatch
 function filterMockData(searchValue?: string) {
     if (searchValue) {
         const filteredSpectrums = mockSpectrums.filter(Spectrum =>
-            Spectrum.Spectrum_name?.toLowerCase().includes((searchValue ?? '').toLowerCase())
+            Spectrum.name?.toLowerCase().includes((searchValue ?? '').toLowerCase())
         );
         if (filteredSpectrums.length === 0) {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
