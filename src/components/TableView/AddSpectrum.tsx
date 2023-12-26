@@ -1,6 +1,6 @@
 import {useState, ChangeEvent, FormEvent, FC, useEffect} from 'react';
 import {Button, Form, Container, Row, Col} from 'react-bootstrap';
-import {createSpectrum} from "../../store/reducers/ActionCreator.ts";
+import {convertServerDateToInputFormat, createSpectrum} from "../../store/reducers/ActionCreator.ts";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import Cookies from "js-cookie";
@@ -51,6 +51,7 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
     };
 
     if (role != '2') {
+        console.log(role)
         return <h2>нет прав</h2>
     }
     return (

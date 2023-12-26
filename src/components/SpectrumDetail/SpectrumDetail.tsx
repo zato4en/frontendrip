@@ -4,6 +4,9 @@ import './SpectrumCard.css'
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import {fetchSpectrum} from "../../store/reducers/ActionCreator.ts";
 import Cookies from "js-cookie";
+import axios from "axios";
+import {IDeleteSpectrumRequest} from "../../models/models.ts";
+import spectrumTable from "../SpectrumTable/SpectrumTable.tsx";
 
 interface SpectrumDetailProps {
     setPage: (name: string, id: number) => void
@@ -15,10 +18,11 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
     const {Spectrum, isLoading, error} = useAppSelector(state => state.SpectrumReducer)
     const navigate = useNavigate();
     const role = Cookies.get('role')
+    const accessToken = Cookies.get('jwtToken')
 
-    const handleDelete = () => {
+    const handleDelete = (spectrumid:number) => {
         navigate('/Spectrums');
-        DeleteData()
+        DeleteData(spectrumid)
             .then(() => {
                 console.log(`Spectrum with ID ${Spectrum?.id} successfully deleted.`);
             })
@@ -28,14 +32,25 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
             });
     }
 
-    const DeleteData = async () => {
+    const DeleteData = async (spectrumid:number) => {
         try {
-            const response = await fetch('http://localhost:8888/Spectrums', {
-                method: 'DELETE',
+            // const response = await fetch('http://localhost:8888/Spectrums', {
+            //     method: 'DELETE',
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     data:{
+            //         id: id,
+            //     },
+            // });
+            const response = await axios.delete(`/api/Spectrums`, {
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`
                 },
-
+                data: {
+                    id: spectrumid,
+                },
             });
 
             if (response.status === 200) {
@@ -64,7 +79,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
             {error && <h1>Ошибка {error} </h1>}
             {<div className="Spectrum-card-body">
                 <div className="card-container">
-                    <span className="pro">Город</span>
+                    <span className="pro">Спектр</span>
                     <img
                         className="round"
                         src={Spectrum?.image_url}
@@ -78,7 +93,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
                             className="delete-button"
                             src="/deleteTrash.png"
                             alt="Delete"
-                            onClick={handleDelete}
+                            onClick={() => handleDelete(Spectrum.id)}
                         />
                     }
                     <div className="buttons">

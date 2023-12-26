@@ -30,7 +30,7 @@ const SpectrumTable: FC<SpectrumTableProps> = ({setPage}) => {
                 <Nav.Item>
                     <Link to="/add-Spectrum-2" className="btn btn-outline-primary mt-2"
                           style={{marginLeft: '80px', marginBottom: '30px'}}>
-                        Добавить город
+                        Добавить спектр
                     </Link>
                 </Nav.Item>
             </Nav>
@@ -38,8 +38,8 @@ const SpectrumTable: FC<SpectrumTableProps> = ({setPage}) => {
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Название города</th>
-                    <th>Статус</th>
+                    <th>Название спектра</th>
+                    {/*<th>Статус</th>*/}
                     <th>Описание</th>
                     <th>Изображение</th>
                 </tr>

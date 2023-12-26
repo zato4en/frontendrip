@@ -164,7 +164,7 @@ export const deleteSpectrum = (SpectrumId: number) => async (dispatch: AppDispat
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
         const response = await axios<IDefaultResponse>(config);
         const error = response.data.description ?? ""
-        const success = error == "" ? 'Город удалён' : ''
+        const success = error == "" ? 'Спектр удалён' : ''
         dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite([error, success]))
         dispatch(fetchSpectrums())
     } catch (e) {
@@ -191,7 +191,7 @@ export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: numbe
         // dispatch(SpectrumSlice.actions.SpectrumsFetching())
         const response = await axios(config);
         const errorText = response.data.description ?? ""
-        const successText = errorText || `Город "${SpectrumName}" добавлен`
+        const successText = errorText || `Спектр "${SpectrumName}" добавлен`
         dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite([errorText, successText]));
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -263,18 +263,19 @@ export const makeSatellite = (id: number) => async (dispatch: AppDispatch) => {
     }
 }
 
-export const moderatorUpdateStatus = (SatelliteId: number, status: number) => async (dispatch: AppDispatch) => {
+export const moderatorUpdateStatus = (SatelliteId: number, status: string, user_id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
         method: "put",
-        url: "/api/Satellites/update/status-for-moderator",
+        url: `/api/SatellitesModer/${SatelliteId}`,
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },
         data: {
-            status_id: status,
-            Satellite_id: SatelliteId
+            status: status,
+            Satellite_id: SatelliteId,
+            moder_id: user_id
         }
     }
     try {
@@ -507,7 +508,7 @@ export const createSpectrum = (
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
         const response = await axios(config);
         const errorText = response.data.description || ''
-        const successText = errorText == '' ? "Город создан" : ''
+        const successText = errorText == '' ? "Спектр создан" : ''
         dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite([errorText, successText]))
         setTimeout(() => {
             dispatch(SpectrumSlice.actions.SpectrumAddedIntoSatellite(['', '']));
@@ -599,8 +600,9 @@ export const loginSession = (login: string, password: string) => async (dispatch
             Cookies.set('jwtToken', jwtToken);
             Cookies.set('role', response.data.role ?? '');
             dispatch(userSlice.actions.setAuthStatus(true));
-            Cookies.set('userImage', response.data.userName)
+            // Cookies.set('userImage', response.data.userImage)
             Cookies.set('userName', response.data.userName)
+            Cookies.set('userName', response.data.userid)
         }
         setTimeout(() => {
             dispatch(userSlice.actions.resetStatuses());

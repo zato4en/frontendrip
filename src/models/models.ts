@@ -47,9 +47,8 @@ export interface IRegisterResponse {
 
 export interface IAuthResponse {
     access_token?: string,
-    description?: string,
-    status?: string,
-    role?: string
+    userid?: number,
+    role?: string,
     userName?: string,
     userImage?: string
 }

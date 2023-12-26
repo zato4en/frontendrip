@@ -29,6 +29,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     const [description, setDescription] = useState('$');
     const [SatelliteName, setSatelliteName] = useState('$');
     const role = Cookies.get('role')
+    const userid = Cookies.get('userid')
 
     useEffect(() => {
         if (Satellite_id) {
@@ -43,7 +44,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
     const handlerApprove = () => {
         if (singleSatellite) {
-            dispatch(moderatorUpdateStatus(singleSatellite.id, 3))
+            dispatch(moderatorUpdateStatus(singleSatellite.id, "Завершен", user.id))
             navigate(-1);
         }
     }
