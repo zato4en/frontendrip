@@ -1,13 +1,13 @@
 import {Routes, Route} from 'react-router-dom';
 import NavigationBar from "./components/NavigationBar/NavigationBar.tsx";
-import CitiesList from "./components/CitiesList/CitiesList.tsx";
-import CityDetail from "./components/CityDetail/CityDetail.tsx";
+import CitiesList from "./components/SpectrumsList/CitiesList.tsx";
+import CityDetail from "./components/SpectrumDetail/CityDetail.tsx";
 import {useState} from "react";
 import BreadCrumbs, {Breadcrumb} from "./components/BreadCrumbs/BreadCrumbs.tsx";
 import RequestView from "./components/RequestView/RequestView.tsx";
 import LoginPage from "./components/LoginPage/LoginPage.tsx";
 import RegisterPage from "./components/RegisterPage/RegisterPage.tsx";
-import CityTable from "./components/CityTable/CityTable.tsx";
+import CityTable from "./components/SpectrumTable/CityTable.tsx";
 import CreateCityPage from "./components/TableView/AddCity.tsx";
 import HikeCard from "./components/RequestView/HikeCard.tsx";
 import Menu from "./components/Menu/Menu.tsx";
