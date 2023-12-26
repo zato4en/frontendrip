@@ -265,7 +265,8 @@ export const makeSatellite = (id: number) => async (dispatch: AppDispatch) => {
     }
 }
 
-export const moderatorUpdateStatus = (SatelliteId: number, status: string, user_id: number) => async (dispatch: AppDispatch) => {
+export const moderatorUpdateStatus = (SatelliteId: number, status: string, modername: string) => async (dispatch: AppDispatch) => {
+
     const accessToken = Cookies.get('jwtToken');
 
     const config = {
@@ -276,8 +277,7 @@ export const moderatorUpdateStatus = (SatelliteId: number, status: string, user_
         },
         data: {
             status: status,
-            Satellite_id: SatelliteId,
-            moder_id: user_id
+            modername: modername
         }
     }
     try {
@@ -367,20 +367,20 @@ export const fetchSatellitesFilter = (dateStart?: string, dateEnd?: string, stat
     dispatch(userSlice.actions.setAuthStatus(accessToken != null && accessToken != ""));
     try {
         dispatch(SatelliteSlice.actions.SatellitesFetching())
-        const queryParams: Record<string, string | undefined> = {};
+
+        // Создание новых параметров запроса
+        const queryParams = new URLSearchParams();
         if (dateStart) {
-            queryParams.start_date = dateStart;
+            queryParams.set('date_formation_start', dateStart);
         }
         if (dateEnd) {
-            queryParams.end_date = dateEnd;
+            queryParams.set('date_formation_end', dateEnd);
         }
         if (status) {
-            queryParams.status_id = status;
+            queryParams.set('status', status);
         }
-        const queryString = Object.keys(queryParams)
-            .map((key) => `${key}=${encodeURIComponent(queryParams[key]!)}`)
-            .join('&');
-        const urlWithParams = `/api/Satellites${queryString ? `?${queryString}` : ''}`;
+
+        const urlWithParams = `/api/Satellites${queryParams.toString() ? `?${queryParams}` : ''}`;
         const response = await axios.get<ISatelliteResponse>(urlWithParams, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -397,6 +397,7 @@ export const fetchSatellitesFilter = (dateStart?: string, dateEnd?: string, stat
         dispatch(SatelliteSlice.actions.SatellitesFetchedError(`${e}`))
     }
 }
+
 
 export const deleteDestSatelliteById = (
     id: number,

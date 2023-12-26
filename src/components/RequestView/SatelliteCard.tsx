@@ -30,7 +30,8 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     const [description, setDescription] = useState('$');
     const [SatelliteName, setSatelliteName] = useState('$');
     const role = Cookies.get('role')
-    const userid = Cookies.get('userid')
+    const modername = Cookies.get('userName')
+
 
     useEffect(() => {
         if (Satellite_id) {
@@ -45,14 +46,15 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
     const handlerApprove = () => {
         if (singleSatellite) {
-            dispatch(moderatorUpdateStatus(singleSatellite.id, "Завершен", user.id))
+            dispatch(moderatorUpdateStatus(singleSatellite.id, "завершен", modername))
+
             navigate(-1);
         }
     }
 
     const handleDiscard = () => {
         if (singleSatellite) {
-            dispatch(moderatorUpdateStatus(singleSatellite.id, 4))
+            dispatch(moderatorUpdateStatus(singleSatellite.id, "отклонен", modername))
             navigate(-1);
         }
     }
@@ -91,7 +93,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                     <div>
                                         {/*<h4>{emptyString(singleSatellite.user.user_name, "Имя не задано")}</h4>*/}
                                         {/*<p>Профессия: {emptyString(singleSatellite.user, 'Профессия не задана')}</p>*/}
-                                        <p>@{emptyString(singleSatellite.user_login, 'Логин на задан')}</p>
+                                        <p>@{emptyString("Логин пользователя: " + singleSatellite.user_login, 'Логин на задан')}</p>
                                     </div>
                                 </div>
 

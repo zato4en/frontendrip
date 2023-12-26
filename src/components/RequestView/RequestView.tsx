@@ -36,7 +36,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
         const handleFilterInterval = setInterval(() => {
             handleFilter();
-        }, 3000);
+        }, 2000);
 
         const cleanup = () => {
             clearInterval(handleFilterInterval);
@@ -68,11 +68,11 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         };
         const formattedStartDate = formatDate(startDate);
         const formattedEndDate = formatDate(endDate);
-        if (role == '2') {
-            dispatch(fetchSatellitesFilter(formattedStartDate, formattedEndDate, `${selectedStatus}`));
-        } else {
+
+            dispatch(fetchSatellitesFilter(formattedStartDate, formattedEndDate, selectedStatus));
+        // } else {
             localFilter(formattedStartDate, formattedEndDate)
-        }
+        // }
     };
 
     function formatDate2(inputDate: string): string {
@@ -143,7 +143,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 </Form.Group>
                             }
 
-                            <label>Дата создания:</label>
+                            <label>Начало диапазона формирования:</label>
                             <DatePicker
                                 selected={startDate}
                                 onChange={(date) => setStartDate(date)}
@@ -151,7 +151,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 popperPlacement="bottom-start"
                             />
 
-                            <label>Дата окончания:</label>
+                            <label>Конец диапазона формирования:</label>
                             <DatePicker
                                 selected={endDate}
                                 onChange={(date) => setEndDate(date)}
@@ -169,9 +169,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                         onChange={(e) => setSelectedStatus(e.target.value)}
                                     >
                                         <option value="">Выберите статус</option>
-                                        <option value="2">Сформирован</option>
-                                        <option value="3">Завершён</option>
-                                        <option value="4">Отклонён</option>
+                                        <option value="в работе">В работе</option>
+                                        <option value="завершен">Завершен</option>
+                                        <option value="отклонен">Отклонен</option>
                                     </Form.Select>
                                 </>
                             )}
@@ -212,7 +212,6 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                         {role == '2' &&
                             <th>Логин пользователя</th>
                         }
-
                         <th>Статус</th>
                     </tr>
                     </thead>
@@ -224,11 +223,12 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.satellite || 'Не задано'}</td>
                                 <td>{checkData(Satellite.date_create)}</td>
                                 <td>{checkData(Satellite.date_formation)}</td>
-                                {/*<td>{checkData(Satellite.date_end)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_start_of_processing)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
                                 <td>{Satellite.percentage || 'Сканирование не началось'}</td>
+
+                                <td>{Satellite.moder_login || 'Логин модера не указан'}</td>
+                                <td>{Satellite.user_login || 'Логин юзера не указан'}</td>
+
+
                                 <td>{Satellite.status}</td>
                             </tr>
                         ))
@@ -238,21 +238,13 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.satellite || 'Не задано'}</td>
                                 <td>{checkData(Satellite.date_create)}</td>
                                 <td>{checkData(Satellite.date_formation)}</td>
-
-                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
                                 <td>{Satellite.percentage || 'Сканирование не началось'}</td>
+                                <td>{Satellite.moder_login || 'не назначен'}</td>
+                                <td>{Satellite.user_login || 'Не задано'}</td>
                                 <td>{Satellite.status}</td>
 
-                                {/*<td>{checkData(Satellite.date_approve)}</td>*/}
-                                {/*<td>{checkData(Satellite.date_start_Satellite)}</td>*/}
 
-                                {role == '2' &&
-                                    <td>{Satellite.moder_login || 'Не задан'}</td>
-                                }
-                                {role == '2' &&
-                                    <td>{Satellite.status}</td>
-                                }
+
 
                             </tr>
                         ))}
