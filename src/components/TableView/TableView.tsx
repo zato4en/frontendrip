@@ -1,10 +1,9 @@
 import {FC} from "react";
 import './TableView.css'
-import {ISatellite, ISpectrumRequests} from "../../models/models.ts";
+import { ISpectrumRequests} from "../../models/models.ts";
 import {useAppDispatch} from "../../hooks/redux.ts";
 import {deleteSatelliteById} from "../../store/reducers/ActionCreator.ts";
 import {SpectrumSlice} from "../../store/reducers/SpectrumSlice.ts";
-import SpectrumItem from "../SpectrumItem/SpectrumItem.tsx";
 
 interface TableViewProps {
     status: string
