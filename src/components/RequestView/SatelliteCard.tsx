@@ -62,7 +62,8 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     const handleMakeRequest = (id: number) => {
         dispatch(makeSatellite(id))
 
-        navigate(-1);
+        navigate("/request");
+
     }
 
     const handleSave = (id: number, Satellite: ISatellite) => {

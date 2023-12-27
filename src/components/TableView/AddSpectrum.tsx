@@ -5,6 +5,8 @@ import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import Cookies from "js-cookie";
 import {useNavigate} from "react-router-dom";
+import {Simulate} from "react-dom/test-utils";
+import waiting = Simulate.waiting;
 
 interface SpectrumData {
     SpectrumName: string;
@@ -36,9 +38,12 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
     }, []);
 
     const save = () => {
-        dispatch(createSpectrum(SpectrumData.SpectrumName, SpectrumData.description, SpectrumData.image))
-        navigate(-1)
-    }
+        dispatch(createSpectrum(SpectrumData.SpectrumName, SpectrumData.description, SpectrumData.image));
+
+        setTimeout(() => {
+            navigate(-1);
+        }, 150);  // 250 миллисекунд = 0.25 секунды
+    };
 
     const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];

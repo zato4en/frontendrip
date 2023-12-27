@@ -35,8 +35,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         dispatch(fetchSatellites());
 
         const handleFilterInterval = setInterval(() => {
+            dispatch(fetchSatellites());
             handleFilter();
-        }, 2000);
+        }, 3000);
 
         const cleanup = () => {
             clearInterval(handleFilterInterval);
@@ -49,6 +50,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             window.removeEventListener('beforeunload', cleanup);
         };
     }, [startDate, endDate, selectedStatus]);
+
 
     const resetFilter = () => {
         setStartDate(null)
@@ -68,11 +70,11 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         };
         const formattedStartDate = formatDate(startDate);
         const formattedEndDate = formatDate(endDate);
-
+        if (role == '2') {
             dispatch(fetchSatellitesFilter(formattedStartDate, formattedEndDate, selectedStatus));
-        // } else {
+        } else {
             localFilter(formattedStartDate, formattedEndDate)
-        // }
+        }
     };
 
     function formatDate2(inputDate: string): string {
@@ -118,6 +120,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             setFilteredUsers(d.length == 0 ? null : d)
         }
     };
+
+
 
     return (
         <>
@@ -216,7 +220,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                     </tr>
                     </thead>
                     <tbody>
-                    {filteredSatellites && role == '0'
+
+                    {filteredSatellites && role != '2'
                         ? filteredSatellites.map((Satellite) => (
                             <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
                                 <td>{Satellite.id}</td>
@@ -224,11 +229,6 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{checkData(Satellite.date_create)}</td>
                                 <td>{checkData(Satellite.date_formation)}</td>
                                 <td>{Satellite.percentage || 'Сканирование не началось'}</td>
-
-                                <td>{Satellite.moder_login || 'Логин модера не указан'}</td>
-                                <td>{Satellite.user_login || 'Логин юзера не указан'}</td>
-
-
                                 <td>{Satellite.status}</td>
                             </tr>
                         ))
@@ -239,12 +239,13 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{checkData(Satellite.date_create)}</td>
                                 <td>{checkData(Satellite.date_formation)}</td>
                                 <td>{Satellite.percentage || 'Сканирование не началось'}</td>
+                                {role == '2' &&
                                 <td>{Satellite.moder_login || 'не назначен'}</td>
+                                }
+                                {role == '2' &&
                                 <td>{Satellite.user_login || 'Не задано'}</td>
+                                }
                                 <td>{Satellite.status}</td>
-
-
-
 
                             </tr>
                         ))}
