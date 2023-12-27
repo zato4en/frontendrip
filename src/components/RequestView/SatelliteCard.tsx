@@ -5,7 +5,7 @@ import {
     deleteSatellite,
     emptyString, fetchSatelliteById,
     makeSatellite, moderatorUpdateStatus,
-    updateSatellite
+    updateSatellite, userupdatesatellite
 } from '../../store/reducers/ActionCreator';
 import TableView from '../TableView/TableView.tsx';
 import {ISatellite} from '../../models/models.ts';
@@ -40,7 +40,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     }, []);
 
     const handleDeleteSatellite = (id: number) => {
-        dispatch(deleteSatellite(id))
+        dispatch(userupdatesatellite(id))
         navigate(-1);
     }
 
@@ -62,7 +62,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     const handleMakeRequest = (id: number) => {
         dispatch(makeSatellite(id))
 
-        navigate("/request");
+        navigate("/Spectrums");
 
     }
 
@@ -146,7 +146,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
                             </div>
                             <div style={{textAlign: 'right'}}>
-                                {singleSatellite.status != "в работе" && <button
+                                {singleSatellite.status == "черновик" && <button
                                     type="button"
                                     className="btn btn-outline-light"
                                     onClick={() => handleSave(singleSatellite.id, singleSatellite)}
@@ -169,14 +169,14 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                         {/* ======================= КНОПКИ ============================= */}
 
                         <div className='delete-make' style={{display: 'flex', gap: '10px'}}>
-                            {singleSatellite.status != "удален"  && (
+                            {singleSatellite.status == "в работе" &&  role == '0' && (
                                 <div style={{flex: 1}}>
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger"
                                         onClick={() => handleDeleteSatellite(singleSatellite.id)}
                                     >
-                                        Удалить
+                                        Отменить
                                     </button>
                                 </div>
                             )}
@@ -201,7 +201,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                             className="btn btn-outline-danger"
                                             onClick={() => handleDiscard()}
                                         >
-                                            Отказать
+                                            Отклонить
                                         </button>
                                     </div>
 

@@ -206,6 +206,36 @@ export const addSpectrumIntoSatellite = (SpectrumId: number, serialNumber: numbe
     }
 }
 
+
+export const userupdatesatellite = (id: number) => async (dispatch: AppDispatch) => {
+    const accessToken = Cookies.get('jwtToken');
+
+    const config = {
+        method: "put",
+        url: `/api/SatellitesUser/${id}`,
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+        data: {
+            id: id
+        }
+    }
+    try {
+        dispatch(SatelliteSlice.actions.SatellitesFetching())
+        const response = await axios(config);
+        const errorText = response.data.description ?? ""
+        const successText = errorText || `Заявка обновлена`
+        dispatch(SatelliteSlice.actions.SatellitesUpdated([errorText, successText]));
+        if (successText != "") {
+            dispatch(fetchSatellites())
+        }
+        setTimeout(() => {
+            dispatch(SatelliteSlice.actions.SatellitesUpdated(['', '']));
+        }, 6000);
+    } catch (e) {
+        dispatch(SatelliteSlice.actions.SatellitesDeleteError(`${e}`))
+    }
+}
 export const deleteSatellite = (id: number) => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
 
@@ -552,6 +582,7 @@ export const registerSession = (userName: string, login: string, password: strin
 
 export const logoutSession = () => async (dispatch: AppDispatch) => {
     const accessToken = Cookies.get('jwtToken');
+    Cookies.remove('jwtToken');
 
     const config = {
         method: "get",
