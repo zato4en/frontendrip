@@ -70,10 +70,10 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
             <Container>
                 <Row className="justify-content-md-center">
                     <Col xs={12} md={6}>
-                        <h2>Добаление города</h2>
+                        <h2>Добаление спектра</h2>
                         <Form onSubmit={handleSubmit}>
                             <Form.Group controlId="formSpectrumName">
-                                <Form.Label>Название города</Form.Label>
+                                <Form.Label>Название спектра</Form.Label>
                                 <Form.Control
                                     type="text"
                                     placeholder="Название"
@@ -85,7 +85,7 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
                             </Form.Group>
 
                             <Form.Group controlId="formSpectrumDescription">
-                                <Form.Label>Описание города</Form.Label>
+                                <Form.Label>Описание спектра</Form.Label>
                                 <Form.Control
                                     as="textarea"
                                     rows={3}
@@ -98,7 +98,7 @@ const CreateSpectrumPage: FC<AddSpectrumProps> = ({setPage}) => {
                             </Form.Group>
 
                             <Form.Group controlId="formSpectrumImage">
-                                <Form.Label>Фотография города</Form.Label>
+                                <Form.Label>Фотография спектра</Form.Label>
                                 <Form.Control
                                     type="file"
                                     accept="image/*"

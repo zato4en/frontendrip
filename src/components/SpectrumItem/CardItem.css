@@ -54,7 +54,7 @@
     width: 30px;
     height: 30px;
     opaSpectrum: 0;
-    transition: opaSpectrum 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 .card-Spectrum-item:hover .deleted-trash {
@@ -74,7 +74,7 @@
     background-color: white;
     border-radius: 50%;
     opaSpectrum: 0;
-    transition: opaSpectrum 0.3s ease, background-color 0.3s ease;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
     cursor: pointer;
 }
 
