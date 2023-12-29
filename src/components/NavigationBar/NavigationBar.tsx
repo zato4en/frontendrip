@@ -50,7 +50,7 @@ const NavigationBar = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <Nav.Item className="mx-3">
-                                <Link to="/" className="nav-link ps-0 text-info">
+                                <Link to="/Spectrums" className="nav-link ps-0 text-info">
                                     Меню
                                 </Link>
                             </Nav.Item>
@@ -79,7 +79,7 @@ const NavigationBar = () => {
                                     id={'search-text-field'}
                                     type="text"
                                     name="search"
-                                    placeholder="Поиск городов"
+                                    placeholder="Поиск спектров"
                                     className="me-2"
                                     aria-label="Search"
                                 />

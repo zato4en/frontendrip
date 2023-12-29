@@ -30,11 +30,11 @@ function App() {
             <>
                 <Routes>
 
-                    <Route path="/" element={
-                        <Menu
-                            setPage={() => addPage([homePage])}
-                        />
-                    }/>
+                    {/*<Route path="/" element={*/}
+                    {/*    <Menu*/}
+                    {/*        setPage={() => addPage([homePage])}*/}
+                    {/*    />*/}
+                    {/*}/>*/}
 
                     <Route path="/Spectrums" element={
                         <SpectrumList
