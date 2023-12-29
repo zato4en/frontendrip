@@ -119,12 +119,12 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                     value={SatelliteName == "$" ? Satellite.satellite : SatelliteName}
                                     onChange={(e) => setSatelliteName(e.target.value)}
                                     style={{marginBottom: '20px'}}
-                                    disabled={Satellite.status == "в работе"}
+                                    disabled={Satellite.status != "черновик"}
                                 />
 
                             </div>
                             <div style={{textAlign: 'right'}}>
-                                {Satellite.status != "в работе" && <button
+                                {Satellite.status == "черновик" && <button
                                     type="button"
                                     className="btn btn-outline-light"
                                     onClick={() => handleSave(Satellite.id, Satellite)}
@@ -136,7 +136,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                         </div>
                         <TableView spectrum_requests={Satellite.spectrum_requests} status={Satellite.status}/>
                         {
-                            Satellite.status != "в работе" && (
+                            Satellite.status == "черновик" && (
                                 <div className='delete-make'>
                                     <div style={{textAlign: 'left', flex: 1}}>
                                         {/*<button*/}

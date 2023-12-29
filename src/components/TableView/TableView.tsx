@@ -41,7 +41,7 @@ const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
                         <td className="Spectrum-name-td">{item.spectrum.name}</td>
                         <td>{item.spectrum.description}</td>
                         {
-                            status != "удален" && <td className="delete-td">
+                            status == "черновик" && <td className="delete-td">
                                 <img
                                     className="delete-button-td"
                                     src="/dustbin.png"

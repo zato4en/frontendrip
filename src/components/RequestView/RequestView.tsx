@@ -104,49 +104,49 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
             {/* =================================== FILTERS ======================================*/}
             {role &&
                 <div className="filter-section d-flex justify-content-end mb-3 pe-4">
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Фильтры
-                        </Dropdown.Toggle>
+                    {/*<Dropdown>*/}
+                    {/*    <Dropdown.Toggle variant="success" id="dropdown-basic">*/}
+                    {/*        Фильтры*/}
+                    {/*    </Dropdown.Toggle>*/}
 
-                        <Dropdown.Menu className={'px-2'}>
-                            <label>Дата создания с:</label>
-                            <DatePicker
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                                className="custom-datepicker"
-                                popperPlacement="bottom-start"
-                            />
+                    {/*    <Dropdown.Menu className={'px-2'}>*/}
+                    {/*        <label>Дата создания с:</label>*/}
+                    {/*        <DatePicker*/}
+                    {/*            selected={startDate}*/}
+                    {/*            onChange={(startDate) => setStartDate(startDate)}*/}
+                    {/*            className="custom-datepicker"*/}
+                    {/*            popperPlacement="bottom-start"*/}
+                    {/*        />*/}
 
-                            <label>Дата окончания по:</label>
-                            <DatePicker
-                                selected={endDate}
-                                onChange={(date) => setEndDate(date)}
-                                className="custom-datepicker"
-                                popperPlacement="bottom-start"
-                            />
+                    {/*        <label>Дата окончания по:</label>*/}
+                    {/*        <DatePicker*/}
+                    {/*            selected={endDate}*/}
+                    {/*            onChange={(endDate) => setEndDate(endDate)}*/}
+                    {/*            className="custom-datepicker"*/}
+                    {/*            popperPlacement="bottom-start"*/}
+                    {/*        />*/}
 
-                            {role == '2' &&
-                                <>
-                                    <label>Статус заявки:</label>
-                                    <Form.Select
-                                        className='my-2'
-                                        value={selectedStatus || ""}
-                                        onChange={(e) => setSelectedStatus(e.target.value)}
-                                    >
-                                        <option value="">Выберите статус</option>
-                                        <option value="1">Черновик</option>
-                                        <option value="2">В работе</option>
-                                        <option value="3">Завершён</option>
-                                        <option value="4">Отклонён</option>
-                                    </Form.Select>
-                                </>
-                            }
+                    {/*        {role == '2' &&*/}
+                    {/*            <>*/}
+                    {/*                <label>Статус заявки:</label>*/}
+                    {/*                <Form.Select*/}
+                    {/*                    className='my-2'*/}
+                    {/*                    value={selectedStatus || ""}*/}
+                    {/*                    onChange={(e) => setSelectedStatus(e.target.value)}*/}
+                    {/*                >*/}
+                    {/*                    <option value="">Выберите статус</option>*/}
+                    {/*                    <option value="1">Черновик</option>*/}
+                    {/*                    <option value="2">В работе</option>*/}
+                    {/*                    <option value="3">Завершён</option>*/}
+                    {/*                    <option value="4">Отклонён</option>*/}
+                    {/*                </Form.Select>*/}
+                    {/*            </>*/}
+                    {/*        }*/}
 
 
 
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    {/*    </Dropdown.Menu>*/}
+                    {/*</Dropdown>*/}
                 </div>
             }
 
