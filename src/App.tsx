@@ -13,11 +13,11 @@ import SatelliteCard from "./components/RequestView/SatelliteCard.tsx";
 import Menu from "./components/Menu/Menu.tsx";
 
 function App() {
-    const homePage: Breadcrumb = {name: 'Главная', to: ''};
+    const homePage: Breadcrumb = {name: 'Главная', to: '/Spectrums'};
     const addSpectrumPage: Breadcrumb = {name: 'Создание спектра', to: 'add-spectrum'};
     const SpectrumsTablePage: Breadcrumb = {name: 'Таблица спектров', to: 'Spectrums/admin'};
     const SpectrumsPage: Breadcrumb = {name: 'Спектры', to: 'Spectrums'};
-    const requestPage: Breadcrumb = {name: 'Заявки', to: 'request'};
+    const requestPage: Breadcrumb = {name: 'Спутники', to: 'request'};
     const [pages, setPage] = useState<Breadcrumb[]>([SpectrumsPage])
     const addPage = (newPage: Breadcrumb[]) => {
         setPage(newPage);
@@ -77,7 +77,7 @@ function App() {
                             (name, id) => addPage([
                                 homePage,
                                 requestPage,
-                                {name: `Заявка: "${name}"`, to: `Satellite/${id}`}
+                                {name: `Спутник: "${name}"`, to: `Satellite/${id}`}
                             ])
                         }/>
                     }/>

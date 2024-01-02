@@ -165,7 +165,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
 
                             {role === '2' && (
                                 <>
-                                    <label>Статус заявки:</label>
+                                    <label>Статус спутника:</label>
                                     <Form.Select
                                         className="mb-2"
                                         style={{width: '170px'}}
