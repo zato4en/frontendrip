@@ -27,7 +27,7 @@ const SpectrumsList: FC<SpectrumsListProps> = ({setPage, searchValue, resetSearc
     }, [searchValue, reloadPage]);
 
     const fetchSpectrums = async () => {
-        const url = 'http://localhost:8888/Spectrums' + `?search=${searchValue ?? ''}`;
+        const url = '/api/Spectrums' + `?search=${searchValue ?? ''}`;
 
         const response = await fetch(url, {
             method: "GET",

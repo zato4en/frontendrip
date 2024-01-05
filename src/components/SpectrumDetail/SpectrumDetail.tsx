@@ -66,7 +66,7 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
 
     async function fetchSpectrum() {
         try {
-            const response = await fetch(`http://localhost:8888/Spectrums/${params.id}`);
+            const response = await fetch(`/api/Spectrums/${params.id}`);
 
             if (!response.ok) {
                 throw new Error('Network response was not ok');
