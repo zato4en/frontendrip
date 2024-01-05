@@ -4,6 +4,7 @@ import { ISpectrumRequests} from "../../models/models.ts";
 import {useAppDispatch} from "../../hooks/redux.ts";
 import {deleteSatelliteById} from "../../store/reducers/ActionCreator.ts";
 import {SpectrumSlice} from "../../store/reducers/SpectrumSlice.ts";
+import {useNavigate} from "react-router-dom";
 
 interface TableViewProps {
     status: string
@@ -13,13 +14,16 @@ interface TableViewProps {
 const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
     const dispatch = useAppDispatch()
     const {minus} = SpectrumSlice.actions
+    const navigate = useNavigate();
 
-    const handleDelete = (spectrum_id: number,satellite_id:number) => {
-        dispatch(minus())
-        dispatch(deleteSatelliteById(spectrum_id,satellite_id))
-        setTimeout(100)
 
-    }
+    const handleDelete = async (spectrum_id: number, satellite_id:number) => {
+        dispatch(minus());
+        await dispatch(deleteSatelliteById(spectrum_id, satellite_id));
+        navigate(-1)
+        // Здесь await убедится, что запрос fetchSatellites() выполнится после удаления
+    };
+
 
     return (
         <>
@@ -42,7 +46,7 @@ const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
                         <td className="Spectrum-name-td">{item.spectrum.name}</td>
                         <td>{item.spectrum.description}</td>
                         {
-                            status != "удален" && <td className="delete-td">
+                            status != "отклонен" && status != "удален" && status != "отменен" && status != "завершен" && <td className="delete-td">
                                 <img
                                     className="delete-button-td"
                                     src="/dustbin.png"

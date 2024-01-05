@@ -2,7 +2,7 @@ import {FC, useEffect, useState} from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux.ts";
-import {fetchSatellites, fetchSatellitesFilter} from "../../store/reducers/ActionCreator.ts";
+import {fetchSatellites, fetchSatellitesFilter, moderatorUpdateStatus} from "../../store/reducers/ActionCreator.ts";
 import MyComponent from "../Popup/Popover.tsx";
 import {Link} from "react-router-dom";
 import "./DatePickerStyles.css";
@@ -21,6 +21,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const {Satellite, error, success} = useAppSelector((state) => state.SatelliteReducer);
+    const {singleSatellite, successs, errorr} = useAppSelector(state => state.SatelliteReducer)
+
     const {isAuth} = useAppSelector((state) => state.userReducer);
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
@@ -29,6 +31,8 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
     const [filteredSatellites, setFilteredSatellites] = useState<ISatellite[] | null>(null);
     const [filteredByUsers, setFilteredUsers] = useState<ISatellite[] | null>(null);
     const [textValue, setTextValue] = useState<string>('');
+    const modername = Cookies.get('userName')
+
 
     useEffect(() => {
         setPage();
@@ -56,6 +60,25 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         setStartDate(null)
         setEndDate(null)
         setSelectedStatus('')
+    }
+
+    const handlerApprove = () => {
+        if (singleSatellite) {
+            dispatch(moderatorUpdateStatus(singleSatellite.id, "завершен", modername))
+            setTimeout(() => {
+                navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
+            }, 100);
+
+        }
+    }
+
+    const handleDiscard = () => {
+        if (singleSatellite) {
+            dispatch(moderatorUpdateStatus(singleSatellite.id, "отклонен", modername))
+            setTimeout(() => {
+                navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
+            }, 100);
+        }
     }
 
     const handleFilter = () => {
@@ -217,6 +240,9 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                             <th>Логин пользователя</th>
                         }
                         <th>Статус</th>
+                        {role == '2' &&
+                            <th>Действия</th>
+                        }
                     </tr>
                     </thead>
                     <tbody>
@@ -246,6 +272,27 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 <td>{Satellite.user_login || 'Не задано'}</td>
                                 }
                                 <td>{Satellite.status}</td>
+                                <td>
+                                    {Satellite.status === "в работе" && (
+                                        <>
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-danger"
+                                                onClick={() => handleDiscard(Satellite.id)}
+                                                style={{ marginRight: '10px' }}
+                                            >
+                                                Отклонить
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-outline-light"
+                                                onClick={() => handlerApprove(Satellite.id)}
+                                            >
+                                                Завершить
+                                            </button>
+                                        </>
+                                    )}
+                                </td>
 
                             </tr>
                         ))}

@@ -321,7 +321,7 @@ export const moderatorUpdateStatus = (SatelliteId: number, status: string, moder
         }
         setTimeout(() => {
             dispatch(SatelliteSlice.actions.SatellitesUpdated(['', '']));
-        }, 6000);
+        }, 3000);
     } catch (e) {
         dispatch(SatelliteSlice.actions.SatellitesDeleteError(`${e}`))
     }

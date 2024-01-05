@@ -23,7 +23,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
     const {Satellite_id} = useParams();
     const dispatch = useAppDispatch()
     const navigate = useNavigate();
-    const {singleSatellite, success, error} = useAppSelector(state => state.SatelliteReducer)
+    const {singleSatellite, success, error} = useAppSelector(state => state.SatelliteReducer);
     const [startSatelliteDate, setStartSatelliteDate] = useState('');
     const [endSatelliteDate, setEndSatelliteDate] = useState('');
     const [leader, setLeader] = useState('$');
@@ -193,29 +193,29 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
                                 </div>
                             )}
 
-                            {singleSatellite.status == "в работе" && role == '2' && (
-                                <>
-                                    <div style={{flex: 1}}>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-danger"
-                                            onClick={() => handleDiscard()}
-                                        >
-                                            Отклонить
-                                        </button>
-                                    </div>
+                            {/*{singleSatellite.status == "в работе" && role == '2' && (*/}
+                            {/*    <>*/}
+                            {/*        <div style={{flex: 1}}>*/}
+                            {/*            <button*/}
+                            {/*                type="button"*/}
+                            {/*                className="btn btn-outline-danger"*/}
+                            {/*                onClick={() => handleDiscard()}*/}
+                            {/*            >*/}
+                            {/*                Отклонить*/}
+                            {/*            </button>*/}
+                            {/*        </div>*/}
 
-                                    <div style={{flex: 1}}>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-light"
-                                            onClick={handlerApprove}
-                                        >
-                                            Завершить
-                                        </button>
-                                    </div>
-                                </>
-                            )}
+                            {/*        <div style={{flex: 1}}>*/}
+                            {/*            <button*/}
+                            {/*                type="button"*/}
+                            {/*                className="btn btn-outline-light"*/}
+                            {/*                onClick={handlerApprove}*/}
+                            {/*            >*/}
+                            {/*                Завершить*/}
+                            {/*            </button>*/}
+                            {/*        </div>*/}
+                            {/*    </>*/}
+                            {/*)}*/}
                         </div>
                     </>
                 }
