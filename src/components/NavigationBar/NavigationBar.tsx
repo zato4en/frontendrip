@@ -18,7 +18,6 @@ import {progressSlice} from "../../store/reducers/ProgressData.ts";
 const NavigationBar = () => {
     const dispatch = useAppDispatch()
     const {isLoading, success, error} = useAppSelector(state => state.userReducer)
-    const userImage = Cookies.get('userImage')
     const userName = Cookies.get('userName')
     const role = Cookies.get('role')
     const jwtToken = Cookies.get('jwtToken')
@@ -73,23 +72,23 @@ const NavigationBar = () => {
                                 </Link>
                             </Nav.Item>
                         </Nav>
-                        {currentUrl == 'Spectrums' &&
-                            <Form onSubmit={handleSearch} className="d-flex">
-                                <FormControl
-                                    id={'search-text-field'}
-                                    type="text"
-                                    name="search"
-                                    placeholder="Поиск спектров"
-                                    className="me-2"
-                                    aria-label="Search"
-                                />
+                        {/*{currentUrl == 'Spectrums' &&*/}
+                        {/*    <Form onSubmit={handleSearch} className="d-flex">*/}
+                        {/*        <FormControl*/}
+                        {/*            id={'search-text-field'}*/}
+                        {/*            type="text"*/}
+                        {/*            name="search"*/}
+                        {/*            placeholder="Поиск спектров"*/}
+                        {/*            className="me-2"*/}
+                        {/*            aria-label="Search"*/}
+                        {/*        />*/}
 
-                                <Button type="submit" variant="outline-light">
-                                    Поиск
-                                </Button>
+                        {/*        <Button type="submit" variant="outline-light">*/}
+                        {/*            Поиск*/}
+                        {/*        </Button>*/}
 
-                            </Form>
-                        }
+                        {/*    </Form>*/}
+                        {/*}*/}
                         {jwtToken ? (
                             <>
                                 <Nav>

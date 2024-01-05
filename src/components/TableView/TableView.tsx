@@ -17,6 +17,8 @@ const TableView: FC<TableViewProps> = ({spectrum_requests, status}) => {
     const handleDelete = (spectrum_id: number,satellite_id:number) => {
         dispatch(minus())
         dispatch(deleteSatelliteById(spectrum_id,satellite_id))
+        setTimeout(100)
+
     }
 
     return (
