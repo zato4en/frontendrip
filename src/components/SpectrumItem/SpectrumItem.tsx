@@ -38,11 +38,11 @@ const SpectrumItem: FC<SpectrumItemProps> = ({Spectrum, onClick, isServer, reloa
     return (
         <div className="card-Spectrum-item" data-Spectrum-id={Spectrum.id}>
             <img
-                src={Spectrum.image_url || "public/default.jpeg"}
+                src={Spectrum.image_url || "https://i.postimg.cc/B6pNb23x/relict.jpg"}
                 alt="Image"
                 onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // предотвращаем бесконечный цикл в случае ошибки с локальным изображением
-                    currentTarget.src = "public/default.jpeg"; // ваше локальное изображение-запасной вариант
+                    currentTarget.src = "https://i.postimg.cc/B6pNb23x/relict.jpg"; // ваше локальное изображение-запасной вариант
                 }}
                 className="photo"
                 onClick={() => onClick(Spectrum.id)}
