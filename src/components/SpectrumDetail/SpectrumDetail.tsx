@@ -98,10 +98,17 @@ const SpectrumDetail: FC<SpectrumDetailProps> = ({setPage}) => {
             : <div className="Spectrum-card-body">
                 <div className="card-container">
                     <span className="pro">Спектр</span>
+
                     <img
                         className="round"
-                        src={Spectrum?.image_url}
-                        alt={Spectrum?.name}
+                        src={Spectrum.image_url || "https://i.postimg.cc/B6pNb23x/relict.jpg"}
+                        alt="Image"
+                        onError={({ currentTarget }) => {
+                            currentTarget.onerror = null; // предотвращаем бесконечный цикл в случае ошибки с локальным изображением
+                            currentTarget.src = "https://i.postimg.cc/B6pNb23x/relict.jpg"; // ваше локальное изображение-запасной вариант
+                        }}
+
+                        id={`photo-${Spectrum.id}`}
                     />
                     <h3>{Spectrum?.name}</h3>
                     {/*<h6>Статус: {Spectrum?.status.status_name}</h6>*/}
