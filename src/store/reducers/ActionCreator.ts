@@ -257,10 +257,10 @@ export const fetchSpectrum = (
 ) => async (dispatch: AppDispatch) => {
     try {
         dispatch(SpectrumSlice.actions.SpectrumsFetching())
-        const response = await axios.get<ISpectrumResponse>(`/api/Spectrums?Spectrum=${SpectrumId}`)
+        const response = await axios.get<ISpectrumResponse>(`/api/Spectrums/${SpectrumId}`)
         const Spectrum = response.data.Spectrums
-        setPage(Spectrum[0].name ?? "Без названия", Spectrum[0].id)
-        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum[0]))
+        setPage(Spectrum.name ?? "Без названия", Spectrum.id)
+        dispatch(SpectrumSlice.actions.SpectrumFetched(Spectrum))
     } catch (e) {
         console.log(`Ошибка загрузки спектров: ${e}`)
         const previewID = SpectrumId !== undefined ? parseInt(SpectrumId, 10) - 1 : 0;

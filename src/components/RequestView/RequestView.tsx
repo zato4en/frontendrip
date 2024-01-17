@@ -171,16 +171,16 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                     </thead>
                     <tbody>
                     {Satellites.map((Satellite) => (
-                            <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
-                                <td>{Satellite.id}</td>
-                                <td>{Satellite.satellite || 'Не задано'}</td>
-                                <td>{checkData(Satellite.date_create)}</td>
-                                <td>{checkData(Satellite.date_formation || 'Не сформирована')}</td>
-                                <td>{Satellite.percentage || 'пустая строка сканирования'}</td>
-                                {/*<td>{Satellite.user_login || 'Не задан'}</td>*/}
-                                <td>{Satellite.status}</td>
-                                {/*<td>{Satellite.leader || 'На задан'}</td>*/}
-                            </tr>
+                        <tr key={Satellite.id} onClick={() => clickCell(Satellite.id)}>
+                            <td>{Satellite.id}</td>
+                            <td>{Satellite.satellite || 'Не задано'}</td>
+                            <td>{checkData(Satellite.date_create)}</td>
+                            <td>{checkData(Satellite.date_formation || 'Не сформирована')}</td>
+                            <td>{Satellite.percentage || 'пустая строка сканирования'}</td>
+                            {/*<td>{Satellite.user_login || 'Не задан'}</td>*/}
+                            <td>{Satellite.status}</td>
+                            {/*<td>{Satellite.leader || 'На задан'}</td>*/}
+                        </tr>
                     ))}
 
 

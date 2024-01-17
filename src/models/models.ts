@@ -4,7 +4,7 @@ export interface ISpectrums {
 }
 
 export interface ISpectrumResponse {
-    Spectrums: ISpectrum[],
+    Spectrums: ISpectrum,
     status?: string
 }
 
