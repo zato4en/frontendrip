@@ -20,8 +20,8 @@ interface RequestViewProps {
 const RequestView: FC<RequestViewProps> = ({setPage}) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const {Satellite, error, success} = useAppSelector((state) => state.SatelliteReducer);
-    const {singleSatellite, successs, errorr} = useAppSelector(state => state.SatelliteReducer)
+    const {Satellite, errorrr, successss} = useAppSelector((state) => state.SatelliteReducer);
+    const {singleSatellite, success, error} = useAppSelector(state => state.SatelliteReducer)
 
     const {isAuth} = useAppSelector((state) => state.userReducer);
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -62,23 +62,18 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
         setSelectedStatus('')
     }
 
-    const handlerApprove = () => {
-        if (singleSatellite) {
-            dispatch(moderatorUpdateStatus(singleSatellite.id, "завершен", modername))
-            setTimeout(() => {
-                navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
-            }, 100);
-
-        }
+    const handlerApprove = (satellite_id) => {
+        dispatch(moderatorUpdateStatus(satellite_id, "завершен", modername))
+        setTimeout(() => {
+            navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
+        }, 1);
     }
 
-    const handleDiscard = () => {
-        if (singleSatellite) {
-            dispatch(moderatorUpdateStatus(singleSatellite.id, "отклонен", modername))
-            setTimeout(() => {
-                navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
-            }, 100);
-        }
+    const handleDiscard = (satellite_id) => {
+        dispatch(moderatorUpdateStatus(satellite_id, "отклонен", modername))
+        setTimeout(() => {
+            navigate("/request"); // Предполагаемое действие для повторной загрузки данных из бекенда
+        }, 1);
     }
 
     const handleFilter = () => {
@@ -273,7 +268,7 @@ const RequestView: FC<RequestViewProps> = ({setPage}) => {
                                 }
                                 <td>{Satellite.status}</td>
                                 <td>
-                                    {Satellite.status === "в работе" && (
+                                    {Satellite.status === "в работе" && role == "2" && (
                                         <>
                                             <button
                                                 type="button"

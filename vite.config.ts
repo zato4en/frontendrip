@@ -10,7 +10,7 @@ export default defineConfig({
     proxy: {
       // Перенаправляем все запросы, начинающиеся на '/api', на локальный сервер на порту 8888
       '/api/': {
-        target: 'http://localhost:8888',
+        target: 'http://192.168.50.209:8888',
         changeOrigin: true,
         // Убираем префикс '/api', когда перенаправляем на бэкенд
         rewrite: path => path.replace(/^\/api/, '')
