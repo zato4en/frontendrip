@@ -61,9 +61,7 @@ const SatelliteCard: FC<SatelliteCardProps> = ({setPage}) => {
 
     const handleMakeRequest = (id: number) => {
         dispatch(makeSatellite(id))
-
-        navigate("/Spectrums");
-
+        navigate("/request");
     }
 
     const handleSave = (id: number, Satellite: ISatellite) => {
